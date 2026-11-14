@@ -1,0 +1,26 @@
+<section id="page-atlas" class="page" aria-labelledby="atlas-title">
+  <header class="page-header"><div><h1 id="atlas-title">Gap Finder</h1><p class="lede">Identify the measurements your research question needs. Inspect the supporting evidence here, or browse complete tables in the NASA Archive.</p></div><button id="gapBrowseDatasets" type="button" class="button-secondary">Browse dataset tables</button></header>
+  <form id="gapForm" class="research-query">
+    <label>Research question<input id="gapQuestion" required maxlength="2000" placeholder="For example: how does gravity affect flame size?"></label>
+    <label>Investigation<select id="atlasGroup"><option value="">Find relevant investigations</option></select></label>
+    <label>Focus<select id="gapGoal"><option value="auto">Use my question</option><option value="flame_geometry">Flame dimensions</option><option value="coagulation">Aerosol evolution</option><option value="scattering">Optical scattering</option><option value="detector">Detector response</option><option value="extinction">Extinction</option><option value="flammability">Flame spread</option><option value="general">Explore sources</option></select></label>
+    <button type="submit" class="button-primary">Check measurement gaps</button>
+  </form>
+  <p id="gapStatus" role="status">Enter your question to start with the relevant evidence.</p>
+  <div class="discovery-actions"><button id="gapsWithSI" type="button" class="button-secondary" disabled>Discuss these findings with SI</button><button id="gapCreateInvestigation" type="button" class="button-primary" disabled>Design an investigation</button><button id="exportGapPlan" type="button" class="button-text" disabled>Export findings</button></div>
+  <div id="researchOverview" class="research-overview"></div>
+  <nav class="research-tabs" aria-label="Evidence workspace"><button type="button" data-research-tab="measurements">Measurements</button><button type="button" data-research-tab="gaps" aria-current="page">What to investigate next</button><button type="button" data-research-tab="reports">Report findings</button><button type="button" data-research-tab="discussion">SI discussion</button></nav>
+  <section id="research-measurements" class="research-panel" hidden>
+    <div class="research-source-controls"><label>Choose a source<select id="researchSource"><option>No evidence selected</option></select></label><label id="researchSignalLabel" hidden>Signal<select id="researchSignal"></select></label></div>
+    <h2 id="atlasRunTitle">Select a scientific question</h2><p id="atlasRunClass">Actual table values and recorded time series will appear here.</p>
+    <div id="researchFields" class="research-fields"></div>
+    <div class="research-plot-controls"><label id="researchMaterialLabel">Material / fuel<select id="researchMaterial"><option value="">All materials</option></select></label><label>Horizontal axis<select id="researchX"></select></label><label>Vertical axis<select id="researchY"></select></label><label>View<select id="researchChartType"><option value="scatter">Scatter</option><option value="line">Line</option><option value="bar">Bar</option><option value="histogram">Histogram</option></select></label><label>Rows displayed <output id="researchRowCount"></output><input id="researchRowLimit" type="range" min="1" max="1" value="1"></label></div>
+    <div id="researchPlot" class="research-plot"><p>No values loaded yet.</p></div><p id="researchPointReadout" role="status">Select a plotted point to inspect its source row.</p>
+    <button id="researchAskPoint" type="button" class="button-text" disabled>Ask SI about the selected point</button>
+    <details><summary>Read the source rows</summary><div id="researchTable" class="research-table"></div></details>
+    <details><summary>Source details and measurement limits</summary><div id="researchProvenance"></div></details>
+  </section>
+  <section id="research-gaps" class="research-panel"><h2>What does this question still need?</h2><p>These findings concern the supplied evidence. Use them to define a measurement, review a report, or develop a controlled comparison.</p><div id="atlasGaps"></div></section>
+  <section id="research-reports" class="research-panel" hidden><h2>Relevant report passages</h2><div id="researchReports"></div></section>
+  <section id="research-discussion" class="research-panel" hidden><h2>Work through the findings</h2><p id="researchSIContext">SI uses the current question, selected table rows and relevant report passages. General scientific reasoning is allowed.</p><label for="researchFollowup">Ask about the evidence or develop a research idea</label><textarea id="researchFollowup" rows="3" maxlength="2000" placeholder="What can these measurements tell us, and how should we design a useful comparison?"></textarea><button id="researchAsk" type="button" class="button-primary">Ask SI here</button><div id="researchSIAnswer" class="evidence-prose" aria-live="polite"></div></section>
+</section>

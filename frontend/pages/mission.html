@@ -1,0 +1,48 @@
+<section id="page-mission" class="page" aria-labelledby="mission-title">
+      <header class="page-header"><div><h1 id="mission-title">NASA Archive</h1><p class="lede">Browse the actual datasets, inspect recorded values, then bring the evidence into your investigation.</p></div></header>
+      <nav class="research-tabs archive-tabs" aria-label="Archive views"><button type="button" data-archive-tab="datasets" aria-current="page">Datasets</button><button type="button" data-archive-tab="runs">Run explorer</button><button type="button" data-archive-tab="ranking">Find relevant evidence</button></nav>
+<section id="archive-datasets" class="archive-browser">
+  <div class="archive-browser-tools"><label>Investigation<select id="datasetGroup"><option value="">All investigations</option></select></label><label>Find a file<input id="datasetSearch" type="search" placeholder="Material, run or filename"></label><label>Show<select id="datasetKind"><option value="data">Tables &amp; imported runs</option><option value="all">All source files</option><option value="table">Experiment tables</option><option value="run">Imported time series</option><option value="reference">Reports &amp; other files</option></select></label></div>
+  <p id="datasetCount" role="status">Loading source files…</p>
+  <div class="dataset-file-scroll"><table class="dataset-file-table"><thead><tr><th scope="col">Dataset / source</th><th scope="col">Investigation</th><th scope="col">Contents</th><th scope="col">Rows</th></tr></thead><tbody id="datasetList"></tbody></table></div>
+  <section id="datasetViewer" class="dataset-viewer" hidden aria-labelledby="datasetTitle">
+    <div class="dataset-viewer-head"><div><h2 id="datasetTitle"></h2><p id="datasetMeta"></p></div><button id="datasetClose" type="button" class="button-text">Close table</button></div>
+    <p id="datasetScope" class="micro"></p>
+    <div class="dataset-legend" aria-label="Cell color legend"><span class="cell-numeric">Number</span><span class="cell-text">Text / category</span><span class="cell-missing">Missing · —</span><span class="cell-sentinel">Possible sentinel · !</span><span>Colors describe recorded values, not validity.</span></div>
+    <form id="datasetRowSearch" class="dataset-row-tools"><label>Search all rows<input id="datasetQuery" type="search" placeholder="Find a run, material or recorded value"></label><button class="button-secondary" type="submit">Filter rows</button><button id="datasetExport" class="button-text" type="button">Export displayed rows</button></form>
+    <p id="datasetStatus" role="status"></p><div id="datasetGrid" class="dataset-grid" tabindex="0" aria-label="Original data table; scroll horizontally for additional columns"></div>
+    <div class="dataset-pagination"><button id="datasetPrevious" type="button" class="button-secondary">Previous rows</button><span id="datasetPage"></span><button id="datasetNext" type="button" class="button-secondary">Next rows</button></div>
+    <details id="datasetSelection" hidden><summary>Selected row &amp; provenance</summary><div id="datasetRowDetail"></div></details>
+    <div class="discovery-actions"><button id="datasetInvestigate" type="button" class="button-primary">Use in an investigation</button><button id="datasetGaps" type="button" class="button-secondary">Check measurement gaps</button><button id="datasetPlot" type="button" class="button-text">Explore plots</button></div>
+  </section>
+</section>
+<div id="archive-runs" hidden>      <section class="run-spotlight" aria-labelledby="run-spotlight-title">
+        <div class="run-spotlight-head"><div><h2 id="run-spotlight-title">Open an analysis-ready run.</h2><p>Representative runs are ordered using signal coverage, event-window availability, value completeness, timestamp integrity, row depth, verified linkage, and warning burden. This is workflow readiness—not scientific validity.</p></div><div class="run-filter" aria-label="Filter run cards"><button class="active" type="button" data-run-filter="all" aria-pressed="true">All</button><button type="button" data-run-filter="PSI101" aria-pressed="false">PSI-101</button><button type="button" data-run-filter="PSI102" aria-pressed="false">PSI-102</button></div></div>
+        <div id="topRunCards" class="run-card-row" aria-live="polite"><p class="micro">Loading imported runs…</p></div>
+      </section>
+
+      <div class="archive-scope" aria-label="Archive scope">
+        <span><strong id="metricFiles">—</strong> checksummed files</span><span><strong id="metricInvestigations">—</strong> investigations</span><span><strong id="metricRuns">—</strong> imported time series</span><span><strong>Read only:</strong> original NASA files are never altered</span>
+      </div>
+
+</div><div id="archive-ranking" hidden>      <section class="discovery-query" aria-labelledby="rankingHeading">
+        <h2 id="rankingHeading">Rank evidence for your question</h2>
+        <p>Rank the supplied evidence for a specific task. Inspect what matches, which measurements are indexed, and what still needs review.</p>
+        <form id="rankingForm" class="discovery-form">
+          <div><label for="rankingQuestion">Scientific question</label><input id="rankingQuestion" required maxlength="2000" value="Which investigations support smoke detector response analysis?"></div>
+          <div><label for="rankingGoal">Measurement requirements</label><select id="rankingGoal"><option value="auto">Infer from question</option value="detector">Smoke detector response</option><option value="coagulation">Coagulation and gravity</option><option value="scattering">Multi-angle scattering</option><option value="flammability">Solid-fuel fire behavior</option><option value="extinction">Droplet extinction</option><option value="general">Topic relevance only</option></select></div>
+          <button type="submit" class="button-primary">Rank evidence</button>
+        </form>
+        <div class="discovery-examples" aria-label="Example questions"><button type="button" data-discovery-question="Which investigations support aerosol coagulation under microgravity?">Coagulation</button><button type="button" data-discovery-question="Which investigations contain multi-angle scattering evidence?">Scattering</button><button type="button" data-discovery-question="Which investigations study droplet flame extinction?">Droplet extinction</button></div>
+        <p id="rankingStatus" role="status"></p>
+        <div class="discovery-actions"><button id="rankToCoverage" type="button" class="button-secondary" disabled>Find missing prerequisites</button><button id="rankWithSI" type="button" class="button-text" disabled>Interpret ranking with SI</button><button id="exportRanking" type="button" class="button-text" disabled>Export ranking</button></div>
+      </section>
+      <details class="rank-method"><summary>Inspect the scoring rule and limits</summary><p id="rankFormula">Loading the backend formula…</p><p id="rankMethod"></p><p>Score means archive-navigation usefulness. Import quality and comparability are shown separately. A report mention establishes topic relevance, not a verified measurement.</p></details>
+      <div class="archive-ranking-results">
+        <div id="investigationRanks" class="rank-list" aria-live="polite">
+          <div class="rank-row"><span class="rank-number">—</span><div><h3>Loading investigation catalog</h3><p>Retrieving source-backed metadata.</p></div><div class="rank-score"><strong>—</strong><span>relevance</span></div></div>
+        </div>
+
+      </div>
+    </div>
+    </section>

@@ -1,0 +1,47 @@
+.research-query { display:grid; grid-template-columns:minmax(280px,2fr) minmax(170px,1fr) minmax(150px,1fr); gap:18px; align-items:end; }
+.research-query label,.research-panel label,.research-entry label { display:block; color:var(--muted); font-size:13px; }
+.research-query input,.research-query select,.research-panel select,.research-panel textarea,.research-entry textarea { width:100%; margin-top:8px; padding:12px; border:1px solid var(--line-strong); border-radius:8px; background:var(--surface-2); color:var(--paper); font:inherit; }
+.research-query>label:first-child { grid-column:1/-1; }
+.research-query button { align-self:end; }
+.research-overview { margin:35px 0; max-width:80ch; }
+.research-overview h2 { font-size:26px; }
+.research-tabs { display:flex; flex-wrap:wrap; gap:10px; margin:32px 0 0; border-bottom:1px solid var(--line); }
+.research-tabs button { border:0; border-bottom:2px solid transparent; background:none; color:var(--muted); font:inherit; font-size:14px; padding:16px 12px; cursor:pointer; }
+.research-tabs button[aria-current=page] { color:var(--blue); border-bottom-color:var(--blue); }
+.research-panel { background:var(--surface); box-shadow:var(--shadow-panel); border-radius:0 0 14px 14px; padding:32px; min-width:0; }
+.research-panel[hidden] { display:none; }
+.research-panel h2 { font-size:24px; margin-top:28px; }
+.research-source-controls { display:grid; grid-template-columns:minmax(0,2fr) minmax(0,1fr); gap:20px; }
+.research-fields { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0 24px; margin:24px 0; max-height:245px; overflow:auto; }
+.research-fields>div { padding:14px 0; border-bottom:1px solid var(--line); }
+.research-fields strong { display:block; font-size:13px; overflow-wrap:anywhere; }
+.research-fields span { display:block; color:var(--muted); font-size:12px; margin-top:6px; }
+.research-plot-controls { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; }
+.research-plot-controls input[type=range] { width:100%; margin-top:16px; accent-color:var(--blue); }
+.research-plot { margin:22px 0 8px; }
+.research-plot svg,#designPlot svg { width:100%; height:auto; }
+.research-table { max-height:460px; overflow:auto; }
+.research-table table { width:100%; border-collapse:collapse; font-size:13px; font-variant-numeric:tabular-nums; }
+.research-table th,.research-table td { padding:12px; text-align:left; border-bottom:1px solid var(--line); white-space:nowrap; }
+.research-panel details { margin:20px 0; border-top:1px solid var(--line); }
+.research-panel summary { padding:15px 0; cursor:pointer; }
+.research-panel pre { white-space:pre-wrap; overflow-wrap:anywhere; max-height:340px; overflow:auto; }
+.research-panel .evidence-prose { max-width:80ch; font-size:15px; line-height:1.8; }
+.research-panel .evidence-prose p { font-size:inherit; }
+.research-finding { padding:24px 0; border-bottom:1px solid var(--line); }
+.research-finding h3 { font-size:21px; }
+.research-finding p { max-width:75ch; }
+.research-state { color:var(--blue); font-size:13px; }
+.research-entry { margin:32px 0; padding:30px; background:var(--surface); border-radius:14px; box-shadow:var(--shadow-panel); }
+.research-entry h2 { font-size:26px; }
+.research-entry button { margin-top:20px; }
+.legacy-analysis { margin:36px 0; }
+.legacy-analysis>summary { cursor:pointer; color:var(--muted); padding:16px 0; }
+.design-variable { margin:20px 0; padding:18px 0; border:0; border-top:1px solid var(--line); min-width:0; }
+.design-variable legend { font-size:16px; padding-right:15px; }
+.design-variable-grid { display:grid; grid-template-columns:1fr 1fr; gap:0 16px; }
+#studio-design input[type=range] { padding:0; accent-color:var(--blue); background:none; border:0; }
+#designPlot { margin-top:24px; }
+#designStatus { margin:20px 0; color:var(--muted); }
+@media(max-width:850px) { .research-query { grid-template-columns:1fr 1fr; } .research-fields { grid-template-columns:1fr 1fr; } }
+@media(max-width:600px) { .research-query,.research-source-controls,.research-plot-controls,.research-fields,.design-variable-grid { grid-template-columns:1fr; } .research-panel { padding:20px 14px; } .research-tabs { gap:0; } .research-tabs button { font-size:12px; padding:14px 8px; } }
