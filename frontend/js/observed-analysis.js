@@ -1,0 +1,5 @@
+$('#distributionTime').oninput=distributionFrame;
+$('#playDistribution').onclick=()=>{if(workspace.timer){pauseTimeline();return;}$('#playDistribution').textContent='Pause timeline';workspace.timer=setInterval(()=>{const slider=$('#distributionTime');if(Number(slider.value)>=Number(slider.max)){pauseTimeline();return;}slider.value=Number(slider.value)+1;distributionFrame();},document.body.classList.contains('reduced-motion')?800:300);};
+document.addEventListener('visibilitychange',()=>{if(document.hidden)pauseTimeline();});
+// Window analysis: proposed ranges remain unconfirmed until the checkbox is selected.
+document.addEventListener('run-loaded',()=>{const w=state.currentOptical.data.event_window;$('#baselineFirst').value=w?.baseline_source_rows?.[0]||'';$('#baselineLast').value=w?.baseline_source_rows?.[1]||'';$('#eventFirst').value=w?.test_source_rows?.[0]||'';$('#eventLast').value=w?.test_source_rows?.[1]||'';$('#confirmWindow').checked=false;$('#exportWindow').disabled=true;workspace.observed=null;$('#windowResult').textContent='Review the suggested source rows before confirming.';contextUpdate();});
