@@ -1,0 +1,32 @@
+{
+  "scope": "Only pages actually consulted during the document review. These are dated reference summaries, not live browsing or invented citations for model knowledge.",
+  "references": [
+    {
+      "title": "NIST Engineering Statistics Handbook — Lognormal distribution",
+      "source_url": "https://itl.nist.gov/div898/handbook/eda/section3/eda3669.htm",
+      "accessed_on": "2026-11-14",
+      "status": "consulted",
+      "scope": "Probability density and parameterization section",
+      "summary": "NIST defines a lognormal variable as one whose logarithm is normally distributed. In the two-parameter form the density contains the squared logarithmic deviation in the negative exponent. Its log-space standard deviation corresponds to ln(sigma_g) in aerosol notation, rather than sigma_g itself. This supports checking the missing squared term in the early SAME report; it is general mathematical background, not a NASA measurement.",
+      "classification": "mathematical_reference"
+    },
+    {
+      "title": "NIST — Moment Method for Obtaining Particle Size Measures of Test Smokes",
+      "source_url": "https://www.nist.gov/publications/moment-method-obtaining-particle-size-measures-test-smokes",
+      "accessed_on": "2026-11-14",
+      "status": "consulted",
+      "scope": "Publication abstract for NISTIR 7050; full report not consulted in this web pass",
+      "summary": "The abstract describes continuous number concentration, ionization-chamber response and mass measurements for five test smokes. Moment ratios yield arithmetic mean diameter and diameter of average mass. Inferring geometric standard deviation requires a lognormal assumption. Comparisons with cascade-impactor measurements are described. The web page creation/publication label must not be substituted for the original report date without checking the report itself.",
+      "classification": "published_method_abstract"
+    },
+    {
+      "title": "NIST — Light Scattering Characteristics and Size Distribution of Smoke and Nuisance Aerosols",
+      "source_url": "https://www.nist.gov/publications/light-scattering-characteristics-and-size-distribution-smoke-and-nuisance-aerosols",
+      "accessed_on": "2026-11-14",
+      "status": "consulted",
+      "scope": "2003 publication abstract; full paper not consulted in this web pass",
+      "summary": "The abstract reports differential mass scattering measurements in m² g⁻¹ sr⁻¹, for two linear polarizations, angles 5–135 degrees and wavelength 632.8 nm. It describes discrimination using a 45/135-degree scattering ratio, polarization ratio and q=(4π/lambda)sin(theta/2). These are results from that study, not supplied PSI detector geometry, a universal classification rule or validation of AERO-PSI predictions.",
+      "classification": "published_scattering_abstract"
+    }
+  ]
+}

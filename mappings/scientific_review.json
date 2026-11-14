@@ -1,0 +1,1480 @@
+{
+  "reviewed_on": "2026-11-14",
+  "scope": "Source-linked selected scientific passages; not exhaustive figure verification or peer review.",
+  "notes": [
+    {
+      "title": "SAME coagulation convention and diffusive wall loss",
+      "source_path": "PSI101/SAME EIRD Rev 2.00 02-25-05 HIgh Q.pdf",
+      "source_sha256": "941dca3ccf7132913bfd73e8a408f3ea558eaa822486dd53ffcdfa26127461cb",
+      "source_range": "PDF page 32, PDF page 33",
+      "anchors": [
+        {
+          "kind": "page",
+          "number": 32,
+          "quote": "variation in the flow time to each instrument. The criteria selected for the residence time is expected to\nbe small compared to the aging chamber times and will also be small compa"
+        },
+        {
+          "kind": "page",
+          "number": 33,
+          "quote": "2   2\n                                             C avg (t )      6   e −n π τ\n                                                                  ∞\n                                "
+        }
+      ],
+      "text": "The engineering report uses dN/dt = -K0 N² and N(t)=N0/(1+N0 K0 t) for a uniform-particle aging estimate. K0 is a number-decay coefficient. For an identical-particle pair collision kernel beta, total-number balance gives K0=beta/2; do not insert beta in the report formula without checking conventions. The separate spherical-wall solution assumes constant diffusivity, initially uniform concentration, quiescent gas and a perfectly absorbing wall. Its dimensionless time is tau=D t/rw². Table 3-2 uses a 100 mm radius and mixes concentration in particles/cc with K0 in mm³/s; convert cc to 1000 mm³. The printed combined value 0.937 for the 1 µm, 10^6 particles/cc, 60 s row is inconsistent with 0.981×0.999≈0.980. Preserve this source discrepancy; the table is an estimate, not measured flight validation.",
+      "classification": "design_calculation_and_review",
+      "review_state": "Selected passage visually and mathematically checked",
+      "reviewed_on": "2026-11-14",
+      "equations": [
+        "\\frac{dN}{dt}=-K_0N^2,\\quad N(t)=\\frac{N_0}{1+N_0K_0t}",
+        "\\frac{\\bar C(t)}{C_0}=\\frac{6}{\\pi^2}\\sum_{n=1}^{\\infty}\\frac{e^{-n^2\\pi^2Dt/r_w^2}}{n^2}"
+      ],
+      "warnings": []
+    },
+    {
+      "title": "Lognormal equation discrepancy and moment reconstruction",
+      "source_path": "PSI101/SAME EIRD Rev 2.00 02-25-05 HIgh Q.pdf",
+      "source_sha256": "941dca3ccf7132913bfd73e8a408f3ea558eaa822486dd53ffcdfa26127461cb",
+      "source_range": "PDF page 48, PDF page 49",
+      "anchors": [
+        {
+          "kind": "page",
+          "number": 48,
+          "quote": "7.1 Post flight data analysis\n\n  The average particle size and an estimate of the width of the size distribution will be estimated from\nvarious moments of the size distribution. Th"
+        },
+        {
+          "kind": "page",
+          "number": 49,
+          "quote": "Equation (12) will be used for estimating σg from the moments of the size distribution function.\n\n   The analysis above will require modification for the case of the light scatteri"
+        }
+      ],
+      "text": "Visual inspection of printed equation (8) on page 48 confirms the numerator in the exponential lacks the square required for a lognormal density. Equation (12) also places the half power ambiguously outside the exponential. Use the clearly printed square-root form in the later SAME final report page 18, not a literal transcription of this early report. Corrected mathematical background is n(D)=N/[sqrt(2π) D ln(sigma_g)] exp[-(ln(D/Dg))²/(2 ln²(sigma_g))], D>0, sigma_g>1. M_j=integral D^j n(D)dD. Mean diameter is M1/M0; diameter of average mass is (M3/M0)^(1/3). M3 is proportional to mass, not equal to mass: spherical constant-density mass concentration is rho*pi*M3/6. The report proposes iterative calibration for the scattering moment and TEM checks. This is not permission to treat uncalibrated detector voltage as a measured size distribution.",
+      "classification": "source_discrepancy_and_derived_math",
+      "review_state": "Selected passage visually and mathematically checked",
+      "reviewed_on": "2026-11-14",
+      "equations": [
+        "n(D)=\\frac{N}{\\sqrt{2\\pi}D\\ln\\sigma_g}\\exp\\!\\left[-\\frac{\\ln^2(D/D_g)}{2\\ln^2\\sigma_g}\\right]",
+        "M_j=\\int_0^\\infty D^j n(D)\\,dD,\\quad c_m=\\rho\\pi M_3/6"
+      ],
+      "warnings": [
+        "Corrected density is an explicitly identified mathematical correction, not the formula as printed in this source."
+      ]
+    },
+    {
+      "title": "DBP nucleation and condensation models: applicability and missing inputs",
+      "source_path": "PSI101/SAME EIRD Rev 2.00 02-25-05 HIgh Q.pdf",
+      "source_sha256": "941dca3ccf7132913bfd73e8a408f3ea558eaa822486dd53ffcdfa26127461cb",
+      "source_range": "PDF page 52, PDF page 58, PDF page 59, PDF page 60, PDF page 63",
+      "anchors": [
+        {
+          "kind": "page",
+          "number": 52,
+          "quote": "Appendix A: Aerosol Dynamics Modeling\n          The main objective of the aerosol dynamics modeling effort is to determine the distance from the\n       condensable vapor source at "
+        },
+        {
+          "kind": "page",
+          "number": 58,
+          "quote": "dM v      ⎡ dM total ⎤                  dM p\n                          = ⎢                       −                                            (A-5)\n                   dt       ⎣ dt"
+        },
+        {
+          "kind": "page",
+          "number": 59,
+          "quote": "2λ\nKn =              (Knudsen number)\n        Dp\n\n  ρp = [A/B**(1 + (1 – Td/C)**D)]*MWDBP*1000\n  with A = 0.3087, B = 0.26113, C = 781., and D = 0.31804\n\n\n           MWDBP\nVm =\n   "
+        },
+        {
+          "kind": "page",
+          "number": 60,
+          "quote": "Summary\n\n  Based on the calculations from the above two approaches, condensational growth of the liquid DBP\naerosol would be completed or become negligible within a duct length of "
+        },
+        {
+          "kind": "page",
+          "number": 63,
+          "quote": "coagulation, and it appears that nucleation and condensation are essentially over at the first sampling\nposition. Above 20 cm from the source, coagulation growth appears to stop al"
+        }
+      ],
+      "text": "Appendix A describes a modified FDS-v2 nucleation/condensation calculation that explicitly excludes coagulation. The global DBP growth model couples vapor depletion, aerosol mass and droplet diameter, with Kelvin curvature, temperature-dependent vapor pressure/surface tension, and f(Kn)=(1+Kn)/(1+1.71Kn+1.333Kn²). Here Kn=2 lambda/Dp and lambda refers to condensing-vapor molecular transport, not automatically the air mean free path used in a Brownian kernel. Equations require DBP vapor mole fraction, total pressure, temperature history, liquid density, molecular volume and diffusion coefficient. The report models condensation becoming negligible within 30 cm; Appendix B interprets ground results as mainly coagulation by roughly 20 cm. These are configuration-specific estimates, not universal cutoff lengths. Property-correlation validity ranges and required transport histories still need verification before implementation. See the separately recovered diameter-growth equation note.",
+      "classification": "reported_model",
+      "review_state": "Selected source passages reviewed",
+      "reviewed_on": "2026-11-14",
+      "equations": [
+        "f(Kn)=\\frac{1+Kn}{1+1.71Kn+1.333Kn^2},\\quad Kn=2\\lambda/D_p"
+      ],
+      "warnings": []
+    },
+    {
+      "title": "DBP diameter-growth equation recovered from the original PDF",
+      "source_path": "PSI101/SAME EIRD Rev 2.00 02-25-05 HIgh Q.pdf",
+      "source_sha256": "941dca3ccf7132913bfd73e8a408f3ea558eaa822486dd53ffcdfa26127461cb",
+      "source_range": "PDF page 57, PDF page 58, PDF page 59, PDF page 60",
+      "anchors": [
+        {
+          "kind": "page",
+          "number": 57,
+          "quote": "25x10-6\n\n                                                                                         200 oC DBT source\n                                                                "
+        },
+        {
+          "kind": "page",
+          "number": 58,
+          "quote": "dM v      ⎡ dM total ⎤                  dM p\n                          = ⎢                       −                                            (A-5)\n                   dt       ⎣ dt"
+        },
+        {
+          "kind": "page",
+          "number": 59,
+          "quote": "2λ\nKn =              (Knudsen number)\n        Dp\n\n  ρp = [A/B**(1 + (1 – Td/C)**D)]*MWDBP*1000\n  with A = 0.3087, B = 0.26113, C = 781., and D = 0.31804\n\n\n           MWDBP\nVm =\n   "
+        },
+        {
+          "kind": "page",
+          "number": 60,
+          "quote": "Summary\n\n  Based on the calculations from the above two approaches, condensational growth of the liquid DBP\naerosol would be completed or become negligible within a duct length of "
+        }
+      ],
+      "text": "Visual review recovers dDp/dt=[4 Vm DAB/(k Dp)]*[Pinf/Tg-Pd/Td]*f(Kn), with Pd=Psat*exp[4 sigma Vm/(k Td Dp)]. Dp is diameter [m], Vm molecular liquid volume [m³/molecule], DAB vapor diffusivity [m²/s], k Boltzmann constant [J/K], partial pressures [Pa], temperatures [K], and sigma surface tension [N/m]. The dimensions reduce to m/s. The vapor molecular mean free path is lambda=3DAB/cbar, cbar=sqrt(8 k Tg/(pi m)). The model assumes droplet/gas thermal equilibrium and a prescribed number concentration. Differentiating aerosol mass as on page 57 also treats N, V and density as fixed in that derivative; changes in those quantities require additional terms. This is a report model with DBP-specific properties and transport histories, not a new validated coagulation or arbitrary-material condensation solver.",
+      "classification": "reported_equation_and_review",
+      "review_state": "Selected passage visually and mathematically checked",
+      "reviewed_on": "2026-11-14",
+      "equations": [
+        "\\frac{dD_p}{dt}=\\frac{4V_mD_{AB}}{kD_p}\\left(\\frac{P_\\infty}{T_g}-\\frac{P_d}{T_d}\\right)f(Kn)",
+        "P_d=P_{sat}\\exp\\left(\\frac{4\\sigma V_m}{kT_dD_p}\\right)"
+      ],
+      "warnings": []
+    },
+    {
+      "title": "SAME moment inversion and uncertainty equations",
+      "source_path": "PSI102/SAME Final Science report  03 18 10 with papers attached (1).pdf",
+      "source_sha256": "af91c96d22d93bbefbc0f2c5e1cc06e24813f532e5379b3fec9f121cccb22193",
+      "source_range": "PDF page 17, PDF page 18, PDF page 19",
+      "anchors": [
+        {
+          "kind": "page",
+          "number": 17,
+          "quote": "The SAME project assumes a lognormal distribution function for the aerosol size distribution. Since a\nlognormal distribution function is uniquely defined by three parameters, Nt, D"
+        },
+        {
+          "kind": "page",
+          "number": 18,
+          "quote": "In the case of the SAME experiment, our objective is to obtain Dg, g, and Nt based on measured\nmoments, M0, M1 and M3 with D0.5 and D1.5 being intermediate parameters. For this pu"
+        },
+        {
+          "kind": "page",
+          "number": 19,
+          "quote": "     M 02 / 3 M 31 / 3  \n(10)            g  exp ln                            \n                                          M1              \n                         "
+        }
+      ],
+      "text": "The final report defines DA=M1/M0 and DM=(M3/M0)^(1/3), Dg=sqrt(DA³/DM), and sigma_g=exp(sqrt(ln(DM/DA))). Equivalent Dg=M0^(-4/3) M1^(3/2) M3^(-1/6). Positive moments and DM>=DA are necessary; inconsistent measured moments must be rejected or investigated, not forced into a distribution. These reconstruct an assumed lognormal distribution from calibrated moments; they are not direct bin-resolved size measurements. For independent moment errors, relative variance of Dg is (16/9)u_r(M0)²+(9/4)u_r(M1)²+(1/36)u_r(M3)². For sigma_g it is [u_r(M0)²+2.25u_r(M1)²+0.25u_r(M3)²]/[9 ln²(sigma_g)]. Shared dilution/calibration errors require covariance terms; the sigma_g approximation becomes singular near a monodisperse distribution. DustTrak red-light scattering at 90 degrees is described as approximately third-moment sensitive over 0.2–2 µm, with calibration corrections; do not confuse it with the ISS detector geometry.",
+      "classification": "reported_equation_and_review",
+      "review_state": "Selected passage visually and mathematically checked",
+      "reviewed_on": "2026-11-14",
+      "equations": [
+        "D_g=M_0^{-4/3}M_1^{3/2}M_3^{-1/6}",
+        "\\sigma_g=\\exp\\sqrt{\\ln\\left(M_0^{2/3}M_3^{1/3}/M_1\\right)}",
+        "u_r^2(D_g)=\\frac{16}{9}u_r^2(M_0)+\\frac94u_r^2(M_1)+\\frac1{36}u_r^2(M_3)"
+      ],
+      "warnings": []
+    },
+    {
+      "title": "SAME calibration, material coverage and contaminated TEM grids",
+      "source_path": "PSI102/SAME Final Science report  03 18 10 with papers attached (1).pdf",
+      "source_sha256": "af91c96d22d93bbefbc0f2c5e1cc06e24813f532e5379b3fec9f121cccb22193",
+      "source_range": "PDF page 23, PDF page 24, PDF page 28",
+      "anchors": [
+        {
+          "kind": "page",
+          "number": 23,
+          "quote": "500\n\n\n                                          450\n\n\n                                          400\n\n\n                                          350\n\n\n\n\n              EAD Output (fi"
+        },
+        {
+          "kind": "page",
+          "number": 24,
+          "quote": "normal size distribution must be assessed further for the smoke samples here. In the results reported\nhere, the DustTrak® response was directly calibrated, for each smoke source, a"
+        },
+        {
+          "kind": "page",
+          "number": 28,
+          "quote": "avionics enclosure), fire sensors must consider large particles in addition to the smaller particles seen\nwith Kapton.\n\nIn general, since the mass increases with the cube of the di"
+        }
+      ],
+      "text": "The final report describes per-smoke-source DustTrak calibration against a tapered-element oscillating microbalance and use of estimated material densities. The calibration is conditional on size distribution not changing significantly. Optical refractive index, agglomeration and lognormal departures remain uncertainties. SAME tested silicone, cellulose/lampwick, Teflon, Kapton and DBP in September/October 2007. Lampwick and silicone have a substantial large-particle mass tail despite smaller count means; Kapton and Teflon are narrower in these reported tests. Recovered TEM grids were contaminated. Do not call the flight TEM collection clean independent validation, or apply one calibration to every material and aging condition.",
+      "classification": "reported_measurement_and_limitation",
+      "review_state": "Selected source passages reviewed",
+      "reviewed_on": "2026-11-14",
+      "equations": [],
+      "warnings": []
+    },
+    {
+      "title": "SAME-R differs from SAME: materials, instruments and run counts",
+      "source_path": "PSI101/SAMER_Final 0602 2014.pdf",
+      "source_sha256": "65381e2715eb7379113dd1b9c550baaa5fa5a247dba00419123143aa98ef80d6",
+      "source_range": "PDF page 2, PDF page 3",
+      "anchors": [
+        {
+          "kind": "page",
+          "number": 2,
+          "quote": "Smoke Aerosol Measurement Experiment Re-flight (SAMER)\n\n                                                     Abstract\n\nSmoke Aerosol Measurement Experiment Re-flight (SAMER) is an "
+        },
+        {
+          "kind": "page",
+          "number": 3,
+          "quote": "easier to understand the particle generation from the view point of material pyrolysis. The second improvement is to\ndevice a method of calculating the percentage of cumulative mom"
+        }
+      ],
+      "text": "SAME-R added Pyrell in place of DBP, higher-temperature and no-flow conditions, and M-pass in place of one Commercial Diagnostic Enclosure. The report describes 2010 flight tests and post-flight dilution-flow, TEM and ground SMPS studies. Its abstract gives 66 successful test points; page 3 describes 67 runs including two reused-sample runs and 109 appendix entries when secondary aging is counted separately. These counts describe different entities. Preserve run identifiers, aging suffixes and sample reuse rather than treating them as 109 independent experiments. PSI101 is the re-flight in this archive; PSI102 is the original SAME. The presence of ground SMPS plots in a report does not establish an available machine-readable flight PSD.",
+      "classification": "reported_experiment_context",
+      "review_state": "Selected source passages reviewed",
+      "reviewed_on": "2026-11-14",
+      "equations": [],
+      "warnings": []
+    },
+    {
+      "title": "Lognormal and SMPS validation is material- and range-dependent",
+      "source_path": "PSI101/SAMER_Final 0602 2014.pdf",
+      "source_sha256": "65381e2715eb7379113dd1b9c550baaa5fa5a247dba00419123143aa98ef80d6",
+      "source_range": "PDF page 11, PDF page 19, PDF page 20, PDF page 22",
+      "anchors": [
+        {
+          "kind": "page",
+          "number": 11,
+          "quote": "the measurements. During each SMPS sample, the volume of air removed was between 0.5 % and 1.5 % of the\ndrum volume and a correspondingly small number of particles were removed so "
+        },
+        {
+          "kind": "page",
+          "number": 19,
+          "quote": "smoke having dg = 249 nm and σg =1.84 and after 14 minutes of aging, dg increases to 328 nm\nand σg increases slightly to 1.98. Considering that Pyrell is not a spherical material, "
+        },
+        {
+          "kind": "page",
+          "number": 20,
+          "quote": "graph), the black bar representing a 1000 nm upper size limit is only at 40%, indicating that 60%\nof the distribution is missed by the instrument, but when losses are considered an"
+        },
+        {
+          "kind": "page",
+          "number": 22,
+          "quote": "The SMPS bin data (based on a 64-channel histogram) can be used in equation (14) formulas to\ncalculate diameters of average properties, which can then be compared with diameters ca"
+        }
+      ],
+      "text": "The report compares ground SMPS distributions, lognormal fits and TEM. It excludes non-spherical Pyrell and Teflon from its spherical-aerosol SMPS moment-method comparison. SMPS upper range changes from about 660 nm at 10:1 sheath/sample flow to 1000 nm at 5:1; a conservative 700 nm cutoff is also assessed. One high-temperature silicone example captures only about 40% of fitted volume to 1000 nm and 20% to 700 nm, while the displayed Kapton case captures 98–100% of its distributions. Higher-moment silicone diameters disagree more strongly with lognormal conversions; some upper bins have fewer than ten particles. A good number-distribution fit does not guarantee accurate mass moments or universal validation for all materials.",
+      "classification": "reported_measurement_and_limitation",
+      "review_state": "Selected source passages reviewed",
+      "reviewed_on": "2026-11-14",
+      "equations": [],
+      "warnings": []
+    },
+    {
+      "title": "SAME-R dilution correction coefficients are instrument-specific",
+      "source_path": "PSI101/SAMER_Final 0602 2014.pdf",
+      "source_sha256": "65381e2715eb7379113dd1b9c550baaa5fa5a247dba00419123143aa98ef80d6",
+      "source_range": "PDF page 26",
+      "anchors": [
+        {
+          "kind": "page",
+          "number": 26,
+          "quote": "In order to make sure the dilution ratio used in the data reduction procedures are accurate, a series flow tests were\nconducted by inserting mass flow meters in different location "
+        }
+      ],
+      "text": "Reported flight dynamic-diluter sample flow: actual flow [ccm]=0.9474*command [ccm]-1.2395. Engineering diluter calibration was unavailable; applying the flight correlation to it is an assumption stated in the report. Reported P-Trak total flows average 703.96 ccm engineering and 705.64 ccm flight. The reported nitrogen-orifice relation is N2 flow [SLPM]=0.308*(regulated N2 pressure)^0.5283, but the pressure convention/units are not identified in this excerpt. The dilution orifice did not maintain critical flow, whereas the total-flow orifice did. Do not silently use this power law as an SI-unit calibration. Flight DustTrak B total flow is reported as 1.69076 LPM. Match hardware, pressures and engineering logs before using these coefficients.",
+      "classification": "reported_calibration",
+      "review_state": "Selected source passages reviewed",
+      "reviewed_on": "2026-11-14",
+      "equations": [],
+      "warnings": [
+        "Pressure units for the empirical power law require confirmation from its calibration context."
+      ]
+    },
+    {
+      "title": "Heater temperature and truncated aerosol moments",
+      "source_path": "PSI101/SAMER_Final 0602 2014.pdf",
+      "source_sha256": "65381e2715eb7379113dd1b9c550baaa5fa5a247dba00419123143aa98ef80d6",
+      "source_range": "PDF page 27, PDF page 28, PDF page 29, PDF page 30",
+      "anchors": [
+        {
+          "kind": "page",
+          "number": 27,
+          "quote": "Objective:\n\nIt was identified that each sample has a significant length of leading section of the resistive wire. This section does not touch the\nsample material and is exposed in "
+        },
+        {
+          "kind": "page",
+          "number": 28,
+          "quote": "where k is a coefficient for conduction part. This “handwavy” because the conduction part is much more complicated and the\ncoefficient k won’t be a constant. It should vary with ti"
+        },
+        {
+          "kind": "page",
+          "number": 29,
+          "quote": "Let’s define two new variables to simplify the derivation.\n\n                                                .\n  =       + 0.25        and         =                                 "
+        },
+        {
+          "kind": "page",
+          "number": 30,
+          "quote": "=     (   )−     ( )=              0.5                (    )−     (    )                       (12)\n\nDividing Eq (12) by Eq (10), we get\n\n     =        (    )−     (    )          "
+        }
+      ],
+      "text": "The heater analysis separates wire touching the sample from exposed lead wire. Total resistance is not a direct sample temperature. It uses measured resistance, temperature-dependent resistivity, current, wire dimensions and a bounded effective heat-transfer parameter 0.5<mu<1, with steady-state and lumped-transfer assumptions. A separate derivation calculates the fraction of a lognormal moment captured between instrument size limits using error functions. A useful independently derived form is F_j=Phi((ln(Du/Dg)-j*s²)/s)-Phi((ln(Dl/Dg)-j*s²)/s), s=ln(sigma_g). This is a conditional lognormal correction, not measured missing particles. Extracted equations on pages 28–30 have missing glyphs and must not be copied as executable code.",
+      "classification": "reported_method_and_derived_math",
+      "review_state": "Selected source passages reviewed",
+      "reviewed_on": "2026-11-14",
+      "equations": [
+        "F_j=\\Phi\\!\\left(\\frac{\\ln(D_u/D_g)-j s^2}{s}\\right)-\\Phi\\!\\left(\\frac{\\ln(D_l/D_g)-j s^2}{s}\\right),\\quad s=\\ln\\sigma_g"
+      ],
+      "warnings": []
+    },
+    {
+      "title": "Instrument-window moment fraction: equation images checked",
+      "source_path": "PSI101/SAMER_Final 0602 2014.pdf",
+      "source_sha256": "65381e2715eb7379113dd1b9c550baaa5fa5a247dba00419123143aa98ef80d6",
+      "source_range": "PDF page 29, PDF page 30",
+      "anchors": [
+        {
+          "kind": "page",
+          "number": 29,
+          "quote": "Let’s define two new variables to simplify the derivation.\n\n                                                .\n  =       + 0.25        and         =                                 "
+        },
+        {
+          "kind": "page",
+          "number": 30,
+          "quote": "=     (   )−     ( )=              0.5                (    )−     (    )                       (12)\n\nDividing Eq (12) by Eq (10), we get\n\n     =        (    )−     (    )          "
+        }
+      ],
+      "text": "The PDF equations give eta(D)=[ln(D/dg)-p ln²(sigma_g)]/[sqrt(2) ln(sigma_g)], and measured fraction M_p,rel=0.5[erf(eta(Du))-erf(eta(Dl))]. This is equivalent to the standard-normal CDF expression in the review derivation. The appendix normalizes its total moment without N: Mp=dg^p exp[0.5(p ln(sigma_g))²]. Multiply by total number concentration to recover dimensional concentration moments. Number fractions (p=0), area-weighted fractions (p=2) and volume-weighted fractions (p=3) generally differ. Requires positive ordered size limits and sigma_g>1, with a separate degenerate treatment at sigma_g=1. A fitted-tail estimate remains assumption-dependent.",
+      "classification": "reported_equation_and_review",
+      "review_state": "Selected passage visually and mathematically checked",
+      "reviewed_on": "2026-11-14",
+      "equations": [
+        "\\eta(D)=\\frac{\\ln(D/d_g)-p\\ln^2\\sigma_g}{\\sqrt2\\ln\\sigma_g}",
+        "M_{p,rel}=\\tfrac12[\\operatorname{erf}(\\eta(D_u))-\\operatorname{erf}(\\eta(D_l))]"
+      ],
+      "warnings": []
+    },
+    {
+      "title": "SAME presentation: detector moments, morphology and size-sensitive detection",
+      "source_path": "PSI101/SAME ICES  2013 07 15 final as presented.pptx",
+      "source_sha256": "0e8480e701f437c2fd7f7434df7acb56df8f493f1ceb62b0994829f396771f34",
+      "source_range": "slide 4, slide 7, slide 8, slide 27, slide 28, slide 29",
+      "anchors": [
+        {
+          "kind": "slide",
+          "number": 4,
+          "quote": "4\nBackground: Spacecraft Fire Detection\nSTS Detector:  sensitive < 1 micron\nD ual-chamber  ionization with inertial separator which rejects particles larger than 1-2  microns\nDevel"
+        },
+        {
+          "kind": "slide",
+          "number": 7,
+          "quote": "7\nLog-Normal Distribution\nLog-normal distribution \nσ g  = 1.6, D g = 1\nNumber  is dominated by the smaller particles\nMass is dominated by the larger particles (tail )"
+        },
+        {
+          "kind": "slide",
+          "number": 8,
+          "quote": "8\n\nZeroth Moment: TSI  PTrak ™\n\n\nFirst Moment: First Alert™ Smoke Detector\nThird Moment: TSI Dust Trak™\nSAME Experimental Diagnostic  Measurements\nAll measure moments of the partic"
+        },
+        {
+          "kind": "slide",
+          "number": 27,
+          "quote": "Conclusions\n27\nParticle  sizes ranged from 100 to 600 nm \nConsistent with a log-normal distribution\nParticle  sizes increase substantially with  aging\nParticle  dimensions increase"
+        },
+        {
+          "kind": "slide",
+          "number": 28,
+          "quote": "Conclusions\n28\nGround based testing at 8 cm/s showed particle dimensions very close to the flight results\nISS Detector showed reduced detection performance for Kapton and Teflon du"
+        },
+        {
+          "kind": "slide",
+          "number": 29,
+          "quote": "Conclusions\n29\nIt is improbable that a single-moment device can be sensitive across the size spectrum and resist false alarms \nDetectors that can normalize the concentration for th"
+        }
+      ],
+      "text": "The presentation contrasts an ionization STS detector with a two-pass infrared ISS detector using 30-degree forward scattering; these are distinct from the DustTrak measurement instrument. It reports roughly 100–600 nm particle sizes in its study context, growth with aging and decreasing airflow, and distinct material morphologies. About 40% of lampwick/silicone aerosol mass is reported above 1 µm aerodynamic diameter, whereas Kapton/Teflon mass is mostly below that threshold. The conclusions motivate size-aware or multiple-moment detection and nuisance discrimination. They do not validate an arbitrary multi-angle instrument or the platform solver. Count mean, count median, aerodynamic size and volume-equivalent diameter must remain distinct.",
+      "classification": "reported_findings",
+      "review_state": "Selected source passages reviewed",
+      "reviewed_on": "2026-11-14",
+      "equations": [],
+      "warnings": []
+    },
+    {
+      "title": "Detector-design slides contain a number-concentration ambiguity",
+      "source_path": "PSI101/SAME ICES  2013 07 15 final as presented.pptx",
+      "source_sha256": "0e8480e701f437c2fd7f7434df7acb56df8f493f1ceb62b0994829f396771f34",
+      "source_range": "slide 25, slide 26",
+      "anchors": [
+        {
+          "kind": "slide",
+          "number": 25,
+          "quote": "Detector Design - Number count basis\n25\nAlarm level: 2  mg/m 3  \n    (500  nm  CMD  and  a  σ g  of 1.3)\n\n22 x 10 6  particles/cc\nNormalized Number  Concentration to  alarm for eac"
+        },
+        {
+          "kind": "slide",
+          "number": 26,
+          "quote": "Detector Design- Mass Basis\n26\nNormalized  Mass Concentration  at  alarm for each device type\nNormalized detector signal  for fixed  Mass Concentration.\nAlarm level: 2  mg/m 3  \n  "
+        }
+      ],
+      "text": "Slide 25 visibly labels an illustrative alarm level of 2 mg/m³, 500 nm count-median diameter, sigma_g=1.3 and 22×10^6 particles/cc. These are illustrative normalized detector comparisons, not a measured run. The particle-number label is dimensionally suspect for ordinary-density spherical particles. For example, assuming rho=1000 kg/m³ explicitly, the stated mass and lognormal size imply approximately 2.24×10^4 particles/cm³, not 22×10^6. Density is not specified on the slide, so this is a consistency check under a stated assumption, not a replacement measured value. Do not import the printed count as a default.",
+      "classification": "source_discrepancy_and_assumption_check",
+      "review_state": "Selected passage visually and mathematically checked",
+      "reviewed_on": "2026-11-14",
+      "equations": [],
+      "warnings": []
+    },
+    {
+      "title": "Legacy Word paper recovered: CSD results and proposed SAME moment method",
+      "source_path": "PSI102/ICES Paper 2005-01-2930 rev.doc",
+      "source_sha256": "67ede025a6cf79ac8857172243334d9cb7550565384178a1351cef34edbc2347",
+      "source_range": "converted PDF page 7, converted PDF page 8",
+      "anchors": [
+        {
+          "kind": "converted_page",
+          "number": 7,
+          "quote": "Material        Total           Detected by      Detected by\n                                                                                                 ISS detector     STS d"
+        },
+        {
+          "kind": "converted_page",
+          "number": 8,
+          "quote": "The average particle size and an estimate of the width of the                                                            (6 )\nsize distribution will be estimated from various momen"
+        }
+      ],
+      "text": "The converted Word paper distinguishes CSD smoke tests from the then-proposed SAME experiment. Liquid aerosols evaporated from TEM grids before examination; solid primary-particle and aggregate dimensions are reported separately. The detection comparison used a 20% operating-range criterion and an ISS detector more sensitive than the ISS standard, not a flight qualification threshold. Moment equations are embedded images and were absent from extracted text. Visual inspection of converted page 8 found the same missing-square lognormal formula as EIRD page 48 and ambiguous sigma_g exponent placement. Use the later final report for the explicit corrected square-root expression; do not treat all text extraction as complete mathematical extraction.",
+      "classification": "reported_method_and_source_discrepancy",
+      "review_state": "Selected passage visually and mathematically checked",
+      "reviewed_on": "2026-11-14",
+      "equations": [],
+      "warnings": []
+    },
+    {
+      "title": "BASS-II FAQ: timing, airflow, oxygen and radiometer caveats",
+      "source_path": "BASS-II/BASS-II data FAQ.docx",
+      "source_sha256": "69f32647792f54ab2a561e3cdafc6c87d854564fe487aed2b09265286bd84e1d",
+      "source_range": "paragraph 13, paragraph 14, paragraph 15, paragraph 18, paragraph 19, paragraph 20, paragraph 21, paragraph 23, paragraph 25",
+      "anchors": [
+        {
+          "kind": "paragraph",
+          "number": 13,
+          "quote": "Date:  actual date of experiment.  Video display is one day later than actual date due to a leap year the on-board computer did not account for."
+        },
+        {
+          "kind": "paragraph",
+          "number": 14,
+          "quote": "GMT -   number is  day of the year .  ISS runs on Greenwich  mean time , so their clock reads as GMT – Year – Day - time"
+        },
+        {
+          "kind": "paragraph",
+          "number": 15,
+          "quote": "Test number:   Initial of PI name followed by test number from the initial matrix.   If multiple runs with same sample on same day,  a and  b are used to designate."
+        },
+        {
+          "kind": "paragraph",
+          "number": 18,
+          "quote": "Flow restrictors:  perforated plates that could be attached to the inlet screen to increase the flow restriction and thus reduce the flow range.   0 is highest flow, lowest restric"
+        },
+        {
+          "kind": "paragraph",
+          "number": 19,
+          "quote": "Fan display:  instantaneous fan voltagex10 on the video display.  Maximum was 122, or 12.2 volts.  Also listed sometimes are pot settings on the control box.  10 is max."
+        },
+        {
+          "kind": "paragraph",
+          "number": 20,
+          "quote": "Air display:  flow spe ed measured in the duct in cm/s on the video display.  R esponse time is very slow (~ 1 min), so reading is only steady  for long times at the same flow sett"
+        },
+        {
+          "kind": "paragraph",
+          "number": 21,
+          "quote": "Radiometer gain:    Uncalibrated  radiometer gain, radiometer is displayed on the video.   Adjusted to avoid saturation.  Useful for relative flame intensity readings and flame dyn"
+        },
+        {
+          "kind": "paragraph",
+          "number": 23,
+          "quote": "Calibrated initial and final O2:   The O2 sensor was out of calibration, so the MCA ISS reading was used to correct the initial ISS ‘air’ reading of the sensor for the day via a co"
+        },
+        {
+          "kind": "paragraph",
+          "number": 25,
+          "quote": "CO readings:  CSA-CP sensor readings.   OR = over range (> 1000 ppm)"
+        }
+      ],
+      "text": "Use the spreadsheet date: the video date display is one day later because leap year was not handled. GMT is day of year. Lettered test variants may reuse the same sample. Flow restrictor setting 0 is highest flow; 2 is lowest. Fan-voltage display is voltage×10. The airflow display responds slowly, about one minute, so it represents steady flow better than transients. Radiometer gain is uncalibrated and gives relative intensity, not absolute heat flux. FAQ reports displayed data at 5 Hz, while engineering requirements specify 4 Hz; preserve this discrepancy. The oxygen sensor was out of calibration; daily ISS MCA readings supplied a constant offset. CO OR indicates overrange above 1000 ppm, not a numerical sample.",
+      "classification": "reported_data_handling",
+      "review_state": "Selected source passages reviewed",
+      "reviewed_on": "2026-11-14",
+      "equations": [],
+      "warnings": []
+    },
+    {
+      "title": "BASS-II engineering presentation: requirements, not measured coverage",
+      "source_path": "BASS-II/BASS-2 Engineering Requirements.pptx",
+      "source_sha256": "08ab1b85ba606db728aafbb731d4a626cd3a655c59f020487c94eb1689ced4f4",
+      "source_range": "slide 1, slide 2, slide 3",
+      "anchors": [
+        {
+          "kind": "slide",
+          "number": 1,
+          "quote": "BASS-2  Engineering   Requirements\nGeneral Requirements\nEach Burning And Suppression of  Solids-2  ( BASS-2)  s olid  f uel  a ssembly is mounted inside the Experiment Assembly via"
+        },
+        {
+          "kind": "slide",
+          "number": 2,
+          "quote": "BASS-2  Engineering Requirements\nAcceleration\nBASS-2  testing will be scheduled around planned thruster firing or spacecraft dock or undock .\nThe acceleration environment will be m"
+        },
+        {
+          "kind": "slide",
+          "number": 3,
+          "quote": "BASS-2  Hardware Description\nBASS-2  will utilize the Smoke Point In Co-flow Experiment (SPICE) hardware currently on ISS\nExperiment Assembly, Cables, Video Camera\nBASS-2  will uti"
+        }
+      ],
+      "text": "The presentation specifies GN2 supply up to 500 SCCM, reused SPICE/BASS hardware, 4 Hz acquisition and ±10% measurement accuracy previously met by SPICE. It calls for nearby SAMS acceleration measurements and avoidance of planned thruster/docking events. These are engineering requirements and heritage specifications; they do not prove this archive contains synchronized acceleration, calibrated radiometry, or successful measurements for every sample.",
+      "classification": "design_requirement",
+      "review_state": "Selected source passages reviewed",
+      "reviewed_on": "2026-11-14",
+      "equations": [],
+      "warnings": []
+    },
+    {
+      "title": "BASS-II science requirements and success criteria",
+      "source_path": "BASS-II/SRD_BASS-II.pdf",
+      "source_sha256": "d00a763d60719bc14004264e216452b44c3c1bf4b0c629e9d307c8abf9568e75",
+      "source_range": "PDF page 1, PDF page 2, PDF page 3",
+      "anchors": [
+        {
+          "kind": "page",
+          "number": 1,
+          "quote": "BASS-II SCIENCE REQUIREMENTS\n• General Requirements\n    – 20 samples for each of the 5 PIs will be flow (including 20 clear pmma rods, 20\n      black pmma rods (varied diameters fo"
+        },
+        {
+          "kind": "page",
+          "number": 2,
+          "quote": "BASS-II SCIENCE REQUIREMENTS\n• Acceleration\n      – BASS-II testing will be scheduled around planned thruster firing or\n        spacecraft dock or undock.\n      – The acceleration "
+        },
+        {
+          "kind": "page",
+          "number": 3,
+          "quote": "BASS-II SUCCESS CRITERIA\n• Minimal Success: 10 samples from each PI (of their total 20)\n  will be successfully tested per PI matrices at the desired test\n  conditions (O2, flow). I"
+        }
+      ],
+      "text": "The requirements describe five PI sample sets, additional Nomex, GN2 atmosphere vitiation, video-overlay signals and 4 Hz heritage acquisition. Minimum/complete success criteria specify desired numbers of tests and images. These targets must not be counted as actual completed runs. Use the summary report and run records for achieved coverage; the FAQ supplies post-test data caveats.",
+      "classification": "design_requirement",
+      "review_state": "Selected source passages reviewed",
+      "reviewed_on": "2026-11-14",
+      "equations": [],
+      "warnings": []
+    },
+    {
+      "title": "BASS-II results: flow-dependent extinction, geometry and model limitations",
+      "source_path": "BASS-II/BASS-II Summary Report.pdf",
+      "source_sha256": "5ffa911fd9b6356f204646003fb9342e341810dcdfdf5cb15756e7f01ec5f770",
+      "source_range": "PDF page 9, PDF page 35, PDF page 36, PDF page 71, PDF page 97, PDF page 109",
+      "anchors": [
+        {
+          "kind": "page",
+          "number": 9,
+          "quote": "Burning and Suppression of Solids—II (BASS–II)\n                            Summary Report\n                                          Sandra L. Olson\n                            Nati"
+        },
+        {
+          "kind": "page",
+          "number": 35,
+          "quote": "Here W is an arbitrary width, and the solid-phase horizontal and vertical-length scales, Lsx, and Lsy,\nand gas phase vertical and horizontal length scales Lgx and Lgy are shown in "
+        },
+        {
+          "kind": "page",
+          "number": 36,
+          "quote": "TABLE 2.1.—COMPARISON OF EXTINCTION VELOCITY Vg,cr\n                              FOR THIN POLYMETHYLMETHACRYLATE AT 1 atm\n                                               Vg,cr, mm/s"
+        },
+        {
+          "kind": "page",
+          "number": 71,
+          "quote": "5.7     Conclusions\n    The Burning and Suppression of Solids (BASS) experiments gave some of the first ever data\nregarding combustion of thick fuels in microgravity. The two-sided"
+        },
+        {
+          "kind": "page",
+          "number": 97,
+          "quote": "The normal-gravity upward limiting O2 concentration of 15.4 percent O2 (Ref. 23) is plotted for\ncomparison, assuming linear superposition of the buoyant flow velocity at the base o"
+        },
+        {
+          "kind": "page",
+          "number": 109,
+          "quote": "7.1.5   Conclusions\n    Concurrent flame growth and extinction over a thin flat cotton-fiberglass composite fabric sample\nwas studied as part of the Burning and Suppression of Soli"
+        }
+      ],
+      "text": "The summary report combines distinct PI studies, not one universal flame-spread model. Thin-PMMA scaling relates radiative extinction velocity to surface radiative loss divided by gas sensible-heat transport. Table 2.1 at 1 atm reports extinction velocities at 21% O2: experiment 10±5 mm/s, computation 15, theory 7.5; at 16% O2: experiment 30±5, computation 35, theory 10. Do not merge theoretical, simulated and observed values into one training target. The thick-fuel study explicitly says its model overpredicts spread rates and needs kinetics/material-property improvements. The fabric study reports 1–5 cm/s quenching velocities for its configurations. Rod-flame quenching involves oxygen transport, three-dimensional effects and oscillations. These studies support conditional flow/oxygen/geometry explanations, not a universal extinction threshold or aerosol collision kernel.",
+      "classification": "reported_results_and_model_limits",
+      "review_state": "Selected source passages reviewed",
+      "reviewed_on": "2026-11-14",
+      "equations": [],
+      "warnings": []
+    },
+    {
+      "title": "BASS-II mixed-volume and oxygen-depletion assumptions",
+      "source_path": "BASS-II/BASS-II Summary Report.pdf",
+      "source_sha256": "5ffa911fd9b6356f204646003fb9342e341810dcdfdf5cb15756e7f01ec5f770",
+      "source_range": "PDF page 14, PDF page 15",
+      "anchors": [
+        {
+          "kind": "page",
+          "number": 14,
+          "quote": "The O2, CO2, and CO measurements required two portable, battery powered instruments in the\nworking volume during testing: Carbon Dioxide Monitor (CDM), and Compound Specific Analyz"
+        },
+        {
+          "kind": "page",
+          "number": 15,
+          "quote": "The data, taken over a wide range of initial O2 concentrations, forced opposed or concurrent flow\nvelocities, and using various sample geometries, is compared with this 6:5 stoichi"
+        }
+      ],
+      "text": "The atmosphere-dilution model assumes constant pressure, temperature and volume, with well-mixed outflow and nitrogen inflow balanced by leakage. Its mixing time must be much shorter than V/Q; this is not guaranteed merely by calling a vessel well mixed. The PMMA repeat-unit complete-combustion balance is C5H8O2+6 O2 ->5 CO2+4 H2O. Thus the ideal O2 consumption to CO2 production molar ratio is 6:5. CO was also observed and an overrange case had no quantitative CO value. Oxygen-depletion fuel estimates need incomplete-combustion, leakage and gas-inventory assumptions; do not automatically convert oxygen percentage differences into mass loss.",
+      "classification": "reported_equation_and_review",
+      "review_state": "Selected passage visually and mathematically checked",
+      "reviewed_on": "2026-11-14",
+      "equations": [
+        "\\mathrm{C_5H_8O_2}+6\\mathrm{O_2}\\rightarrow5\\mathrm{CO_2}+4\\mathrm{H_2O}"
+      ],
+      "warnings": []
+    },
+    {
+      "title": "BASS-II heat-transfer equations and thermal-property naming discrepancy",
+      "source_path": "BASS-II/BASS-II Summary Report.pdf",
+      "source_sha256": "5ffa911fd9b6356f204646003fb9342e341810dcdfdf5cb15756e7f01ec5f770",
+      "source_range": "PDF page 35, PDF page 36, PDF page 90, PDF page 92",
+      "anchors": [
+        {
+          "kind": "page",
+          "number": 35,
+          "quote": "Here W is an arbitrary width, and the solid-phase horizontal and vertical-length scales, Lsx, and Lsy,\nand gas phase vertical and horizontal length scales Lgx and Lgy are shown in "
+        },
+        {
+          "kind": "page",
+          "number": 36,
+          "quote": "TABLE 2.1.—COMPARISON OF EXTINCTION VELOCITY Vg,cr\n                              FOR THIN POLYMETHYLMETHACRYLATE AT 1 atm\n                                               Vg,cr, mm/s"
+        },
+        {
+          "kind": "page",
+          "number": 90,
+          "quote": "Figure 6.17.—Predicted temperature along extinction boundary Tcrit (Eq. (6.2)), Nusselt\n                number Nu (Eq. (6.3)), decay of heating rate q ′′ with stretch rate a (Eq. "
+        },
+        {
+          "kind": "page",
+          "number": 92,
+          "quote": "A surface energy balance is defined as\n\n                                                                                               ∂Tsolid\n            qtot qconv′′ Ah + ε g a"
+        }
+      ],
+      "text": "For thermally thin opposed-flow PMMA, the scaling is Vf,thermal~lambda_g*(Tf-Tv)/[rho_s*c_s*tau*(Tv-Tinf)], where tau is half-thickness. The derived critical flow is Vg,cr=epsilon*sigma*(Tv^4-Tinf^4)/[c_g*rho_g*(Tf-Tv)]. It is a scaling relation under the stated thermal/radiative assumptions, not a universal measured threshold. A different rod-tip analysis uses Nu=1.32 Re^0.5 Pr^0.4 and convective heat flux Nu*lambda*(Tcrit-Ts)/s. Page 90 calls lambda thermal diffusivity, but dimensional consistency of the printed heat-flux equation requires thermal conductivity [W/(m K)], not diffusivity [m²/s]. The same terminology concern affects lambda_s in the page 92 conductive-loss term. Retain this discrepancy and verify property definitions before numerical reuse. Solid regression rates and hemispherical mass flux differ by an area factor; these are not aerosol source rates without a measured smoke yield.",
+      "classification": "reported_equation_and_source_discrepancy",
+      "review_state": "Selected passage visually and mathematically checked",
+      "reviewed_on": "2026-11-14",
+      "equations": [
+        "V_{g,cr}=\\frac{\\epsilon\\sigma(T_v^4-T_\\infty^4)}{c_g\\rho_g(T_f-T_v)}",
+        "Nu=1.32Re^{1/2}Pr^{0.4}"
+      ],
+      "warnings": []
+    },
+    {
+      "title": "BASS research hypothesis and suppression context",
+      "source_path": "BASS (ORIGINAL)/SRD_BASS.pdf",
+      "source_sha256": "768a7c289af30d47a2d519db9ba67ef1d944b6053760da3b79efa99df9c04707",
+      "source_range": "PDF page 3",
+      "anchors": [
+        {
+          "kind": "page",
+          "number": 3,
+          "quote": "Background\n\nFlame spread behavior, flammability, and suppression data are of interest to NASA for\napplication to fire safety efforts. The reduced buoyant flows, coupled with low-sp"
+        }
+      ],
+      "text": "BASS investigates flame spread and suppression under reduced buoyancy and low-speed circulation. The claim that adequately ventilated microgravity materials may burn as well or better than at 1g is a research hypothesis here. The document explains why extinguisher application and entrainment can differ in microgravity; it is not an operational firefighting prescription or a measured aerosol PSD.",
+      "classification": "design_rationale",
+      "review_state": "Selected source passages reviewed",
+      "reviewed_on": "2026-11-14",
+      "equations": [],
+      "warnings": []
+    },
+    {
+      "title": "BASS archive layout is a directory guide",
+      "source_path": "BASS (ORIGINAL)/DLD_BASS.pdf",
+      "source_sha256": "e38622cce587897c8fe5f8f5af404ee9bb682fea687f4038a67167c03b218505",
+      "source_range": "PDF page 1",
+      "anchors": [
+        {
+          "kind": "page",
+          "number": 1,
+          "quote": "PSI Data Layout Document – BASS (Burning and Suppression of Solids) Investigation\n\n\nBASS (Burning and Suppression of Solids) examines the burning and extinction characteristics of "
+        }
+      ],
+      "text": "The layout document separates BASS_2012 and BASS_2013; images and videos are organized by dates. It describes 21 image galleries for 2012, and 12 audiovisual collections plus 15 image galleries for 2013 on PSI. These are website inventory descriptions, not proof all corresponding media were downloaded locally, and contain no new coagulation equations.",
+      "classification": "archive_navigation",
+      "review_state": "Selected source passages reviewed",
+      "reviewed_on": "2026-11-14",
+      "equations": [],
+      "warnings": []
+    },
+    {
+      "title": "BASS fabric study: measured spread versus extrapolated extinction",
+      "source_path": "BASS (ORIGINAL)/US National Meeting-070HE-0218-Final.docx",
+      "source_sha256": "434e9b2cade638d63dcb738d3355533db702649eca356c63e9277b1ef8eecac7",
+      "source_range": "paragraph 17, paragraph 152, paragraph 165, paragraph 169",
+      "anchors": [
+        {
+          "kind": "paragraph",
+          "number": 17,
+          "quote": "Microgravity combustion tests burning fabric samples were performed aboard the International Space Station.  The cotton-fiberglass blend samples were mounted inside a small wind tu"
+        },
+        {
+          "kind": "paragraph",
+          "number": 152,
+          "quote": "Concurrent -flow  flame spread  rate  increases linearly with flow  speed , and l inear curve fits are shown.   Spread rate is width - dependent for the  two  widths studied.   For"
+        },
+        {
+          "kind": "paragraph",
+          "number": 165,
+          "quote": "For concurrent-flow flames, the fuel preheating depends on the entire flame and hot plume which means that the  flame  response time  to flow changes is a strong function of the fl"
+        },
+        {
+          "kind": "paragraph",
+          "number": 169,
+          "quote": "One of the  goal s of his test  was to determine the flow speed at which the flame would go out.  Unfortunately, the flame went out because it  simply  ran out of fuel.  The lowest"
+        }
+      ],
+      "text": "The paper studies cotton–fiberglass fabric in concurrent and opposed flow in the ISS glovebox. Concurrent spread at low flow was approximately linear with flow for the tested widths; opposed-flow spread peaked around 10–15 cm/s. Concurrent-flow extinction below about 1 cm/s was observed. In the described opposed-flow attempt the flame reached the end of the fuel before quenching; its finite low-flow extinction boundary was inferred, not directly measured. Steady spread is obtained from flame-position slopes; short samples, direction, width and response time constrain comparability.",
+      "classification": "reported_measurement_and_inference",
+      "review_state": "Selected source passages reviewed",
+      "reviewed_on": "2026-11-14",
+      "equations": [],
+      "warnings": []
+    },
+    {
+      "title": "FLEX planned extinction matrix, timing and LOI relation",
+      "source_path": "FLEX/FLEX_Test_Plan.pdf",
+      "source_sha256": "0af43477a04b05e3c44558b22c16a69cfda837a6a17fa94178ce1f9fce361dc5",
+      "source_range": "PDF page 2, PDF page 3, PDF page 4, PDF page 5",
+      "anchors": [
+        {
+          "kind": "page",
+          "number": 2,
+          "quote": "2.2   Agent Efficacy\nThe expressions for the Damköhler number provide a convenient theoretical basis for flame ex-\ntinction. Unfortunately, they are not easily used by engineers d"
+        },
+        {
+          "kind": "page",
+          "number": 3,
+          "quote": "Table 2: Gaseous fire suppression agent efficacy, as measured by the M EC , for cup burner flames\n(Takahashi et al., 2004).\n\n                            Agent/Env.       M EC , 1 −"
+        },
+        {
+          "kind": "page",
+          "number": 4,
+          "quote": "5.2.8    Ambient Temperature and Pressure Measurement\nDuring each test the chamber gas temperature and pressure measurements shall be required. The\nfollowing are the specifications"
+        },
+        {
+          "kind": "page",
+          "number": 5,
+          "quote": "convective flow7 . In these tests, the procedure will be to duplicate tests above which yield finite-\nsized extinction droplet diameters. Near the end of the tests, prior to flame "
+        }
+      ],
+      "text": "The test plan describes a conceptual droplet flammability map, not a measured boundary. LOI=0.209*(1-MEC) assumes suppressant dilution of standard air; it is not universal for arbitrary initial oxygen mixtures. Ambient temperature/pressure measurement and GMT synchronization specifications are requirements (10 Hz minimum, ±0.5 °C, ±0.01 atm, ±0.03 s). The plan explicitly states its matrices are an engineering envelope rather than the final executed matrix. Heptane and methanol fuels, suppressant fractions, droplet size, pressure and imposed/drift flows are relevant experimental variables; these are combustion droplets, not automatically smoke aerosol bins.",
+      "classification": "design_requirement_and_equation",
+      "review_state": "Selected source passages reviewed",
+      "reviewed_on": "2026-11-14",
+      "equations": [
+        "LOI=0.209(1-MEC)"
+      ],
+      "warnings": []
+    },
+    {
+      "title": "FLEX data organization and calibration-record distinction",
+      "source_path": "FLEX/FLEX DoD.docx",
+      "source_sha256": "1120819bb8f57f418cc5185700bbbd8304f1a019d9a99ca67baee130898fac98",
+      "source_range": "paragraph 1, paragraph 3, paragraph 4, paragraph 5, paragraph 6, paragraph 7, paragraph 9, paragraph 11, paragraph 13",
+      "anchors": [
+        {
+          "kind": "paragraph",
+          "number": 1,
+          "quote": "FLEX ( Flame Extinguishment Experiment )  investigates   the effectiveness of fire suppressants in microgravity and quantify the effect of different possible crew exploration atmos"
+        },
+        {
+          "kind": "paragraph",
+          "number": 3,
+          "quote": "FLEX  – Calibration"
+        },
+        {
+          "kind": "paragraph",
+          "number": 4,
+          "quote": "F LEX - LCTF Calibration"
+        },
+        {
+          "kind": "paragraph",
+          "number": 5,
+          "quote": "FLEX - Radiometer Calibration"
+        },
+        {
+          "kind": "paragraph",
+          "number": 6,
+          "quote": "FLEX  –   HEP"
+        },
+        {
+          "kind": "paragraph",
+          "number": 7,
+          "quote": "FLEX  –   MeOH"
+        },
+        {
+          "kind": "paragraph",
+          "number": 9,
+          "quote": "These Experiment Data records are located on the “Data” tab within the  FLEX  investigation in PSI.  When a n experiment data  record is selected, the “Scientific Data  a nd Inform"
+        },
+        {
+          "kind": "paragraph",
+          "number": 11,
+          "quote": "The  “Raw Data”, “Analyzed Data”  link s  disp lay records for the raw/analyzed data   within the specific  GMT /gas mixture .   When a raw/analyzed data record is selected, there "
+        },
+        {
+          "kind": "paragraph",
+          "number": 13,
+          "quote": "The  “Raw Videos”  and  “Images”  link s  displays records for each  video/image   within the specific  GMT /gas mixture .   The “General” tab will contain the Video. An “Image Dat"
+        }
+      ],
+      "text": "The organization document describes text data and images/videos organized by fuel, GMT and atmosphere. Listed calibration records must remain distinct from heptane and methanol fuel experiments. A reference to PSI media or data does not establish that every file is in the local archive. Read timing logs together with their instrument calibration and atmosphere metadata.",
+      "classification": "archive_navigation",
+      "review_state": "Selected source passages reviewed",
+      "reviewed_on": "2026-11-14",
+      "equations": [],
+      "warnings": []
+    },
+    {
+      "title": "ACME actual instrumentation and geometry",
+      "source_path": "ACME FLAME DESIGN/PSI-10_Engineering Documents_ACME Engineering Implementation Rpt..pdf",
+      "source_sha256": "393f3ebc6662b10f0fe55d87ceda3b6696d2cc9c91266b81132761de50078456",
+      "source_range": "PDF page 3, PDF page 55, PDF page 61, PDF page 63",
+      "anchors": [
+        {
+          "kind": "page",
+          "number": 3,
+          "quote": "ACME Engineering Implementation                                                              19 May 2022\n\n\n1. Introduction\nThe purpose of this report is to provide a description of"
+        },
+        {
+          "kind": "page",
+          "number": 55,
+          "quote": "ACME Engineering Implementation                                                           19 May 2022\n\n\n\n\n       Figure 58. Coil type igniter from details in drawing S1101MFA1339, "
+        },
+        {
+          "kind": "page",
+          "number": 61,
+          "quote": "ACME Engineering Implementation                                                                 19 May 2022\n\n\n   F. Radiometer Fields of View\n       Detailed information about the "
+        },
+        {
+          "kind": "page",
+          "number": 63,
+          "quote": "ACME Engineering Implementation                                                           19 May 2022\n\n\n   G. Thermocouples\n       The thermocouple rakes, of which there are two ve"
+        }
+      ],
+      "text": "The engineering report describes six gas-fueled laminar diffusion-flame investigations in the CIR, distinct from FLEX liquid-droplet experiments. The low-light ultraviolet camera was used only for s-Flame. Radiometer fields of view depend on array/burner configuration; the CFI-G array is not covered by the shown FOV diagrams. Thermocouple rakes have near/far variants; actual thermocouple types differ from original intent and bead size was not measured. Use hardware-specific geometry, response and calibration rather than interpreting every camera/radiometer channel as interchangeable optical scattering data.",
+      "classification": "reported_instrumentation",
+      "review_state": "Selected source passages reviewed",
+      "reviewed_on": "2026-11-14",
+      "equations": [],
+      "warnings": []
+    },
+    {
+      "title": "Flame Design: reported extinction results and unavailable acceleration archive",
+      "source_path": "ACME FLAME DESIGN/PSI-10_Reports_FinalRpt_ACMEFlameDesign.pdf",
+      "source_sha256": "1d64b7f42f079579671624da5356cfe6d867ad014dd1d6932e9fcc6d3a1706fd",
+      "source_range": "PDF page 18, PDF page 25, PDF page 26, PDF page 27",
+      "anchors": [
+        {
+          "kind": "page",
+          "number": 18,
+          "quote": "ACME/Flame Design Final Report (2023)                                                         6 April 2023\n\n\n       tests that could be conducted. However, estimates of the chamber"
+        },
+        {
+          "kind": "page",
+          "number": 25,
+          "quote": "ACME/Flame Design Final Report (2023)                                                           6 April 2023\n\n\n   C. Summary of Preliminary Results\n       Abstract for Critical tem"
+        },
+        {
+          "kind": "page",
+          "number": 26,
+          "quote": "ACME/Flame Design Final Report (2023)                                                        6 April 2023\n\n\n       Abstract for Observations of long duration microgravity spherical"
+        },
+        {
+          "kind": "page",
+          "number": 27,
+          "quote": "ACME/Flame Design Final Report (2023)                                                          6 April 2023\n\n\n            •   In the spherical, infinite domain configuration, the c"
+        }
+      ],
+      "text": "The final report describes normal and inverse ethylene spherical flames at atmospheric pressure and reports a critical extinction temperature of 1130 K for that study. Reported extinction fluxes are fuel-based 0.2 g/(m² s) for normal flames and oxygen-based 0.68 g/(m² s) for inverse flames. These are different reactants and are not generic smoke-generation rates. Some flames showed steady-state behaviour for up to 870 s; numerical infinite-domain times approaching 100000 s are model results, not flight durations. SAMS acceleration is explicitly archived separately through PIMS, not with ACME PSI files. Diagnostic/calibration limitations and non-spherical burner flow are discussed. CH4/CO2 and desired coflow conditions in earlier requirements were not all flown.",
+      "classification": "reported_results_and_scope",
+      "review_state": "Selected source passages reviewed",
+      "reviewed_on": "2026-11-14",
+      "equations": [],
+      "warnings": []
+    },
+    {
+      "title": "CFI-G cool flames: restricted conditions and lost data",
+      "source_path": "ACME II/PSI-159_Reports_FinalRpt_ACME.CFI-G.pdf",
+      "source_sha256": "f6cce7cc08ca69c155994d7a8898e21cd4aba122f4e46d5e00708e4889a1ebab",
+      "source_range": "PDF page 15, PDF page 16, PDF page 23, PDF page 24",
+      "anchors": [
+        {
+          "kind": "page",
+          "number": 15,
+          "quote": "ACME/CFI-G Final Report (2022)                                                         21 November 2022\n\n\n       acceleration measurements are not archived with the ACME experiment"
+        },
+        {
+          "kind": "page",
+          "number": 16,
+          "quote": "ACME/CFI-G Final Report (2022)                                                         21 November 2022\n\n\n       eventually stopped working. Only the first two tests on that day we"
+        },
+        {
+          "kind": "page",
+          "number": 23,
+          "quote": "ACME/CFI-G Final Report (2022)                                                      21 November 2022\n\n\n   C. Summary of Preliminary Results\n       Abstract for Spherical Gas-Fueled"
+        },
+        {
+          "kind": "page",
+          "number": 24,
+          "quote": "ACME/CFI-G Final Report (2022)                                                     21 November 2022\n\n\n       latter was not feasible because of the n-pentane’s low vapor pressure.\n"
+        }
+      ],
+      "text": "The final report reports spherical gas-fueled cool flames only for normal n-butane at 2 bar and ambient oxygen mole fraction 0.39 in its investigated conditions. A separate pool-heptane/stagnation-flow study is ground research; its temperatures must not be relabelled as ISS observations. Difficult-to-see cool flames, interrupted tests, lost primary camera data on a failed-drive test day, low-range mass-flow-controller errors and asymmetric high-flow flames affect interpretation. A missing cool-flame image is not proof no reaction occurred. Gaseous combustion kinetics are separate from aerosol coagulation.",
+      "classification": "reported_results_and_limitations",
+      "review_state": "Selected source passages reviewed",
+      "reviewed_on": "2026-11-14",
+      "equations": [],
+      "warnings": []
+    },
+    {
+      "title": "ACME integrated science requirements and optical calibration",
+      "source_path": "ACME FLAME DESIGN/PSI-10_Science Documents_ACME_ISRD.pdf",
+      "source_sha256": "f7f9e49476606f0f9da67dd655d08237090f89139ecb2d295c4c25ab5c5342e9",
+      "source_range": "PDF page 1, PDF page 2, PDF page 34, PDF page 35",
+      "anchors": [
+        {
+          "kind": "page",
+          "number": 1,
+          "quote": "ACME-SRD-001.B Integrated Science Requirements Document (ISRD)               2013-SEPT-30\n\n\n\n                                  ACME\n     Advanced Combustion via Microgravity Experi"
+        },
+        {
+          "kind": "page",
+          "number": 2,
+          "quote": "ACME-SRD-001.B Integrated Science Requirements Document (ISRD)      2013-SEPT-30\n\n\nTable of Contents\nIntroduction (which includes no requirements)               Page\n      Signatur"
+        },
+        {
+          "kind": "page",
+          "number": 34,
+          "quote": "ACME-SRD-001.B Integrated Science Requirements Document (ISRD)                      2013-SEPT-30\n\n\n      3.2.10. At least one view is required. Having two views would allow for con"
+        },
+        {
+          "kind": "page",
+          "number": 35,
+          "quote": "ACME-SRD-001.B Integrated Science Requirements Document (ISRD)                   2013-SEPT-30\n\n\n              1g characterization is also required with the fibers. Characterization"
+        }
+      ],
+      "text": "This 2013 requirements document covers five planned investigations. It specifies imaging filters and characterization requirements, including CH*/background bands, UV imaging and temperature diagnostics. Required field of view, transmission tolerance, sampling and calibration do not establish achieved performance in a supplied run. Requirement applicability changes by investigation. Compare the later engineering and final reports before interpreting optical signals or counting instruments.",
+      "classification": "design_requirement",
+      "review_state": "Selected source passages reviewed",
+      "reviewed_on": "2026-11-14",
+      "equations": [],
+      "warnings": []
+    },
+    {
+      "title": "ACME operations requirements are command plans",
+      "source_path": "ACME FLAME DESIGN/PSI-10_Science Documents_ACME_SORD.pdf",
+      "source_sha256": "32afd4c0d3c9fe5be1c8e992b7d6a615418911712a93d204a3b220dcbc6601f6",
+      "source_range": "PDF page 1, PDF page 3",
+      "anchors": [
+        {
+          "kind": "page",
+          "number": 1,
+          "quote": "ACME-SORD-001.A Science Ops Requirements Document                                  2011-10-18\nAny text in italics is a comment and not a requirement.\n\n\n\n\n                          "
+        },
+        {
+          "kind": "page",
+          "number": 3,
+          "quote": "ACME-SORD-001.A Science Ops Requirements Document                          2011-10-18\nAny text in italics is a comment and not a requirement.\n\n\n\nOUTLINE                            "
+        }
+      ],
+      "text": "The 2011 operations document derives from the integrated requirements and covers four planned experiments, command functions, flow/electric-field ramps and example sequences. It explicitly distinguishes italic commentary from requirements. Extracted plain text loses that typography; retain the original for requirement interpretation. Example control sequences are not observed time series or proof a particular flow/voltage sequence was executed.",
+      "classification": "design_requirement",
+      "review_state": "Selected source passages reviewed",
+      "reviewed_on": "2026-11-14",
+      "equations": [],
+      "warnings": []
+    },
+    {
+      "title": "Flame Design equations describe flame structure and transport",
+      "source_path": "ACME FLAME DESIGN/PSI-10_Science Documents_SRD_ACMEFlameDesign.pdf",
+      "source_sha256": "e783fc0da3d388b567654c109b2595a5a74218de6ccd641241f13b091a5448eb",
+      "source_range": "PDF page 8, PDF page 17, PDF page 27, PDF page 38",
+      "anchors": [
+        {
+          "kind": "page",
+          "number": 8,
+          "quote": "Many industrial applications that require very high temperatures, for example, blast\nfurnaces, already employ oxygen-enriched air. Argonne National Laboratories has been studying\no"
+        },
+        {
+          "kind": "page",
+          "number": 17,
+          "quote": "r → ∞ : T → T∞ ; Yk → Yk,∞ , k = 1, 2, . . . , K ,                                       (1.9)\n\n       Because thermocouple measurements in the 5 s drop facility showed no signific"
+        },
+        {
+          "kind": "page",
+          "number": 27,
+          "quote": "Table 2.1. Objectives and science data end products.\n\n     Objectives                                               Science Data End Products\n A   Obtain soot-inception limits of q"
+        },
+        {
+          "kind": "page",
+          "number": 38,
+          "quote": "and will be discarded.\n     For the mass flow rate of m, the mass flux at the flame front is F = m / (4 π r f 2 ). Because\nthe actual flame standoff distance depends linearly on th"
+        }
+      ],
+      "text": "The requirements report defines Zst=[1+YF*WO*nuO/(YO*WF*nuF)]^(-1), using stream mass fractions, molecular weights and stoichiometric coefficients. It describes inert exchange at fixed adiabatic temperature, reacting-flow conservation, participating-gas radiation and gravity-disturbance constraints. Appendix mass flux is m_dot/(4*pi*rf²); this is a spherical flame-front flux, not particle mass concentration. Its example detailed chemistry/radiation solver and desired end products are not implemented by the platform coagulation solver. Gas reaction rates, soot formation, Brownian particle collisions and detector scattering require separate models and evidence.",
+      "classification": "reported_model_and_design",
+      "review_state": "Selected source passages reviewed",
+      "reviewed_on": "2026-11-14",
+      "equations": [
+        "Z_{st}=\\left(1+\\frac{Y_F W_O\\nu_O}{Y_O W_F\\nu_F}\\right)^{-1}",
+        "F=\\dot m/(4\\pi r_f^2)"
+      ],
+      "warnings": []
+    },
+    {
+      "title": "Flame Design publication list is bibliographic evidence",
+      "source_path": "ACME FLAME DESIGN/PSI-10_Reports_TaskbookPubsList_Feb2023.pdf",
+      "source_sha256": "efb9ac32a82a6bd000ad28e88f2c355d59973357cd39a5a9d5865704ae7f3847",
+      "source_range": "PDF page 1, PDF page 2, PDF page 3",
+      "anchors": [
+        {
+          "kind": "page",
+          "number": 1,
+          "quote": "Irace PH, Waddell K, Constales D, Yablonsky G, Kim M, Sunderland PB, Axelbaum RL. \"On the existence of steady\nstate gaseous microgravity spherical diffusion flames in the presence "
+        },
+        {
+          "kind": "page",
+          "number": 2,
+          "quote": "2017 10th US National Combustion Meeting, College Park, MD, April 23-26, 2017. 6 pp. , Apr-2017\nWu W (Wendong Wu). \"Fundamental Studies of Flame Structure Through Laser Plasma Diag"
+        },
+        {
+          "kind": "page",
+          "number": 3,
+          "quote": "31st Annual Meeting of the American Society for Gravitational and Space Research, Alexandria, VA, November 11-14,\n2015. , Nov-2015\nWu W, Yablonsky G, Axelbaum RL. \"New Observation "
+        }
+      ],
+      "text": "This file lists papers, presentations and theses with dates and DOI links. It is useful for finding primary research, but a title or link is not the contents of that publication. Do not report an equation or numerical result from a listed paper unless its actual text has been consulted.",
+      "classification": "bibliography",
+      "review_state": "Selected source passages reviewed",
+      "reviewed_on": "2026-11-14",
+      "equations": [],
+      "warnings": []
+    },
+    {
+      "title": "Flame Design taskbook reports mix annual progress and objectives",
+      "source_path": "ACME FLAME DESIGN/PSI-10_Reports_TaskbookRpts.pdf",
+      "source_sha256": "81cea0977ef21d3d99d5e3a0f07a0af41eee326a82d92e8ff0cff38bc36c9e34",
+      "source_range": "PDF page 1, PDF page 2",
+      "anchors": [
+        {
+          "kind": "page",
+          "number": 1,
+          "quote": "Task Book Report                                                                                                                 Generated on: 02/28/2024\n\n\n\n\nFiscal Year:          "
+        },
+        {
+          "kind": "page",
+          "number": 2,
+          "quote": "Task Book Report                                                                                                                               Generated on: 02/28/2024\n\n\n\n         "
+        }
+      ],
+      "text": "The taskbook compilation contains administrative history, proposed objectives, yearly progress and publication lists. The 2024 entry reports processing normal/inverse flame tests and simulations, including chemistry and radiation-boundary work. Repeated annual text is not independent replication. Funding dates, proposed conditions and numerical studies must remain distinct from measured flight run conditions.",
+      "classification": "progress_report",
+      "review_state": "Selected source passages reviewed",
+      "reviewed_on": "2026-11-14",
+      "equations": [],
+      "warnings": []
+    },
+    {
+      "title": "Saffire operations occurred on uncrewed Cygnus after undocking",
+      "source_path": "SAFFIRE/SAFFIRE-I Operations.pdf",
+      "source_sha256": "01f812143679acbd31d7013404e3a8b8752ad554cf93b40a96845ebf37ffe882",
+      "source_range": "PDF page 1",
+      "anchors": [
+        {
+          "kind": "page",
+          "number": 1,
+          "quote": "SAFFIRE-I Operations\n\nOperational Requirements and Protocols\n\nThe Saffire experiments are conducted in three consecutive flights of the Cygnus vehicle. Since Cygnus undergoes a\ndes"
+        }
+      ],
+      "text": "Saffire I–III were carried in Cygnus cargo vehicles and run after departure from ISS. The operations description distinguishes large I/III samples from the smaller Saffire-II specimens and explains autonomous operations/downlink before destructive reentry. The generic ISS platform metadata must not be used to imply that these large fires burned inside the crewed station.",
+      "classification": "reported_experiment_context",
+      "review_state": "Selected source passages reviewed",
+      "reviewed_on": "2026-11-14",
+      "equations": [],
+      "warnings": []
+    },
+    {
+      "title": "Saffire raw-image offset must follow the exact directory stage",
+      "source_path": "SAFFIRE/SAFFIRE-I Image Directory Nomenclature.pdf",
+      "source_sha256": "c775153b5c68f5aa8bbdcdb455ef9f737f5291da752ce6befe1f5558cf3fd6ce",
+      "source_range": "PDF page 1",
+      "anchors": [
+        {
+          "kind": "page",
+          "number": 1,
+          "quote": "SAFFIRE-I Image Directory Nomenclature\n\nXn_Raw_CamOriginal        RAW Camera Original - contains 8 byte offset that must be corrected prior\n                          to color inter"
+        }
+      ],
+      "text": "The image-nomenclature PDF says Raw_CamOriginal has an 8-byte offset and Raw_DistroMaster has already been corrected. This conflicts with the DoD table description calling Raw_DistroMaster offset-bearing. Do not apply an unconditional second 8-byte removal. Mapped images have geometric distortion correction; JPEG2PNG avoids another lossy save but does not recover original image information. Preserve acquisition, demosaic, mapping, exposure and gain provenance before extracting flame geometry.",
+      "classification": "reported_data_handling_and_conflict",
+      "review_state": "Selected source passages reviewed",
+      "reviewed_on": "2026-11-14",
+      "equations": [],
+      "warnings": []
+    },
+    {
+      "title": "Saffire material, image mapping and embedded diagnostics table",
+      "source_path": "SAFFIRE/SAFFIRE-I and SAFFIRE-III DoD.docx",
+      "source_sha256": "49c939337fa00a0473f7efa10367288f510afcbf69dd7f5405054a2617d3a66d",
+      "source_range": "paragraph 3, paragraph 5",
+      "anchors": [
+        {
+          "kind": "paragraph",
+          "number": 3,
+          "quote": "The sample material for SAFFIRE-I and SAFFIRE-III is a composite fabric consisting of cotton on a fiberglass substrate (75% cotton, 25% fiberglass by weight). It is called SIBAL cl"
+        },
+        {
+          "kind": "paragraph",
+          "number": 5,
+          "quote": "The experiment data is organized in PSI by sample number and camera number.  There were 2 cameras capturing images during the experiment and they are denoted as C1 for camera 1 and"
+        }
+      ],
+      "text": "The DoD describes SIBAL as 75% cotton and 25% fiberglass by mass, with stated I/III airflow values of 20/30 cm/s. F1/F2 denote pre/post-flow records; C1/C2 distinguish cameras. These labels are not fuel species or aerosol size bins. Visual review of Table 2 on converted PDF page 2 recovers an image-only diagnostics table: thermocouples, radiometers, O2/CO2 sensors, pressure sensors, anemometers, cameras and smoke-wire flow visualization. Sensor descriptions do not prove availability or calibration of every channel locally. The Raw_DistroMaster offset description conflicts with the separate image-nomenclature PDF.",
+      "classification": "archive_navigation_and_instrumentation",
+      "review_state": "Selected source passages reviewed",
+      "reviewed_on": "2026-11-14",
+      "equations": [],
+      "warnings": []
+    },
+    {
+      "title": "SoFIE-GEL PMMA sphere growth and oxygen-depletion assumptions",
+      "source_path": "SOFIE/Aly 2026 CSSCI Abstract.pdf",
+      "source_sha256": "40b8b7f20b351ff14ed17b49343f1401bc7880229315a3d860c689397a409328",
+      "source_range": "PDF page 1, PDF page 2, PDF page 4, PDF page 5",
+      "anchors": [
+        {
+          "kind": "page",
+          "number": 1,
+          "quote": "Sub Topic: Fire\n\n\n      2026 Spring Technical Meeting of the Central States Section of The Combustion Institute\n                                        May 17 - 19, 2026\n          "
+        },
+        {
+          "kind": "page",
+          "number": 2,
+          "quote": "Sub Topic: Fire\n\n\n\n\nFigure 1: Experimental setup. Left: schematic illustration of the SoFIE flow duct. Right: A flame\n    photo and diagram of the three parameters used to quantify"
+        },
+        {
+          "kind": "page",
+          "number": 4,
+          "quote": "Sub Topic: Fire\n\n\n280 s until the end of the test. The figure shows that the flame length is not monotonic with time.\nAt this constant flow velocity, the flame tip first grows slow"
+        },
+        {
+          "kind": "page",
+          "number": 5,
+          "quote": "Sub Topic: Fire\n\n\nangles have been determined as a function of time for a few tests. Flame lengths, tip velocities,\nand sample total burning rates are strong functions of flow velo"
+        }
+      ],
+      "text": "The 2026 paper studies 4 cm PMMA spheres using projected flame-tip length, angle and radius, assuming approximate axisymmetry. Fuel burn rate is inferred from oxygen depletion assuming complete combustion; pressure transients also enter when pressure changes. A representative fixed-flow test at 4.7 cm/s reaches a limiting flame length and then retreats as oxygen declines; this is not a general constant-flow law. Figure 5 explicitly marks interpolated missing-image segments and oscillation-trough data. Treat these differently from directly tracked continuous observations. This is flame geometry/combustion evidence, not a particle-size distribution.",
+      "classification": "reported_measurement_and_assumptions",
+      "review_state": "Selected source passages reviewed",
+      "reviewed_on": "2026-11-14",
+      "equations": [],
+      "warnings": []
+    },
+    {
+      "title": "SoFIE taskbook: experimental period and conditional findings",
+      "source_path": "SOFIE/TaskBookD1259B57C2702453C950346E397E5134-11132026.pdf",
+      "source_sha256": "748922dd194bf0260236c2fcbef7baaaa6c5ed54359d99b978de5be24756654a",
+      "source_range": "PDF page 2",
+      "anchors": [
+        {
+          "kind": "page",
+          "number": 2,
+          "quote": "Task Book Report                                                                                                                             Generated on: 11/13/2026\n\n\n\n           "
+        }
+      ],
+      "text": "The 2026 taskbook reports GEL operations from January 2023 to March 2024, using PMMA spheres to study flow, oxygen, pressure and internal heating. It describes flammability maps, quenching, preheating and limiting flame length. It attributes lower inferred sphere burning rates than equivalent ground tests to flow/flame separation. This is a project summary, not raw measurements or universal behaviour for all spacecraft materials.",
+      "classification": "progress_report",
+      "review_state": "Selected source passages reviewed",
+      "reviewed_on": "2026-11-14",
+      "equations": [],
+      "warnings": []
+    },
+    {
+      "title": "NASA flammability update: scale, partial gravity and dated scope",
+      "source_path": "SOFIE/NASA Materials Flammability Update update 9.09.2021 Final.pdf",
+      "source_sha256": "978dc094891093a85d3c0f86e192e0d9edceda04497259b561c575e552791ff5",
+      "source_range": "PDF page 7, PDF page 8, PDF page 9, PDF page 14, PDF page 16",
+      "anchors": [
+        {
+          "kind": "page",
+          "number": 7,
+          "quote": "Saffire IV-V Test Matrix (as executed)\nFlight/Sample                IV-1           IV-2      V-2      V-3         V-4\nMaterial/configuration      SIBAL          2-sided   Cotton   "
+        },
+        {
+          "kind": "page",
+          "number": 8,
+          "quote": "Findings-Extinguishment\n\n\n\n\n                          Extinguishment of\n                          bubbling polymers\n                          cannot be assumed to\n                 "
+        },
+        {
+          "kind": "page",
+          "number": 9,
+          "quote": "Findings - Spread rate\n               BASS concurrent 2 cm wide\n               BASS concurrent 1 cm wide    Duct size and flow development\n               BASS opposed 2 cm wide    "
+        },
+        {
+          "kind": "page",
+          "number": 14,
+          "quote": "Maximum Oxygen Concentration (MOC) at 0-g,\n                           Martian-g, and Lunar-g\n♦ Tests were conducted at WSTF (normal-g) and GRC (partial-g) to\n  quantify changes in "
+        },
+        {
+          "kind": "page",
+          "number": 16,
+          "quote": "Fire Detection in Lunar - G\n♦ In terrestrial fires, buoyancy drives smoke upward, allowing convenient placement of smoke detectors on\n  ceilings. In microgravity, this buoyant flow"
+        }
+      ],
+      "text": "The 2021 presentation separates executed Saffire IV/V conditions from future plans. It cautions that bubbling polymers may not extinguish quickly in quiescent conditions and that sample/duct geometry changes spread and pyrolysis length. Partial-gravity minimum oxygen concentration depends on material; stopping ventilation does not remove natural convection on the Moon or Mars. Lunar smoke-transport/detector placement is posed as a modeling need, not an established result. Dates and planned schedules are historical, not current commitments.",
+      "classification": "reported_context_and_limitations",
+      "review_state": "Selected source passages reviewed",
+      "reviewed_on": "2026-11-14",
+      "equations": [],
+      "warnings": []
+    },
+    {
+      "title": "SoFIE project presentation: separate investigations and a size discrepancy",
+      "source_path": "SOFIE/SOFIE ISS.pdf",
+      "source_sha256": "dc42805d92fb9073cda48d76b9aa3fdf9fd26b7780d537a9e8e1b73ac433e7b0",
+      "source_range": "PDF page 2, PDF page 4, PDF page 5, PDF page 6, PDF page 7, PDF page 8, PDF page 9, PDF page 14, PDF page 21",
+      "anchors": [
+        {
+          "kind": "page",
+          "number": 2,
+          "quote": "SoFIE — Solid Fuel Ignition and Extinction\n\n\nTheme:\n\n  Ignition and flammability of solid spacecraft materials in practical geometries and realistic atmospheric conditions\n\nRelevan"
+        },
+        {
+          "kind": "page",
+          "number": 4,
+          "quote": "SoFIE — Solid Fuel Ignition and Extinction\n\n\n\nMaterial Ignition and Suppression Test (MIST); Carlos Fernandez-Pello: UC Berkeley\nFuel: acrylic cylinders (PMMA)\n\n\nSpacecraft Materia"
+        },
+        {
+          "kind": "page",
+          "number": 5,
+          "quote": "Material Ignition and Suppression Test (MIST)\n\n\n               PI: Carlos Fernandez-Pello, University of California at Berkeley\n               Co-I: Michael Gollner, University of "
+        },
+        {
+          "kind": "page",
+          "number": 6,
+          "quote": "Spacecraft Materials μg Research on Flammability (SMμRF)\n\n                                                  PI: Sandra Olson, NASA Glenn Research Center\nObjectives:\n• Flammability "
+        },
+        {
+          "kind": "page",
+          "number": 7,
+          "quote": "Narrow Channel Apparatus (NCA)\n\n                                      PI: Professor Fletcher Miller, San Diego State University\n                                      Co-I: Sandra O"
+        },
+        {
+          "kind": "page",
+          "number": 8,
+          "quote": "Residence Time Driven Flame Spread (RTDFS)\n\n\n                          PI: Subrata (Sooby) Bhattacharjee, San Diego State University, San Diego, CA\n                          Intern"
+        },
+        {
+          "kind": "page",
+          "number": 9,
+          "quote": "Growth and Extinction Limit of Solid Fuels (GEL)\n\n     PI: James S. T’ien, Case Western Reserve University, Cleveland, Ohio\n     Co-Is: Paul Ferkul, USRA/NASA GRC; Sandra Olson, NA"
+        },
+        {
+          "kind": "page",
+          "number": 14,
+          "quote": "Experiment Samples\n\n\n\n\n                                                         SMuRF (30 cm rods)\n\n\n\n\nNCA (10 cm x 5 cm x 1 cm block)\n\n\n\n                                          "
+        },
+        {
+          "kind": "page",
+          "number": 21,
+          "quote": "General Test Point Sequence\n\n\n•   Fill chamber per specific test point requirement\n•   Sample atmosphere using CIR Gas Chromatograph (GC)\n•   Configure CIR and SoFIE cameras and il"
+        }
+      ],
+      "text": "The presentation outlines MIST, SMuRF, NCA, RTDFS and GEL, each with different geometry, objectives and boundary conditions. It is mostly facility/design context and anticipated operations, not a uniform measured dataset. Page 14 text labels the GEL sphere as 40 cm diameter, whereas the later GEL paper reports 4 cm; preserve this discrepancy and use run-specific/later experimental documentation before assigning sample dimensions. Descriptions of cameras, fans, heaters and gas sampling do not imply aerosol scattering measurements.",
+      "classification": "design_context_and_source_discrepancy",
+      "review_state": "Selected source passages reviewed",
+      "reviewed_on": "2026-11-14",
+      "equations": [],
+      "warnings": []
+    },
+    {
+      "title": "Advanced Combustion via Microgravity Experiments / Flame Design: ISA metadata scope",
+      "source_path": "ACME FLAME DESIGN/PSI-10_metadata_PSI-10-ISA/i_Investigation.txt",
+      "source_sha256": "1db6cedcaff6d7c468741263133e4dacafec3a12711262e578a321d089623d48",
+      "source_range": "line 34",
+      "anchors": [
+        {
+          "kind": "line",
+          "number": 34,
+          "quote": "Study Title\tAdvanced Combustion via Microgravity Experiments / Flame Design"
+        }
+      ],
+      "text": "This ISA metadata identifies Advanced Combustion via Microgravity Experiments / Flame Design. Objective, hypothesis and approach fields describe investigation context; they are not measured rows. Publication and hardware URLs are bibliographic pointers, not websites consulted by SI. Directory PSI identifiers differ in some export names; retain the actual path and Study Title. Source-specific instrument, location and calibration claims should be checked against the associated reports.",
+      "classification": "investigation_metadata",
+      "review_state": "Metadata structure reviewed",
+      "reviewed_on": "2026-11-14",
+      "equations": [],
+      "warnings": []
+    },
+    {
+      "title": "ISA sample files contain placeholder text, not scientific samples",
+      "source_path": "ACME FLAME DESIGN/PSI-10_metadata_PSI-10-ISA/s_PSI-10.txt",
+      "source_sha256": "cb9374159b9b01a83bfe53a0b8ba1a602793df86f298e0ad222615c55d200135",
+      "source_range": "line 1",
+      "anchors": [
+        {
+          "kind": "line",
+          "number": 1,
+          "quote": "Source Name\tSample Name"
+        }
+      ],
+      "text": "All eight identical s_PSI sample text exports contain literal escaped separators and a Do not use this placeholder. They contain no measured sample table. Preserve them as archive artifacts and exclude them from scientific sample counts.",
+      "classification": "non_scientific_placeholder",
+      "review_state": "Content inspected",
+      "reviewed_on": "2026-11-14",
+      "equations": [],
+      "warnings": []
+    },
+    {
+      "title": "Advanced Combustion via Microgravity Experiments / Cool Flames Investigation with Gases: ISA metadata scope",
+      "source_path": "ACME II/PSI-159_metadata_PSI-159-ISA/i_Investigation.txt",
+      "source_sha256": "03092ce8efc68e1a8430098bf73da9b4e9ae2ef302c677c368c2c81ded355ac9",
+      "source_range": "line 34",
+      "anchors": [
+        {
+          "kind": "line",
+          "number": 34,
+          "quote": "Study Title\tAdvanced Combustion via Microgravity Experiments / Cool Flames Investigation with Gases"
+        }
+      ],
+      "text": "This ISA metadata identifies Advanced Combustion via Microgravity Experiments / Cool Flames Investigation with Gases. Objective, hypothesis and approach fields describe investigation context; they are not measured rows. Publication and hardware URLs are bibliographic pointers, not websites consulted by SI. Directory PSI identifiers differ in some export names; retain the actual path and Study Title. Source-specific instrument, location and calibration claims should be checked against the associated reports.",
+      "classification": "investigation_metadata",
+      "review_state": "Metadata structure reviewed",
+      "reviewed_on": "2026-11-14",
+      "equations": [],
+      "warnings": []
+    },
+    {
+      "title": "Burning and Suppression of Solids: ISA metadata scope",
+      "source_path": "BASS (ORIGINAL)/PSI-26_metadata_PSI-102_BASS/i_Investigation.txt",
+      "source_sha256": "7a6fc1b1ce0ac3a381da8389f4d4b89b35001ab7bc2a4bec15f0efcb3a20d63d",
+      "source_range": "line 34",
+      "anchors": [
+        {
+          "kind": "line",
+          "number": 34,
+          "quote": "Study Title\tBurning and Suppression of Solids"
+        }
+      ],
+      "text": "This ISA metadata identifies Burning and Suppression of Solids. Objective, hypothesis and approach fields describe investigation context; they are not measured rows. Publication and hardware URLs are bibliographic pointers, not websites consulted by SI. Directory PSI identifiers differ in some export names; retain the actual path and Study Title. Source-specific instrument, location and calibration claims should be checked against the associated reports.",
+      "classification": "investigation_metadata",
+      "review_state": "Metadata structure reviewed",
+      "reviewed_on": "2026-11-14",
+      "equations": [],
+      "warnings": []
+    },
+    {
+      "title": "Burning and Suppression of Solids - II: ISA metadata scope",
+      "source_path": "BASS-II/PSI-25_metadata_PSI_metadata_PSI-101_BASS-II/i_Investigation.txt",
+      "source_sha256": "ad5b3e61b34ec832d02f9f592677d8d1f2efe4f4d9380c996378190b83dca55c",
+      "source_range": "line 34",
+      "anchors": [
+        {
+          "kind": "line",
+          "number": 34,
+          "quote": "Study Title\tBurning and Suppression of Solids - II"
+        }
+      ],
+      "text": "This ISA metadata identifies Burning and Suppression of Solids - II. Objective, hypothesis and approach fields describe investigation context; they are not measured rows. Publication and hardware URLs are bibliographic pointers, not websites consulted by SI. Directory PSI identifiers differ in some export names; retain the actual path and Study Title. Source-specific instrument, location and calibration claims should be checked against the associated reports.",
+      "classification": "investigation_metadata",
+      "review_state": "Metadata structure reviewed",
+      "reviewed_on": "2026-11-14",
+      "equations": [],
+      "warnings": []
+    },
+    {
+      "title": "FLEX 20CAL08 timing/radiometer log needs calibration and clock alignment",
+      "source_path": "FLEX/20CAL08.txt",
+      "source_sha256": "5f61e7c73da03d51b8df5250146d8232ceba11683905c93fad3f865d90031ded",
+      "source_range": "lines 1–206",
+      "anchors": [
+        {
+          "kind": "line",
+          "number": 1,
+          "quote": "Test Point:\t\t\t\t20CAL08"
+        }
+      ],
+      "text": "20CAL08 is a calibration-labelled log with setup/burn events, two timestamps, narrow/wide radiometer means and standard deviations, and archived image counters. Rows 94–95 repeat both timestamps and radiometer values while image counters advance; do not treat these as two independent radiation samples or drop the distinct image metadata. Programmed igniter and burn-to-completion durations are not measured extinction times. Numerical radiometer rows do not state physical units. Wide-channel negative values must be retained; do not silently turn them into absolute irradiance or particle concentrations. Check clock offsets and counters before aligning with video. This is potentially useful time-series data, not a measured aerosol PSD.",
+      "classification": "raw_log_data_review",
+      "review_state": "Log structure and numeric rows audited",
+      "reviewed_on": "2026-11-14",
+      "equations": [],
+      "warnings": []
+    },
+    {
+      "title": "Flame Extinguishment Experiment: ISA metadata scope",
+      "source_path": "FLEX/PSI-69_metadata_PSI-133_FLEX/i_Investigation.txt",
+      "source_sha256": "f425bf49ed355cc4941e5f6dde215d477f084834bd9a4bf77e8bf231cd9a7520",
+      "source_range": "line 34",
+      "anchors": [
+        {
+          "kind": "line",
+          "number": 34,
+          "quote": "Study Title\tFlame Extinguishment Experiment"
+        }
+      ],
+      "text": "This ISA metadata identifies Flame Extinguishment Experiment. Objective, hypothesis and approach fields describe investigation context; they are not measured rows. Publication and hardware URLs are bibliographic pointers, not websites consulted by SI. Directory PSI identifiers differ in some export names; retain the actual path and Study Title. Source-specific instrument, location and calibration claims should be checked against the associated reports.",
+      "classification": "investigation_metadata",
+      "review_state": "Metadata structure reviewed",
+      "reviewed_on": "2026-11-14",
+      "equations": [],
+      "warnings": []
+    },
+    {
+      "title": "Smoke Aerosol Measurement Experiment-Reflight: ISA metadata scope",
+      "source_path": "PSI101/PSI-101_metadata_PSI-169_SAME-R/i_Investigation.txt",
+      "source_sha256": "d588a72584db3467a60d65b8872def958a574cea87e39083e124d51c448c0959",
+      "source_range": "line 34",
+      "anchors": [
+        {
+          "kind": "line",
+          "number": 34,
+          "quote": "Study Title\tSmoke Aerosol Measurement Experiment-Reflight"
+        }
+      ],
+      "text": "This ISA metadata identifies Smoke Aerosol Measurement Experiment-Reflight. Objective, hypothesis and approach fields describe investigation context; they are not measured rows. Publication and hardware URLs are bibliographic pointers, not websites consulted by SI. Directory PSI identifiers differ in some export names; retain the actual path and Study Title. Source-specific instrument, location and calibration claims should be checked against the associated reports.",
+      "classification": "investigation_metadata",
+      "review_state": "Metadata structure reviewed",
+      "reviewed_on": "2026-11-14",
+      "equations": [],
+      "warnings": []
+    },
+    {
+      "title": "Smoke and Aerosol Measurement Experiment: ISA metadata scope",
+      "source_path": "PSI102/Metadata/i_Investigation.txt",
+      "source_sha256": "5d5fe6b1c101b47475e783f939292c2ab28b5bbf1541ada637331478f5256138",
+      "source_range": "line 34",
+      "anchors": [
+        {
+          "kind": "line",
+          "number": 34,
+          "quote": "Study Title\tSmoke and Aerosol Measurement Experiment"
+        }
+      ],
+      "text": "This ISA metadata identifies Smoke and Aerosol Measurement Experiment. Objective, hypothesis and approach fields describe investigation context; they are not measured rows. Publication and hardware URLs are bibliographic pointers, not websites consulted by SI. Directory PSI identifiers differ in some export names; retain the actual path and Study Title. Source-specific instrument, location and calibration claims should be checked against the associated reports.",
+      "classification": "investigation_metadata",
+      "review_state": "Metadata structure reviewed",
+      "reviewed_on": "2026-11-14",
+      "equations": [],
+      "warnings": []
+    },
+    {
+      "title": "Spacecraft Fire Safety Experiment-I: ISA metadata scope",
+      "source_path": "SAFFIRE/PSI-98_metadata_PSI-166_SAFFIRE-I/i_Investigation.txt",
+      "source_sha256": "26c269438b45a3c8c281f66d1beec07678cdd86755e1e6401b66aeae60fe0c1d",
+      "source_range": "line 34",
+      "anchors": [
+        {
+          "kind": "line",
+          "number": 34,
+          "quote": "Study Title\tSpacecraft Fire Safety Experiment-I"
+        }
+      ],
+      "text": "This ISA metadata identifies Spacecraft Fire Safety Experiment-I. Objective, hypothesis and approach fields describe investigation context; they are not measured rows. Publication and hardware URLs are bibliographic pointers, not websites consulted by SI. Directory PSI identifiers differ in some export names; retain the actual path and Study Title. Source-specific instrument, location and calibration claims should be checked against the associated reports. The ISS platform label needs the Operations document qualification: burning occurred aboard uncrewed Cygnus after undocking.",
+      "classification": "investigation_metadata",
+      "review_state": "Metadata structure reviewed",
+      "reviewed_on": "2026-11-14",
+      "equations": [],
+      "warnings": []
+    }
+  ]
+}

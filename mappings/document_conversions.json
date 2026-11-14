@@ -1,0 +1,10 @@
+[
+  {
+    "source_path": "PSI102/ICES Paper 2005-01-2930 rev.doc",
+    "source_sha256": "67ede025a6cf79ac8857172243334d9cb7550565384178a1351cef34edbc2347",
+    "converted_path": "derived/evidence/review/converted/ICES Paper 2005-01-2930 rev.pdf",
+    "converted_sha256": "78bc080b50148ed31cba9855dac82c8e18fc372df76b3c27ac2d9d15af79d43b",
+    "converter": "LibreOffice headless, separate derived copy",
+    "conversion_review": "Text and image equations inspected separately; original remains unchanged."
+  }
+]
