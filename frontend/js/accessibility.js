@@ -1,0 +1,3 @@
+pathFor=function(points,xKey,yKey,domain){let started=false;return points.map(point=>{if(point[xKey]===null||point[yKey]===null||!Number.isFinite(Number(point[xKey]))||!Number.isFinite(Number(point[yKey]))){started=false;return '';}const {x,y}=chartCoordinates(point,xKey,yKey,domain);const command=started?'L':'M';started=true;return `${command}${x.toFixed(2)},${y.toFixed(2)}`;}).join(' ');};
+// Existing tabs also support arrow-key navigation.
+$$('[role=tab]').forEach((b,i,all)=>b.addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight'].includes(e.key)){e.preventDefault();const next=all[(i+(e.key==='ArrowRight'?1:-1)+all.length)%all.length];next.click();next.focus();}}));

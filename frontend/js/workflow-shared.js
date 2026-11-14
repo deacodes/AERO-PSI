@@ -1,0 +1,17 @@
+/* Shared scientific workflow; backend results remain the source of numerical truth. */
+$('#coagForm .canvas').append($('.distribution-stage'));
+const workspace = {plan:null, request:null, investigation:null, optics:null, observed:null, timer:null};
+const post = (url,body) => jsonFetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+function readPhysicsInputs(){return {gravity_m_s2:Number($('#gravity').value),brownian_regime:$('#kernel').value,gas_temperature_k:Number($('#temperature').value),gas_pressure_pa:Number($('#pressure').value),gas_viscosity_pa_s:Number($('#viscosity').value),particle_density_kg_m3:Number($('#density').value),wall_loss_rate_s:Number($('#wallLoss').value),dilution_rate_s:Number($('#dilution').value),shear_rate_s:Number($('#shear').value),settling_deposition:$('#deposition').checked,settling_height_m:Number($('#height').value)};}
+function download(name,content,type='application/json'){const url=URL.createObjectURL(new Blob([content],{type}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+function richText(value){
+  // Preserve math before Markdown consumes backslashes. Never trust model HTML.
+  const math=[];const source=normalizeText(value).replace(/\$\$([\s\S]+?)\$\$|\\\[([\s\S]+?)\\\]|\\\(([\s\S]+?)\\\)|\$([^$\n]+)\$/g,(match,a,b,c,d)=>{const id=math.length;math.push({text:a||b||c||d,display:!!(a||b)});return `AEROMATHPLACEHOLDER${id}END`;});
+  let html=DOMPurify.sanitize(marked.parse(source),{USE_PROFILES:{html:true},FORBID_TAGS:['img','style','input','form','button'],FORBID_ATTR:['style','id','name']});
+  html=html.replace(/AEROMATHPLACEHOLDER(\d+)END/g,(_,i)=>math[i]?katex.renderToString(math[i].text,{displayMode:math[i].display,throwOnError:false,trust:false,maxExpand:1000}):'');return html;
+}
+function contextUpdate(){const run=state.currentOptical;const model=state.currentCoag;$('#sharedContext').textContent=(typeof Studio!=='undefined'&&Studio.view.record?Studio.view.record.content.title+' · ':'')+[run?friendlyRun(findRun(run.source)).title:null,model?`${model.payload.gravity_m_s2} m/s² · ${model.payload.brownian_regime} scenario`:null].filter(Boolean).join(' / ')||'Select a NASA run or explore an explicit model scenario.';invalidatePlan();}
+function invalidatePlan(){workspace.plan=null;workspace.request=null;workspace.investigation=null;$('#analysisPlan').innerHTML='';$('#investigationResults').textContent='';$('#exportBrief').disabled=true;$('#exportInvestigation').disabled=true;$('#investigationState').textContent='Ready to investigate';$('#executeInvestigation').disabled=true;$('#planContext').textContent='The plan uses your current computed scenario and selected run. Build a new plan after changing the question or context.';}
+$('#openInvestigation').onclick=()=>navigate('studio',typeof Studio!=='undefined'&&Studio.view.record?{id:Studio.view.record.id}:{});
+$$('[data-gravity]').forEach(b=>b.onclick=()=>{$('#gravity').value=b.dataset.gravity;$$('[data-gravity]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));});
+$('#resetScenario').onclick=()=>{$('#coagForm').reset();$('#stickingValue').textContent='1.00';};

@@ -1,0 +1,5 @@
+    const drawer = $('#settingsDrawer');
+    $('#settingsOpen').addEventListener('click', () => { const open = !drawer.classList.contains('open'); drawer.classList.toggle('open', open); drawer.setAttribute('aria-hidden', String(!open)); $('#settingsOpen').setAttribute('aria-expanded', String(open)); if (open) $('#settingsClose').focus(); });
+    $('#settingsClose').addEventListener('click', () => { drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); $('#settingsOpen').setAttribute('aria-expanded','false'); $('#settingsOpen').focus(); });
+    [['largeText','large-text'],['highContrast','high-contrast'],['reduceMotion','reduced-motion']].forEach(([id,className]) => { const input = $(`#${id}`); const saved = localStorage.getItem(id) === 'true'; input.checked = saved; document.body.classList.toggle(className, saved); input.addEventListener('change', () => { document.body.classList.toggle(className, input.checked); localStorage.setItem(id, input.checked); }); });
+    document.addEventListener('keydown', event => { if (event.key === 'Escape' && drawer.classList.contains('open')) $('#settingsClose').click(); });
