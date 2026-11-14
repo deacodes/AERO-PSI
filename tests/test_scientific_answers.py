@@ -29,6 +29,27 @@ class ScientificAnswers(unittest.TestCase):
         fake=SimpleNamespace(models=SimpleNamespace(generate_content=lambda **kwargs:SimpleNamespace(text=json.dumps(result))))
         return patch('google.genai.Client',return_value=fake)
 
+    def test_context_general_mode_excludes_attached_evidence(self):
+        with patch('aero_psi_copilot.retrieve') as retrieve, self.mock_client(self.response()) as client:
+            result=ask(self.catalog,'Explain thermal motion',runtime_evidence=[{'id':'private-row','text':'ATTACHED_ROW_SENTINEL'}],information_mode='explain')
+        retrieve.assert_not_called()
+        self.assertFalse(result['information_scope']['source_claims_included'])
+        self.assertTrue(result['information_scope']['general_science_included'])
+        self.assertFalse(result['information_scope']['web_search_performed'])
+        self.assertEqual(result['sources'],[])
+
+    def test_context_evidence_mode_does_not_return_general_explanation(self):
+        with self.mock_client(self.response()):
+            result=ask(self.catalog,'Explain the record',runtime_evidence=[{'id':'row','text':'Recorded value 12'}],information_mode='evidence')
+        self.assertNotIn('scientific_explanation',result)
+        self.assertEqual(result['information_scope']['requested'],'evidence')
+
+    def test_unavailable_answer_does_not_claim_generated_findings(self):
+        with patch.dict(os.environ,{'AERO_PSI_COPILOT_ENABLED':'false'}):
+            result=ask(self.catalog,'Explain record',runtime_evidence=[{'id':'row','text':'Recorded value 12'}],information_mode='auto')
+        self.assertFalse(result['information_scope']['source_claims_included'])
+        self.assertFalse(result['information_scope']['general_science_included'])
+
     def test_general_question_without_archive_match_gets_science(self):
         with self.mock_client(self.response()):r=answer_question(self.catalog,'Could Brownian motion continue in zero gravity?')
         self.assertEqual(r['mode'],'vertex_scientific');self.assertIn('thermal',r['scientific_explanation'])

@@ -14,6 +14,17 @@ import aero_psi_studio as studio
 class ResearchTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):cls.catalog=json.loads(Path('aero_psi_catalog.json').read_text())
+    def test_auto_selection_exposes_ranked_alternatives_and_ties(self):
+        r=explore(self.catalog,{'question':'How does gravity affect flame size?'})
+        self.assertTrue(r['selection']['automatic'])
+        candidates=r['selection']['candidates']
+        self.assertEqual(len(candidates),len(self.catalog['investigations']))
+        self.assertEqual(r['group'],candidates[0]['group'])
+        self.assertEqual(r['selection']['tied_top_groups'],[c['group'] for c in candidates if c['score']==candidates[0]['score']])
+        chosen=explore(self.catalog,{'question':'How does gravity affect flame size?','group':'PSI102'})
+        self.assertEqual(chosen['group'],'PSI102')
+        self.assertFalse(chosen['selection']['automatic'])
+
     def test_flame_size_routes_to_flame_measurements_not_aerosol(self):
         _,goal,_=query_spec({'question':'How does gravity affect flame size?'})
         self.assertEqual(goal,'flame_geometry')

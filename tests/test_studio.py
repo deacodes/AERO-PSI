@@ -63,11 +63,11 @@ class StudioTests(unittest.TestCase):
         self.assertEqual(studio.get_record(r['id'],self.storage)['runs'],[])
     def test_interpretation_reads_saved_rows_not_client_claims(self):
         r=self.create();r=studio.add_dataset(self.stamp(r)|{'dataset':{'name':'Test','reference':'User supplied','columns':[{'name':'x'},{'name':'y'}],'rows':[[1,2],[3,4]]}},self.storage)
-        def ask(catalog,question,runtime_evidence,allow_background):
-            data=json.loads(runtime_evidence[0]['text']);self.assertEqual(data['rows'],[[3,4]])
+        def ask(catalog,question,runtime_evidence,allow_background,history=None,information_mode=None):
+            data=json.loads(runtime_evidence[0]['text']);self.assertEqual(data['rows'],[[3,4]]);self.assertEqual(history,[{'role':'user','content':'What is this dataset?'}])
             return {'mode':'science_unavailable'}
         with patch.object(studio,'ask',side_effect=ask):
-            result=studio.interpret(self.stamp(r)|{'question':'Explain this point','dataset_id':r['datasets'][0]['id'],'row_indices':[1]},self.catalog,self.storage)
+            result=studio.interpret(self.stamp(r)|{'question':'Explain this point','history':[{'role':'user','content':'What is this dataset?'}],'dataset_id':r['datasets'][0]['id'],'row_indices':[1]},self.catalog,self.storage)
         self.assertEqual(result['ai_reviews'][0]['row_indices'],[1])
     def test_library_includes_legacy_and_archive_can_restore(self):
         r=self.create();legacy=self.storage/'legacy';legacy.mkdir();i='a'*32
@@ -84,7 +84,7 @@ class StudioTests(unittest.TestCase):
         c['steps'][0]['data_links']=[{'dataset_id':r['datasets'][0]['id'],'row_indices':indices}]
         r=studio.save(self.stamp(r)|{'content':c},self.storage)
         self.assertEqual(len(r['content']['steps'][0]['data_links'][0]['row_indices']),45)
-        def ask(catalog,question,runtime_evidence,allow_background):
+        def ask(catalog,question,runtime_evidence,allow_background,history=None,information_mode=None):
             data=json.loads(runtime_evidence[0]['text'])
             self.assertEqual(len(data['rows']),30)
             self.assertEqual(data['scope_row_count'],45)
