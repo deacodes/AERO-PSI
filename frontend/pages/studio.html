@@ -1,0 +1,63 @@
+<section id="page-studio" class="page studio-page" aria-labelledby="studio-page-title">
+  <div class="page-header studio-heading">
+    <div><h1 id="studio-page-title">Investigation Studio</h1><p class="lede">Turn a question into a method. Keep the evidence, calculations and decisions together.</p></div>
+    <button type="button" class="button-primary" id="studioNew">New investigation</button>
+  </div>
+  <p id="studioStatus" class="studio-status" role="status" aria-live="polite"></p>
+  <div id="studioLibrary">
+    <div class="studio-library-tools"><label>Find an investigation<input id="studioSearch" type="search" placeholder="Search questions and titles"></label><label>Show<select id="studioFilter"><option value="active">Active investigations</option><option value="all">All saved work</option><option value="archived">Archived investigations</option></select></label></div>
+    <div id="studioLibraryItems" class="studio-library-items"><p>Loading saved investigations…</p></div>
+  </div>
+  <form id="studioCreate" class="studio-create" hidden>
+    <button type="button" class="button-text" id="studioCancelCreate">Back to library</button>
+    <h2>What would you like to investigate?</h2>
+    <p>Start with a scientific question. SI can develop a method, identify missing inputs and suggest useful graphs. Specialized models are optional.</p>
+    <label for="studioQuestion">Research question</label><textarea id="studioQuestion" rows="3" maxlength="2000" required placeholder="Describe what you want to understand, compare or measure…"></textarea>
+    <label for="studioKind">Investigation type</label><select id="studioKind"><option value="literature">Literature &amp; scientific reasoning</option><option value="data_analysis">Analyze measurements</option><option value="simulation">Numerical simulation</option><option value="experiment">Plan a physical experiment</option></select>
+    <div class="studio-actions"><button class="button-primary" type="submit" id="studioGenerate">Develop with SI</button><button class="button-secondary" type="button" id="studioManual">Start a manual plan</button></div>
+    <p class="micro">SI creates a draft for your review. No calculation or physical experiment runs automatically. One bounded AI request is made when you choose “Develop with SI”.</p>
+  </form>
+  <div id="studioDetail" hidden>
+    <div class="studio-detail-bar"><button type="button" class="button-text" id="studioBack">All investigations</button><span id="studioSaveState" role="status"></span><button type="button" class="button-primary" id="studioSave">Save changes</button><button type="button" class="button-secondary" id="studioExport">Export record</button><button type="button" class="button-text" id="studioBrief">Export research brief</button></div>
+    <div class="studio-title-row"><div><label class="sr-only" for="studioTitle">Investigation title</label><input id="studioTitle" class="studio-title-input" maxlength="180"><p id="studioMeta" class="micro"></p></div><button type="button" class="button-text" id="studioArchive">Archive</button></div>
+    <details class="studio-question-editor"><summary>Question, overview &amp; revision history</summary><label for="studioEditQuestion">Research question</label><textarea id="studioEditQuestion" rows="2" maxlength="2000"></textarea><label for="studioSummary">Overview · Markdown supported</label><textarea id="studioSummary" rows="4"></textarea><div class="studio-actions"><button type="button" class="button-secondary" id="studioHistory">View saved revisions</button></div><div id="studioHistoryItems"></div></details>
+    <div id="studioSummaryView" class="evidence-prose studio-summary"></div>
+    <div class="studio-progress"><progress id="studioProgress" max="1" value="0" aria-label="Completed investigation steps"></progress><span id="studioProgressLabel"></span></div>
+    <div class="studio-layout">
+      <aside class="studio-step-rail" aria-label="Investigation steps"><div class="studio-rail-heading"><h2>Research steps</h2><button type="button" id="studioAddStep" class="button-text">Add step</button></div><ol id="studioSteps"></ol><p class="micro">Checks record your progress, not scientific verification.</p></aside>
+      <div class="studio-workspace">
+        <nav class="studio-tabs" aria-label="Investigation views"><button type="button" data-studio-tab="method" aria-current="page">Method</button><button type="button" data-studio-tab="design">Experiment design</button><button type="button" data-studio-tab="results">Data &amp; graphs</button><button type="button" data-studio-tab="safety">Safety &amp; limits</button><button type="button" data-studio-tab="sources">Sources</button></nav>
+        <section id="studio-method" class="studio-panel">
+          <div id="studioStepContent"></div>
+          <details class="studio-refine"><summary>Develop or revise this investigation with SI</summary><label for="studioRevisionPrompt">What should change?</label><textarea id="studioRevisionPrompt" rows="3" maxlength="2000" placeholder="Add a comparison, clarify the method, or adjust the research scope…"></textarea><button type="button" class="button-secondary" id="studioRevise">Generate revised plan</button><p class="micro">Creates a new revision. Previous plans remain in history; step completion resets and earlier calculations are marked out of date.</p></details>
+        </section>
+        <section id="studio-design" class="studio-panel" hidden>
+          <h2>Design the comparison</h2><p>Define what changes, what stays fixed and what you will measure. Sliders update the proposed trial layout; they do not predict an outcome.</p>
+          <label>Hypothesis<textarea id="designHypothesis" rows="2" placeholder="What relationship will this investigation test?"></textarea></label>
+          <label>Response to measure, including units<input id="designOutcome" placeholder="For example: a defined flame dimension at a specified time"></label>
+          <div class="studio-panel-heading"><h3>Independent variables</h3><button type="button" class="button-secondary" id="designAddVariable">Add a variable</button></div><div id="designVariables"></div>
+          <label>Replicates per condition <output id="designReplicateCount">1</output><input type="range" id="designReplicates" min="1" max="20" value="1"></label>
+          <label>Conditions to hold fixed<textarea id="designControls" rows="3"></textarea></label>
+          <label>Measurement method<textarea id="designMethod" rows="3" placeholder="Specify the instrument, timing, calibration and uncertainty…"></textarea></label>
+          <label>Analysis and decision criteria<textarea id="designAnalysis" rows="3"></textarea></label>
+          <button type="button" id="designPreview" class="button-primary">Update trial layout</button><p id="designStatus" role="status"></p>
+          <div id="designPlot"></div><p id="designReadout" role="status"></p><button id="designExport" type="button" class="button-text" disabled>Export planned trials</button>
+          <details><summary>Planned conditions</summary><div id="designTable" class="studio-table-scroll"></div></details>
+        </section>
+        <section id="studio-results" class="studio-panel" hidden>
+          <div class="studio-panel-heading"><h2>Data &amp; graphs</h2><button type="button" class="button-secondary" id="studioToggleData">Add your data</button></div>
+          <div id="studioDataForm" hidden><h3>Import a small CSV table</h3><p>Supply actual measurements or explicitly identified simulated data. Blank numeric cells stay missing.</p><label>Dataset name<input id="studioDataName" maxlength="180"></label><label>Source, method and assumptions<textarea id="studioDataReference" rows="2" maxlength="2000"></textarea></label><label>CSV file<input id="studioCsvFile" type="file" accept=".csv,text/csv"></label><label>Or paste CSV, including column names<textarea id="studioCsv" rows="6" spellcheck="false" placeholder="Time,Signal&#10;0,0.12&#10;1,0.18"></textarea></label><label>Column units, separated by commas<input id="studioDataUnits" placeholder="s,V"></label><button type="button" id="studioAddData" class="button-primary">Save dataset</button><p class="micro">Up to 2,000 rows, 12 columns and 100 KB per request. Uploaded data is labeled user-supplied, not NASA-verified.</p></div>
+          <div id="studioChartSuggestions"></div>
+          <div id="studioChartControls" class="studio-chart-controls"><label>Dataset<select id="studioDataset"></select></label><label>Chart<select id="studioChartType"><option value="line">Line</option><option value="scatter">Scatter</option><option value="bar">Bar</option><option value="histogram">Histogram</option><option value="heatmap">Heatmap</option></select></label><label>X / categories<select id="studioX"></select></label><label>Y / values<select id="studioY"></select></label><label id="studioZLabel" hidden>Heatmap values<select id="studioZ"></select></label></div>
+          <p id="studioDatasetScope" class="micro"></p><div id="studioChart" class="studio-chart"></div><p id="studioPointReadout" role="status">Select a plotted value to inspect or discuss it.</p>
+          <div class="studio-actions"><button id="studioChartCsv" type="button" class="button-text">Export dataset CSV</button><button id="studioChartSvg" type="button" class="button-text">Export chart SVG</button><button id="studioPointStep" type="button" class="button-text" disabled>Add selected point to a step</button></div>
+          <label for="studioGraphQuestion">Ask SI about these data</label><textarea id="studioGraphQuestion" rows="2" placeholder="What might explain this trend, and what cannot we conclude?"></textarea><button type="button" id="studioInterpret" class="button-secondary">Interpret saved data</button><div id="studioGraphAnswer" class="evidence-prose" aria-live="polite"></div>
+          <details><summary>Data table</summary><div id="studioDataTable" class="studio-table-scroll"></div></details>
+          <details><summary>Saved calculations &amp; provenance</summary><div id="studioRuns"></div></details>
+        </section>
+        <section id="studio-safety" class="studio-panel" hidden><h2>Safety &amp; research limits</h2><p id="studioSafetyScope"></p><div id="studioSafetyView" class="evidence-prose"></div><details><summary>Edit review notes</summary><label for="studioSafety">Safety and integrity review · Markdown</label><textarea id="studioSafety" rows="8"></textarea></details><h3>Unresolved limitations</h3><ul id="studioLimits"></ul><label for="studioNotebook">Investigation notebook</label><textarea id="studioNotebook" rows="6" placeholder="Record decisions, reviews, uncertainties and observations…"></textarea></section>
+        <section id="studio-sources" class="studio-panel" hidden><h2>Evidence behind the plan</h2><p>Source identifiers are checked against retrieved records. A citation is not independent confirmation that a claim is correct.</p><div id="studioSources"></div></section>
+      </div>
+    </div>
+  </div>
+</section>
