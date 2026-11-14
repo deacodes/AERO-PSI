@@ -149,6 +149,9 @@ def rank_for_question(catalog, payload, records=None, documents=None):
                                      'measurement_suitability':{'value':suitability,'weight':mw,'points':round(100*mw*(suitability or 0),2)}},
                        'matches':matches,'unmatched_concepts':sorted(set(concepts)-{m['concept'] for m in matches}),
                        'requirements':requirements,'data_quality':quality,
+                       'evidence_inventory':{'structured_rows':len(rows),'structured_tables':len({r['source_path'] for r in rows}),
+                           'imported_time_series':len(runs),
+                           'reference_files':sum(f.get('investigation_group')==group and f.get('format','').lower().lstrip('.') in ('pdf','ppt','pptx','doc','docx','txt') for f in catalog.get('files',[]))},
                        'comparability':{'state':'not_established','reason':'Matched run identity, units, calibration, windows and controlled conditions require pairwise review. Platform metadata is not acceleration history.'},
                        'metadata_source':ref(meta,'metadata')})
     result.sort(key=lambda r:(-r['score'],r['group']))
@@ -203,7 +206,11 @@ def gap_plan(catalog,payload,records=None):
               'proposal':proposal_for_requirement(requirement,item['group'],ranking['question'])})
     candidates.sort(key=lambda g:(-g['priority'],g['group'],g['title']))
     for i,gap in enumerate(candidates): gap['position']=candidates[i-1]['position'] if i and gap['priority']==candidates[i-1]['priority'] else i+1
-    return {'version':VERSION,'question':ranking['question'],'goal':ranking['goal'],'group':group,
+    assessment=None
+    if records is None:
+        from aero_psi_research import explore
+        assessment=explore(catalog,payload)['assessment']
+    return {'question_assessment':assessment,'version':VERSION,'question':ranking['question'],'goal':ranking['goal'],'group':group,
             'classification':'evidence-index audit and conditional experiment planning',
             'priority_formula':'100 × (0.60 weighted question-concept coverage + 0.40 declared workflow blocker). Critical calibration/model prerequisites = 1; other indexed requirements = 0.5. Cost and feasibility are unknown and unscored.',
             'scope':'Normalized structured fields and imported usable signals; unreviewed report mentions cannot close quantitative prerequisites.',

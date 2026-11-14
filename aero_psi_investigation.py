@@ -124,9 +124,13 @@ def investigate(catalog,payload,storage=INVESTIGATION_STORAGE,cancelled=None):
                     context={k:v for k,v in output.items() if k!='items'}
                     context['items']=[{k:i[k] for k in ('group','score','position','components','unmatched_concepts','comparability')} for i in output['items']]
                 elif step['tool']=='plan_measurements':
-                    context={k:v for k,v in output.items() if k not in ('gaps','coverage')}
+                    context={k:v for k,v in output.items() if k not in ('gaps','coverage','question_assessment')}
                     context['gaps']=[{k:g[k] for k in ('id','group','title','priority','category','proposal')} for g in output['gaps'][:4]]
                     context['total_gaps']=len(output['gaps'])
+                    assessment=output.get('question_assessment')
+                    if assessment:
+                        context['question_assessment']={k:assessment[k] for k in ('question','group','verdict','explanation','priority_rule','scope')}
+                        context['question_assessment']['actions']=assessment['actions'][:3]
                 elif step['tool']=='coverage_gaps':
                     context={k:v for k,v in output.items() if k not in ('gaps','strata')}
                     context['gaps']=output['gaps'][:4]

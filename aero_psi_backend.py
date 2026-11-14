@@ -355,8 +355,8 @@ class CatalogHandler(BaseHTTPRequestHandler):
             '/api/v1/observed/compare',
             '/api/v1/copilot',
             '/api/v1/si/investigate',
-            '/api/v1/research/explore', '/api/v1/research/interpret', '/api/v1/research/design', '/api/v1/archive/table', '/api/v1/archive/interpret',
-            '/api/v1/studio/create', '/api/v1/studio/save', '/api/v1/studio/generate',
+            '/api/v1/research/gap-review', '/api/v1/research/explore', '/api/v1/research/interpret', '/api/v1/research/design', '/api/v1/archive/table', '/api/v1/archive/interpret',
+            '/api/v1/studio/from-research', '/api/v1/studio/attach-model', '/api/v1/studio/create', '/api/v1/studio/save', '/api/v1/studio/generate',
             '/api/v1/studio/dataset', '/api/v1/studio/execute', '/api/v1/studio/interpret',
             '/api/v1/evidence/search',
             '/api/v1/evidence/excerpt',
@@ -372,6 +372,9 @@ class CatalogHandler(BaseHTTPRequestHandler):
             raw=self.rfile.read(length) if length else b"{}"
             payload=json.loads(raw.decode("utf-8"))
             if not isinstance(payload,dict): raise ValueError("Request body must be a JSON object.")
+            if request.path=='/api/v1/research/gap-review':
+                from aero_psi_gap_si import review
+                self.send_json(envelope(review(self.catalog,payload),self.catalog)); return
             if request.path=='/api/v1/si/interpret-model':
                 from aero_psi_model_interpretation import interpret
                 self.send_json(envelope(interpret(self.catalog,payload),self.catalog)); return
@@ -386,7 +389,7 @@ class CatalogHandler(BaseHTTPRequestHandler):
                 function=research.explore if request.path.endswith('/explore') else research.interpret
                 self.send_json(envelope(function(self.catalog,payload),self.catalog)); return
             if request.path.startswith('/api/v1/studio/'):
-                actions = {'create': studio.create, 'save': studio.save, 'generate': lambda p: studio.generate(p, self.catalog),
+                actions = {'from-research': lambda p: studio.from_research(p, self.catalog), 'attach-model': studio.attach_model, 'create': studio.create, 'save': studio.save, 'generate': lambda p: studio.generate(p, self.catalog),
                            'dataset': studio.add_dataset, 'execute': lambda p: studio.execute(p, self.catalog),
                            'interpret': lambda p: studio.interpret(p, self.catalog)}
                 self.send_json(envelope(actions[request.path.rsplit('/', 1)[1]](payload), self.catalog)); return

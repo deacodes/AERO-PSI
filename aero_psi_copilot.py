@@ -148,8 +148,19 @@ def provider_failure(exc):
     return f'Vertex response unavailable or invalid ({name}; status {code or "unknown"}). Please retry.'
 
 
-def ask(catalog: dict[str,Any], question: str, runtime_evidence: list | None = None, *, allow_background: bool = False, history: list | None = None, retrieve_sources: bool = True) -> dict[str,Any]:
+def ask(catalog: dict[str,Any], question: str, runtime_evidence: list | None = None, *, allow_background: bool = False, history: list | None = None, retrieve_sources: bool = True, information_mode: str | None = None) -> dict[str,Any]:
     if not isinstance(question,str) or not question.strip() or len(question)>2000: raise ValueError("question must be 1 to 2000 characters.")
+    if information_mode is not None:
+        if information_mode not in ('auto','evidence','explain'): raise ValueError('Choose project evidence, general science, or both')
+        allow_background=information_mode!='evidence'
+        retrieve_sources=information_mode!='explain'
+        if information_mode=='explain': runtime_evidence=[]
+    selected_mode=information_mode or ('auto' if allow_background and retrieve_sources else 'explain' if allow_background else 'evidence')
+    def scope_result(result):
+        result['information_scope']={'requested':selected_mode,'general_science_included':bool(result.get('service',{}).get('status')=='generated' and result.get('scientific_explanation')),
+            'source_claims_included':bool(result.get('service',{}).get('status')=='generated' and (result.get('observed_in_source') or result.get('model_result'))),
+            'web_search_performed':False}
+        return result
     history=validate_history(history)
     # Previous user context helps resolve follow-ups; prior AI answers are not source evidence.
     previous=next((h['content'] for h in reversed(history) if h['role']=='user'),'')
@@ -162,7 +173,7 @@ def ask(catalog: dict[str,Any], question: str, runtime_evidence: list | None = N
         if allow_background:
             result['mode']='science_unavailable'
             result['answer']='SI could not generate a scientific answer for this request. '+reason
-        return result
+        return scope_result(result)
     if not evidence and not allow_background: return unavailable("No supplied AERO-PSI evidence record matched the question.")
     load_local_env()
     if os.environ.get("AERO_PSI_COPILOT_ENABLED","true").lower() != "true": return unavailable("Vertex AI is disabled in this server process.")
@@ -214,13 +225,14 @@ def ask(catalog: dict[str,Any], question: str, runtime_evidence: list | None = N
     validated['service']={'provider':'Vertex','status':'generated'}
     cited=set(validated["sources"])
     validated["claim_support_status"]="not_independently_verified"; validated["mode"]="vertex_scientific" if allow_background else "vertex_grounded"; validated["question"]=question; validated["sources"]=[{key:value for key,value in item.items() if key != "text"} for item in evidence if item["id"] in cited]; validated["warnings"]=["Observed claims are limited to retrieved supplied records. Verify source rows before external publication."]
-    return validated
+    return scope_result(validated)
 
 
 def interpret_point(catalog: dict[str,Any], payload: dict[str,Any]) -> dict[str,Any]:
     """Interpret one backend-verified graph point without treating it as new archive evidence."""
     if not isinstance(payload,dict): raise ValueError("Point interpretation input must be a JSON object.")
     kind=payload.get("kind")
+    history=validate_history(payload.get("history"))
     question=str(payload.get("question") or "Explain this point, its scientific meaning, and its limits.").strip()
     if not question or len(question)>1000: raise ValueError("question must be 1 to 1000 characters.")
     if kind == "coagulation_point":
@@ -246,6 +258,8 @@ def interpret_point(catalog: dict[str,Any], payload: dict[str,Any]) -> dict[str,
         supported=[fallback_interpretation,"The value is a source-preserved observed sample; it was not interpolated or recalibrated."]
         limitations=point["warnings"][-2:]+["A single point does not establish a trend, causal mechanism, particle size, or calibrated optical property."]
     else: raise ValueError("kind must be coagulation_point or optical_point.")
+    if payload.get('mode') is not None:
+        return ask(catalog,question,runtime_evidence=[dict(evidence,text=json.dumps(evidence,ensure_ascii=False))],history=history,information_mode=payload['mode'])
     source_public={key:value for key,value in evidence.items() if key not in {"inputs","point","warnings","solver","conservation_check"}}
     fallback={"mode":"verified_context_fallback","kind":kind,"headline":"Verified point interpretation","interpretation":fallback_interpretation,"supported":supported,"limitations":limitations,"sources":[source_public]}
     load_local_env()
@@ -255,7 +269,7 @@ def interpret_point(catalog: dict[str,Any], payload: dict[str,Any]) -> dict[str,
     if not project or project.startswith("PASTE_"): return fallback
     try:
         from aero_psi_ai import generate_json, object_schema, AIResponseError
-        prompt=f'''You are AERO-PSI Scientific Intelligence. Interpret one backend-verified graph point using ONLY the supplied context. Keep measured samples, deterministic model output, assumptions, and unknowns separate. Never infer particle size from detector voltage, causality from association, or archive validation for a runtime model scenario. Return valid JSON only with exactly: headline (string), interpretation (string), supported (array of strings), limitations (array of strings), sources (array containing only the supplied source id). Short Markdown and LaTeX are allowed only when supported by context.\n\nUSER QUESTION: {question}\n\nVERIFIED CONTEXT: {json.dumps(evidence,ensure_ascii=False)}'''
+        prompt=f'''You are AERO-PSI Scientific Intelligence. Interpret one backend-verified graph point using ONLY the supplied context. Keep measured samples, deterministic model output, assumptions, and unknowns separate. Never infer particle size from detector voltage, causality from association, or archive validation for a runtime model scenario. Return valid JSON only with exactly: headline (string), interpretation (string), supported (array of strings), limitations (array of strings), sources (array containing only the supplied source id). Short Markdown and LaTeX are allowed only when supported by context.\n\nUSER QUESTION: {question}\n\nCHAT CONTEXT: {json.dumps(history,ensure_ascii=False)}\n\nVERIFIED CONTEXT: {json.dumps(evidence,ensure_ascii=False)}'''
         schema=object_schema({'headline':{'type':'string'},'interpretation':{'type':'string'},'supported':{'type':'array','items':{'type':'string'}},'limitations':{'type':'array','items':{'type':'string'}},'sources':{'type':'array','items':{'type':'string','enum':[evidence['id']]},'minItems':1,'maxItems':1}})
         parsed=generate_json(prompt,schema,max_tokens=3000)
         if not isinstance(parsed,dict): return fallback

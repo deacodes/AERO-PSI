@@ -28,12 +28,16 @@ def clean_title(meta):
 def explore(catalog,payload):
     question,goal,concepts=query_spec(payload)
     ranking=rank_for_question(catalog,payload)
+    if not ranking['items']: raise ValueError('No investigations are available in this archive')
     group=payload.get('group') or ranking['items'][0]['group']
     meta=next((r for r in catalog.get('investigations',[]) if r['group']==group),None)
     if meta is None: raise ValueError('Choose an investigation from this archive')
     rows=[r for r in catalog.get('normalized_experiments',[]) if r['source_path'].split('/')[0]==group and any(v.get('state')=='observed' and str(v.get('value','')).strip() for v in r['fields'].values())]
     paths=sorted({r['source_path'] for r in rows})
-    table=payload.get('table') or (paths[0] if paths else None)
+    source_path=payload.get('source_path')
+    if source_path is not None and not any(f['source_path']==source_path and source_path.split('/')[0]==group for f in catalog.get('files',[])):
+        raise ValueError('Choose a source file from the selected investigation')
+    table=payload.get('table') or (source_path if source_path in paths else None) or (paths[0] if paths else None)
     if table is not None and table not in paths: raise ValueError('Choose a table from the selected investigation')
     selected=[r for r in rows if r['source_path']==table]
     fields={}
@@ -79,7 +83,9 @@ def explore(catalog,payload):
     for row in selected:
         grid.append({'source_row':row['source_row'],'source_path':row['source_path'],'source_sha256':row['source_sha256'],
                      'values':{k:v['value'] if v.get('state')=='observed' else None for k,v in row['fields'].items()}})
-    return {'question':question,'goal':goal,'group':group,'overview':overview,
+    from aero_psi_gap_assessment import assess
+    assessment=assess(question,goal,group,rows,runs,findings)
+    return {'selection':{'automatic':not bool(payload.get('group')),'tied_top_groups':[i['group'] for i in ranking['items'] if i['score']==ranking['items'][0]['score']], 'formula':ranking['formula'], 'candidates':[{'group':i['group'],'score':i['score'],'matched_concepts':[m['concept'] for m in i['matches']], 'unmatched_concepts':i['unmatched_concepts']} for i in ranking['items']]},'selected_source':source_path,'assessment':assessment,'question':question,'goal':goal,'group':group,'overview':overview,
             'groups':[{'group':i['group'],'title':clean_title(i),'score':next((v['score'] for v in ranking['items'] if v['group']==i['group']),0)} for i in catalog['investigations']],
             'tables':[{'path':p,'row_count':sum(r['source_path']==p for r in rows)} for p in paths],
             'selected_table':table,'columns':columns,'rows':grid,'findings':findings,'passages':docs,
@@ -112,5 +118,5 @@ def interpret(catalog,payload):
         for row in selected:
             evidence.append({'id':f"table:{row['source_path']}:{row['source_row']}",'kind':'source_table_row','title':f"{context['group']} — row {row['source_row']}",'source_path':row['source_path'],'source_range':f"row {row['source_row']}",
                 'text':json.dumps({'source_sha256':row['source_sha256'],'values':row['values'],'columns':[{k:c[k] for k in ('key','label')} for c in context['columns']]},ensure_ascii=False)})
-    evidence.append({'id':'runtime:research:'+hashlib.sha256(json.dumps(payload,sort_keys=True).encode()).hexdigest()[:20], 'kind':'archive_comparison','title':'Current question and measurement requirements','source_path':context['selected_table'] or context['group'],'source_range':'Question-specific source review','text':json.dumps({'overview':context['overview'],'requirements':context['findings'],'scope':context['scope']},ensure_ascii=False)})
-    return ask(catalog,question,runtime_evidence=evidence,allow_background=True,history=payload.get('history'))
+    evidence.append({'id':'runtime:research:'+hashlib.sha256(json.dumps(payload,sort_keys=True).encode()).hexdigest()[:20], 'kind':'archive_comparison','title':'Current question and measurement requirements','source_path':context['selected_table'] or context['group'],'source_range':'Question-specific source review','text':json.dumps({'overview':context['overview'],'requirements':context['assessment'],'scope':context['scope']},ensure_ascii=False)})
+    return ask(catalog,question,runtime_evidence=evidence,allow_background=True,history=payload.get('history'),information_mode=payload.get('mode','auto'))

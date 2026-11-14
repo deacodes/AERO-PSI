@@ -27,4 +27,4 @@ def context_evidence(payload):
 
 def interpret(catalog,payload):
     evidence=context_evidence(payload)
-    return ask(catalog,payload.get('question','Explain this result and the assumptions that matter most.'),runtime_evidence=[evidence],allow_background=True,history=payload.get('history'))
+    return ask(catalog,payload.get('question','Explain this result and the assumptions that matter most.'),runtime_evidence=[evidence],allow_background=True,history=payload.get('history'),information_mode=payload.get('mode','auto'))

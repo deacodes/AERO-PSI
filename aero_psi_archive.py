@@ -80,6 +80,6 @@ def interpret(catalog,payload):
     evidence={'id':'runtime:archive-table','kind':'verified_source_table','title':'Verified archive table context','source_path':page['source_path'],'source_range':scope,'text':json.dumps(page,ensure_ascii=False)}
     # Keep table context intact rather than silently cutting off wide rows.
     evidence['text']=json.dumps({'columns':page['columns'],'rows':page['rows'][:3],'total_rows':page['total_rows'],'matching_rows':page['matching_rows'],'scope':scope+'; at most three source rows supplied as examples','source_sha256':page['source_sha256']},ensure_ascii=False)
-    answer=ask(catalog,payload.get('question','Summarize what this dataset records, its useful comparisons and its limitations.'),runtime_evidence=[evidence],allow_background=True,history=payload.get('history'))
+    answer=ask(catalog,payload.get('question','Summarize what this dataset records, its useful comparisons and its limitations.'),runtime_evidence=[evidence],allow_background=True,history=payload.get('history'),information_mode=payload.get('mode','auto'))
     answer['table_scope']=scope+'; at most three source rows supplied as examples'
     return answer
