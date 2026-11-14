@@ -1,5 +1,5 @@
 <section id="page-mission" class="page" aria-labelledby="mission-title">
-      <header class="page-header"><div><h1 id="mission-title">NASA Archive</h1><p class="lede">Browse the actual datasets, inspect recorded values, then bring the evidence into your investigation.</p></div></header>
+      <header class="page-header"><div><h1 id="mission-title">NASA Archive</h1><p class="lede">Explore NASA experiment tables, recorded signals and research reports. Select a source to inspect its values or bring it into an SI discussion.</p></div></header>
       <nav class="research-tabs archive-tabs" aria-label="Archive views"><button type="button" data-archive-tab="datasets" aria-current="page">Datasets</button><button type="button" data-archive-tab="runs">Run explorer</button><button type="button" data-archive-tab="ranking">Find relevant evidence</button></nav>
 <section id="archive-datasets" class="archive-browser">
   <div class="archive-browser-tools"><label>Investigation<select id="datasetGroup"><option value="">All investigations</option></select></label><label>Find a file<input id="datasetSearch" type="search" placeholder="Material, run or filename"></label><label>Show<select id="datasetKind"><option value="data">Tables &amp; imported runs</option><option value="all">All source files</option><option value="table">Experiment tables</option><option value="run">Imported time series</option><option value="reference">Reports &amp; other files</option></select></label></div>
@@ -13,11 +13,11 @@
     <p id="datasetStatus" role="status"></p><div id="datasetGrid" class="dataset-grid" tabindex="0" aria-label="Original data table; scroll horizontally for additional columns"></div>
     <div class="dataset-pagination"><button id="datasetPrevious" type="button" class="button-secondary">Previous rows</button><span id="datasetPage"></span><button id="datasetNext" type="button" class="button-secondary">Next rows</button></div>
     <details id="datasetSelection" hidden><summary>Selected row &amp; provenance</summary><div id="datasetRowDetail"></div></details>
-    <div class="discovery-actions"><button id="datasetInvestigate" type="button" class="button-primary">Use in an investigation</button><button id="datasetGaps" type="button" class="button-secondary">Check measurement gaps</button><button id="datasetPlot" type="button" class="button-text">Explore plots</button></div>
+    <div class="dataset-actions"><div class="dataset-action-group"><span class="action-group-label">Investigate</span><div class="discovery-actions"><button id="datasetInvestigate" type="button" class="button-primary">Use in an investigation</button><button id="datasetGaps" type="button" class="button-secondary">Check measurement gaps</button><button id="datasetPlot" type="button" class="button-text">Explore plots</button></div></div><div id="datasetSIActions" class="dataset-action-group"><span class="action-group-label">Ask SI</span></div></div>
   </section>
 </section>
 <div id="archive-runs" hidden>      <section class="run-spotlight" aria-labelledby="run-spotlight-title">
-        <div class="run-spotlight-head"><div><h2 id="run-spotlight-title">Open an analysis-ready run.</h2><p>Representative runs are ordered using signal coverage, event-window availability, value completeness, timestamp integrity, row depth, verified linkage, and warning burden. This is workflow readiness—not scientific validity.</p></div><div class="run-filter" aria-label="Filter run cards"><button class="active" type="button" data-run-filter="all" aria-pressed="true">All</button><button type="button" data-run-filter="PSI101" aria-pressed="false">PSI-101</button><button type="button" data-run-filter="PSI102" aria-pressed="false">PSI-102</button></div></div>
+        <div class="run-spotlight-head"><div><h2 id="run-spotlight-title">Explore runs</h2><p>Ordered by data availability and import checks.</p></div><div class="run-filter" aria-label="Filter run cards"><button class="active" type="button" data-run-filter="all" aria-pressed="true">All</button><button type="button" data-run-filter="PSI101" aria-pressed="false">PSI-101</button><button type="button" data-run-filter="PSI102" aria-pressed="false">PSI-102</button></div></div>
         <div id="topRunCards" class="run-card-row" aria-live="polite"><p class="micro">Loading imported runs…</p></div>
       </section>
 
@@ -27,7 +27,7 @@
 
 </div><div id="archive-ranking" hidden>      <section class="discovery-query" aria-labelledby="rankingHeading">
         <h2 id="rankingHeading">Rank evidence for your question</h2>
-        <p>Rank the supplied evidence for a specific task. Inspect what matches, which measurements are indexed, and what still needs review.</p>
+        <p>Find investigations relevant to your question.</p>
         <form id="rankingForm" class="discovery-form">
           <div><label for="rankingQuestion">Scientific question</label><input id="rankingQuestion" required maxlength="2000" value="Which investigations support smoke detector response analysis?"></div>
           <div><label for="rankingGoal">Measurement requirements</label><select id="rankingGoal"><option value="auto">Infer from question</option value="detector">Smoke detector response</option><option value="coagulation">Coagulation and gravity</option><option value="scattering">Multi-angle scattering</option><option value="flammability">Solid-fuel fire behavior</option><option value="extinction">Droplet extinction</option><option value="general">Topic relevance only</option></select></div>
@@ -37,10 +37,10 @@
         <p id="rankingStatus" role="status"></p>
         <div class="discovery-actions"><button id="rankToCoverage" type="button" class="button-secondary" disabled>Find missing prerequisites</button><button id="rankWithSI" type="button" class="button-text" disabled>Interpret ranking with SI</button><button id="exportRanking" type="button" class="button-text" disabled>Export ranking</button></div>
       </section>
-      <details class="rank-method"><summary>Inspect the scoring rule and limits</summary><p id="rankFormula">Loading the backend formula…</p><p id="rankMethod"></p><p>Score means archive-navigation usefulness. Import quality and comparability are shown separately. A report mention establishes topic relevance, not a verified measurement.</p></details>
+      <details class="rank-method"><summary>Inspect the scoring rule and limits</summary><p id="rankFormula">Loading the backend formula…</p><p id="rankMethod"></p><p>Scores help navigate the archive; they do not grade scientific validity. File import checks apply only to imported time series, not to experiment tables or reports. Cross-run comparability is not assessed by this ranking: matched conditions, units, calibration and timing must be reviewed before numerical comparisons. Platform metadata is not a measured acceleration history. Report mentions establish topic relevance only.</p></details>
       <div class="archive-ranking-results">
         <div id="investigationRanks" class="rank-list" aria-live="polite">
-          <div class="rank-row"><span class="rank-number">—</span><div><h3>Loading investigation catalog</h3><p>Retrieving source-backed metadata.</p></div><div class="rank-score"><strong>—</strong><span>relevance</span></div></div>
+          <div class="rank-row"><span class="rank-number">—</span><div><h3>Loading investigation catalog</h3></div><div class="rank-score"><strong>—</strong><span>relevance</span></div></div>
         </div>
 
       </div>

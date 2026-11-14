@@ -1,10 +1,11 @@
 renderCopilot=function(answer){
-  const sections=[];const unavailable=['science_unavailable','educational_unavailable','evidence_only_fallback'].includes(answer.mode);
+  const sections=[];
+  const scope=answer.information_scope;if(scope){const labels={auto:'Evidence + general science',evidence:'Project evidence only',explain:'General scientific knowledge'};sections.push(`<p class="answer-origin"><strong>${escapeHTML(labels[scope.requested]||'Scientific answer')}</strong> · ${scope.general_science_included&&scope.source_claims_included?'Includes scientific background and cited findings':scope.source_claims_included?'Includes cited findings':scope.general_science_included?'Includes general scientific reasoning':'No generated findings'}.</p>`);}const unavailable=['science_unavailable','educational_unavailable','evidence_only_fallback'].includes(answer.mode);
   if(unavailable)sections.push(`<div class="error-box" role="status"><strong>AI answer unavailable</strong><p>${escapeHTML(answer.service?.reason || answer.unknown_or_limitation?.[0] || 'No generated answer was returned.')}</p><p>Retrieved records below are source material, not an AI scientific answer.</p></div>`);
-  else if(answer.mode?.startsWith('vertex'))sections.push('<p class="micro">Answered by Vertex AI · scientific reasoning and source findings are separated below</p>');
-  if(answer.scientific_explanation)sections.push(`<section class="answer-section"><h3>Scientific explanation</h3><div class="evidence-prose">${richText(answer.scientific_explanation)}</div><p class="micro">General scientific reasoning; not independently verified or a NASA measurement.</p></section>`);
-  else if(answer.answer&&!unavailable)sections.push(`<section class="answer-section"><h3>Scientific explanation</h3><div class="evidence-prose">${richText(answer.answer)}</div></section>`);
-  for(const [key,title] of [['observed_in_source','What the sources report'],['model_result','Calculated or reported model results'],['unknown_or_limitation','What remains uncertain']]){
+
+  if(answer.scientific_explanation)sections.push(`<section class="answer-section"><h3>General scientific reasoning</h3><div class="evidence-prose">${richText(answer.scientific_explanation)}</div></section>`);
+  else if(answer.answer&&!unavailable)sections.push(`<section class="answer-section"><h3>General scientific reasoning</h3><div class="evidence-prose">${richText(answer.answer)}</div></section>`);
+  for(const [key,title] of [['observed_in_source','Cited evidence'],['model_result','Model calculations'],['unknown_or_limitation','What remains uncertain']]){
     if(answer[key]?.length&&!(unavailable&&key==='unknown_or_limitation'))sections.push(`<section class="answer-section"><h3>${title}</h3>${answer[key].map(v=>`<div class="evidence-prose">${richText(v)}${v.source_ids?.length?`<p class="micro">Citations: ${v.source_ids.map(escapeHTML).join(', ')}</p>`:''}</div>`).join('')}</section>`);
   }
   $('#copilotAnswer').innerHTML=sections.join('')||'<p>No answer was returned. Try again or ask a more specific question.</p>';state.copilotSources=answer.sources||[];$('#sourceSearch').disabled=!state.copilotSources.length;renderSourceTrail(state.copilotSources);
@@ -33,7 +34,7 @@ renderSourceTrail=function(sources,query=''){
   $('#sourceSearch').disabled=!sources.length;
   const list=sources.filter(s=>JSON.stringify(s).toLowerCase().includes(query.toLowerCase()));
   $('#sourceCount').textContent=`${list.length} source records`;
-  $('#copilotSources').innerHTML=list.map((s,i)=>`<div class="citation"><button class="citation-button" data-source-index="${i}" type="button" aria-expanded="false"><strong>${escapeHTML(s.title||s.source_path||s.id)}</strong><span>${escapeHTML(s.source_range||'Source record')}</span><small>${escapeHTML(s.review_state||s.kind||'Source reference')} · Inspect source</small></button></div>`).join('')||'<p class="micro">Sources appear when SI cites archive records or consulted references. General knowledge does not imply a web search.</p>';
+  $('#copilotSources').innerHTML=list.map((s,i)=>`<div class="citation"><button class="citation-button" data-source-index="${i}" type="button" aria-expanded="false"><strong>${escapeHTML(s.title||s.source_path||s.id)}</strong><span>${escapeHTML(s.source_range||'Source record')}</span><small>${escapeHTML(s.review_state||s.kind||'Source reference')} · Inspect source</small></button></div>`).join('')||'<p class="micro">No sources cited yet.</p>';
   $$('[data-source-index]').forEach(b=>b.onclick=async()=>{
     const s=list[Number(b.dataset.sourceIndex)];
     const existing=b.parentElement.querySelector('.source-excerpt');

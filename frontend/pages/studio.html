@@ -1,6 +1,6 @@
 <section id="page-studio" class="page studio-page" aria-labelledby="studio-page-title">
   <div class="page-header studio-heading">
-    <div><h1 id="studio-page-title">Investigation Studio</h1><p class="lede">Turn a question into a method. Keep the evidence, calculations and decisions together.</p></div>
+    <div><h1 id="studio-page-title">Investigation Studio</h1><p class="lede">Develop a research question into a method. Keep your evidence, proposed comparisons, calculations and observations together.</p></div>
     <button type="button" class="button-primary" id="studioNew">New investigation</button>
   </div>
   <p id="studioStatus" class="studio-status" role="status" aria-live="polite"></p>
@@ -11,7 +11,7 @@
   <form id="studioCreate" class="studio-create" hidden>
     <button type="button" class="button-text" id="studioCancelCreate">Back to library</button>
     <h2>What would you like to investigate?</h2>
-    <p>Start with a scientific question. SI can develop a method, identify missing inputs and suggest useful graphs. Specialized models are optional.</p>
+
     <label for="studioQuestion">Research question</label><textarea id="studioQuestion" rows="3" maxlength="2000" required placeholder="Describe what you want to understand, compare or measure…"></textarea>
     <label for="studioKind">Investigation type</label><select id="studioKind"><option value="literature">Literature &amp; scientific reasoning</option><option value="data_analysis">Analyze measurements</option><option value="simulation">Numerical simulation</option><option value="experiment">Plan a physical experiment</option></select>
     <div class="studio-actions"><button class="button-primary" type="submit" id="studioGenerate">Develop with SI</button><button class="button-secondary" type="button" id="studioManual">Start a manual plan</button></div>
@@ -32,7 +32,7 @@
           <details class="studio-refine"><summary>Develop or revise this investigation with SI</summary><label for="studioRevisionPrompt">What should change?</label><textarea id="studioRevisionPrompt" rows="3" maxlength="2000" placeholder="Add a comparison, clarify the method, or adjust the research scope…"></textarea><button type="button" class="button-secondary" id="studioRevise">Generate revised plan</button><p class="micro">Creates a new revision. Previous plans remain in history; step completion resets and earlier calculations are marked out of date.</p></details>
         </section>
         <section id="studio-design" class="studio-panel" hidden>
-          <h2>Design the comparison</h2><p>Define what changes, what stays fixed and what you will measure. Sliders update the proposed trial layout; they do not predict an outcome.</p>
+          <h2>Design the comparison</h2><p>Set factors and controls. The preview shows planned trials, not predicted outcomes.</p>
           <label>Hypothesis<textarea id="designHypothesis" rows="2" placeholder="What relationship will this investigation test?"></textarea></label>
           <label>Response to measure, including units<input id="designOutcome" placeholder="For example: a defined flame dimension at a specified time"></label>
           <div class="studio-panel-heading"><h3>Independent variables</h3><button type="button" class="button-secondary" id="designAddVariable">Add a variable</button></div><div id="designVariables"></div>

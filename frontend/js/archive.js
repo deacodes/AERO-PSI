@@ -5,12 +5,10 @@
           jsonFetch('/api/v1/rankings/investigations'),
           jsonFetch('/api/v1/optical/runs?group=PSI101'), jsonFetch('/api/v1/optical/runs?group=PSI102')
         ]);
-        state.summary = summary; state.investigations = investigations; state.ranking = ranking; state.runs.PSI101 = runs101; state.runs.PSI102 = runs102;
-        $('#statusDot').classList.toggle('online', Boolean(health.ok)); $('#apiStatus').textContent = health.ok ? 'Archive connected' : 'Archive unavailable';
+        state.summary = summary; state.investigations = investigations; state.ranking = ranking; state.runs.PSI101 = runs101; state.runs.PSI102 = runs102; setAtlasGroups();
         $('#metricFiles').textContent = formatNumber(summary.file_count); $('#metricInvestigations').textContent = formatNumber(summary.investigation_count); $('#metricRuns').textContent = formatNumber(runs101.length + runs102.length);
         $('#rankFormula').textContent=ranking.formula; renderInvestigations(); renderRunCards(); populateOpticalRuns(); renderAtlasRuns(); loadAtlasGaps(); renderCoverage();
       } catch (error) {
-        $('#apiStatus').textContent = 'Start Python backend';
         $('#investigationRanks').innerHTML = `<div class="error-box">${escapeHTML(error.message)}. Run <b>python3 aero_psi_backend.py serve</b> from the project folder.</div>`;
       }
     }
