@@ -1,0 +1,32 @@
+# Local NASA source archive: retain locally, do not publish by default.
+DATA/
+
+# Generated AERO-PSI data products and temporary office conversions.
+aero_psi_catalog.json
+derived/
+cache/
+tmp/
+exports/
+*.parquet
+
+# Python and local runtime state.
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+
+# Editor and operating-system files.
+.DS_Store
+.vscode/
+.idea/
+
+# Frontend build artifacts.
+node_modules/
+dist/
+build/
+.next/
+coverage/
+
