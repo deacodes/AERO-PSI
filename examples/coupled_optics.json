@@ -1,0 +1,35 @@
+{
+  "scenario": {
+    "brownian_regime": "fuchs",
+    "initial_median_diameter_m": 1e-07,
+    "initial_geometric_std_dev": 1.3,
+    "section_count": 16,
+    "output_points": 5,
+    "residence_time_s": 30
+  },
+  "optics": {
+    "method": "mie",
+    "wavelength_vacuum_m": 5.5e-07,
+    "medium_refractive_index": 1.0,
+    "particle_refractive_index": {
+      "n": 1.5,
+      "k": 0.01,
+      "reference": "Synthetic optical assumption, not a NASA material measurement"
+    },
+    "angles_deg": [
+      0,
+      15,
+      30,
+      45,
+      60,
+      75,
+      90,
+      105,
+      120,
+      135,
+      150,
+      165,
+      180
+    ]
+  }
+}

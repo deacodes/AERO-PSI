@@ -1,0 +1,18 @@
+{
+  "question": "How do the supplied gravity assumptions change this aerosol scenario?",
+  "action": "execute",
+  "scenario": {
+    "brownian_regime": "fuchs",
+    "section_count": 16,
+    "output_points": 5,
+    "residence_time_s": 30,
+    "initial_number_concentration_m3": 1000000000,
+    "initial_median_diameter_m": 0.000001,
+    "initial_geometric_std_dev": 1.6,
+    "settling_deposition": true,
+    "settling_height_m": 0.2
+  },
+  "plan": [
+    {"tool": "gravity_comparison", "reason": "Compare explicit gravity endpoints with other scenario assumptions fixed."}
+  ]
+}

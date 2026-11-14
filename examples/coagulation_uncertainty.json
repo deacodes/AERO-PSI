@@ -1,0 +1,26 @@
+{
+  "scenario": {
+    "brownian_regime": "fuchs",
+    "section_count": 32,
+    "residence_time_s": 60,
+    "output_points": 11,
+    "initial_median_diameter_m": 1e-7,
+    "initial_geometric_std_dev": 1.6
+  },
+  "samples": 16,
+  "seed": 2026,
+  "uncertain_inputs": {
+    "initial_number_concentration_m3": {
+      "low": 1e10,
+      "high": 1e11,
+      "distribution": "log_uniform",
+      "reference": "Illustrative assumed range; not measured NASA uncertainty"
+    },
+    "sticking_efficiency": {
+      "low": 0.5,
+      "high": 1.0,
+      "distribution": "uniform",
+      "reference": "Illustrative independent assumption"
+    }
+  }
+}

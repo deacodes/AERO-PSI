@@ -1,0 +1,12 @@
+{
+  "method": "mie",
+  "wavelength_vacuum_m": 5.5e-7,
+  "medium_refractive_index": 1.0,
+  "particle_refractive_index": {"n": 1.5, "k": 0.01, "reference": "Synthetic optical assumption, not a NASA material measurement"},
+  "angles_deg": [0, 15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165, 180],
+  "distribution": {
+    "diameters_m": [5e-8, 1e-7, 2e-7],
+    "number_per_bin_m3": [1e8, 5e8, 1e8],
+    "source": {"reference": "Synthetic bin-number distribution"}
+  }
+}

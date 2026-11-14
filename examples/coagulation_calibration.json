@@ -1,0 +1,23 @@
+{
+  "scenario": {
+    "brownian_regime": "disabled",
+    "initial_number_concentration_m3": 10000000000,
+    "section_count": 16,
+    "residence_time_s": 10,
+    "output_points": 101,
+    "stability_fraction": 0.001
+  },
+  "parameter": "dilution_rate_s",
+  "lower": 0,
+  "upper": 0.04,
+  "candidate_count": 9,
+  "observable": "number_concentration_m3",
+  "observations": [
+    {"time_s": 0, "value": 10000000000, "source": {"reference": "Synthetic N(t)=1e10 exp(-0.02t), training"}},
+    {"time_s": 5, "value": 9048374180.359596, "source": {"reference": "Synthetic N(t)=1e10 exp(-0.02t), training"}}
+  ],
+  "validation_observations": [
+    {"time_s": 7, "value": 8693582353.988058, "source": {"reference": "Synthetic N(t)=1e10 exp(-0.02t), holdout"}},
+    {"time_s": 10, "value": 8187307530.779819, "source": {"reference": "Synthetic N(t)=1e10 exp(-0.02t), holdout"}}
+  ]
+}
