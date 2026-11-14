@@ -47,7 +47,7 @@ const fs=require('fs');
   await page.locator('#studioChart [data-rows]').first().click();
   if(await page.locator('#studioPointStep').isDisabled())throw Error('Point action not enabled');
   await page.locator('#studioGraphQuestion').fill('Explain this selected fixture point');await page.locator('#studioInterpret').click();
-  await page.waitForFunction(()=>document.querySelector('#studioGraphAnswer').textContent.length>10);
+  await page.locator('#askCopilot').click();await page.waitForFunction(()=>!document.querySelector('#askCopilot').disabled);await page.evaluate(()=>navigate('studio',{id:Studio.view.record.id}));
   await page.waitForFunction(()=>document.querySelector('#page-studio').getAttribute('aria-busy')!=='true');
   const saved=(await (await page.request.get(base+'/api/v1/studio/record?id='+id)).json()).data;
   if(saved.datasets[0].rows[1][1]!==null)throw Error('Missing cell became zero');

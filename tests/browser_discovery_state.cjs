@@ -1,6 +1,6 @@
 const {chromium}=require('playwright');
 (async()=>{const browser=await chromium.launch({headless:true,executablePath:process.env.CHROME_PATH});try{
-const p=await browser.newPage({viewport:{width:1440,height:1000}});await p.goto('http://127.0.0.1:8765/archive');await p.waitForFunction(()=>document.documentElement.dataset.ready==='true'&&typeof discovery!=='undefined'&&discovery.rankCurrent);await p.locator('[data-archive-tab=ranking]').click();
+const p=await browser.newPage({viewport:{width:1440,height:1000}});await p.goto('http://127.0.0.1:8765/archive');await p.waitForFunction(()=>document.documentElement.dataset.ready==='true'&&typeof discovery!=='undefined'&&discovery.rankCurrent);await p.evaluate(()=>{document.querySelector('#gapAnalysisMode').value='basic';document.querySelector('#gapAnalysisMode').dispatchEvent(new Event('change'));});await p.locator('[data-archive-tab=ranking]').click();
 const ledgers=await p.evaluate(()=>discovery.ranking.items.map(i=>({score:i.score,sum:Math.round(Object.values(i.components).reduce((a,c)=>a+c.points,0)*100)/100})));if(ledgers.some(i=>i.score!==i.sum))throw Error('Score ledger mismatch');
 await p.locator('#rankingQuestion').fill('droplet extinction');if(!await p.locator('#rankToCoverage').isDisabled()||await p.locator('[data-plan-group]:enabled').count())throw Error('Stale ranking actions active');
 const before=await p.locator('#gapQuestion').inputValue();await p.evaluate(()=>openCoverage('PSI101'));if(await p.locator('#gapQuestion').inputValue()!==before)throw Error('Stale handoff active');
