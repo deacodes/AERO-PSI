@@ -1,0 +1,5 @@
+source_path,experimental_record_key,reviewer,reviewed_at,notes
+PSI102/Kapton/kaptonGMT257 zgy average.xls,NASA_PSI102_RUN08,NASA PSI directory listing,2026-11-14,Official PSI directory hierarchy: Kapton / Run 08. Timestamp content is retained as a quality-review flag and does not override source directory provenance.
+PSI102/Kapton/kaptonGMT257.xls,NASA_PSI102_RUN08,NASA PSI directory listing,2026-11-14,Official PSI directory hierarchy: Kapton / Run 08. Timestamp content is retained as a quality-review flag and does not override source directory provenance.
+PSI102/Teflon/TeflonGMT257hkp.xls,NASA_PSI102_RUN10,NASA PSI directory listing,2026-11-14,Official PSI directory hierarchy: Teflon / Run 10.
+PSI102/Teflon/TeflonGMT257hkp zgy average.xls,NASA_PSI102_RUN10,NASA PSI directory listing,2026-11-14,Official PSI directory hierarchy: Teflon / Run 10.
