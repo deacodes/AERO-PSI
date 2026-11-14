@@ -30,3 +30,7 @@ build/
 .next/
 coverage/
 
+# Local visual checks and generated submission artifacts.
+.impeccable/review/
+output/
+
