@@ -32,6 +32,20 @@ class TableDiscussionTests(unittest.TestCase):
    self.assertEqual(ask.call_args.kwargs['history'],p['history'])
    self.assertEqual(result['table_analysis']['row_count'],400)
    self.assertNotIn('First 30',result['table_scope'])
+ def test_imported_sentinel_codes_excluded_without_changing_source(self):
+  import tempfile,gzip,json
+  from pathlib import Path
+  with tempfile.TemporaryDirectory() as folder:
+   root=Path(folder).resolve();(root/'derived').mkdir();file=root/'derived/run.gz'
+   with gzip.open(file,'wt') as f:
+    for i,value in enumerate([-999,-10,0,20],2):f.write(json.dumps({'source_row':i,'values':{'PTrakMeasurement(PtPerCC)':value}})+'\n')
+   before=file.read_bytes()
+   page={'source_path':'run.xls','source_sha256':'abc','worksheet':'Sheet1','columns':['PTrakMeasurement(PtPerCC)']}
+   with patch('aero_psi.table_discussion.root',return_value=root),patch('aero_psi.table_discussion.manifest_records',return_value=[{'source_path':'run.xls','status':'imported','derived_path':'derived/run.gz'}]):
+    a=analyze({'raw_tables':[]},{},page)
+   self.assertEqual(a['summaries'][0]['possible_sentinel'],2)
+   self.assertEqual(a['summaries'][0]['min']['value'],0)
+   self.assertEqual(before,file.read_bytes())
  def test_general_science_mode_does_not_display_unused_data(self):
   with patch('aero_psi.copilot.ask',return_value={'sources':[]}):
    result=interpret(self.catalog,{'source_path':self.path,'mode':'explain'})

@@ -70,7 +70,7 @@ def analyze(catalog, payload, page):
         for c in columns:
             value = number(values.get(c)); item = stats[c]
             if value is not None and not math.isfinite(value): value = None
-            if is_run and value == -10:
+            if is_run and value in (-10, -999):
                 item['possible_sentinel'] += 1; value = None
             elif value is None: item['missing_or_nonnumeric'] += 1
             point = {'row':r,'value':value}
@@ -95,6 +95,6 @@ def analyze(catalog, payload, page):
             'x_label':'Source row (not elapsed time)','columns':columns,'summaries':summaries,'charts':charts,
             'limitations':['Only this imported worksheet is analyzed; other workbook sheets are not included. Numeric summaries cover the listed columns, not every column.',
                           'Values retain source column labels and units; calibration and instrument validity are not established.',
-                          'Possible -10 instrument sentinel values are excluded from numeric summaries and plots for imported runs; confirm the channel convention.',
+                          'Possible -10 and -999 instrument sentinel values are excluded from numeric summaries and plots for imported runs; confirm the channel convention.',
                           'Graphs use source-row order, not inferred time. Lines break at excluded or missing rows. Large plots retain sampled extrema; summaries use every matching row.',
                           'First-to-last differences and extrema are descriptive, not evidence of a mechanism or a monotonic trend.']}
