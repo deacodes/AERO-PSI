@@ -5,14 +5,16 @@ import re
 
 
 class AIResponseError(ValueError):
-    pass
+    def __init__(self, message, *, retryable=False):
+        super().__init__(message)
+        self.retryable=retryable
 
 
 def parse_response(response):
     candidates=getattr(response,'candidates',None) or []
     reason=str(getattr(candidates[0],'finish_reason','')) if candidates else ''
     if 'MAX_TOKENS' in reason:
-        raise AIResponseError('The AI response reached its length limit before completing. Request a narrower investigation or revise one part at a time.')
+        raise AIResponseError('The AI response reached its length limit before completing. Request a narrower investigation or revise one part at a time.', retryable=True)
     if any(r in reason for r in ('SAFETY','BLOCKLIST','PROHIBITED_CONTENT')):
         raise AIResponseError('The AI service declined this response. Reframe the request around literature review, simulation or measurement planning.')
     raw=(getattr(response,'text',None) or '').strip()
@@ -20,8 +22,8 @@ def parse_response(response):
     try:
         value=json.loads(raw)
     except (ValueError,TypeError) as exc:
-        raise AIResponseError('The AI returned an incomplete or malformed response. Your saved work is unchanged. Retry the request; no default answer was substituted.') from exc
-    if not isinstance(value,dict): raise AIResponseError('The AI returned the wrong response format. Retry the request.')
+        raise AIResponseError('The AI returned an incomplete or malformed response. Your saved work is unchanged. Retry the request; no default answer was substituted.', retryable=True) from exc
+    if not isinstance(value,dict): raise AIResponseError('The AI returned the wrong response format. Retry the request.', retryable=True)
     return value
 
 
@@ -57,3 +59,13 @@ def studio_schema(tools,source_ids):
     design=object_schema({k:string for k in ['hypothesis','outcome','controls','measurement_method','analysis']}|{'variables':{'type':'array','items':variable,'maxItems':4},'replicates':{'type':'integer','minimum':1,'maximum':20}})
     chart=object_schema({'type':{'type':'string','enum':['line','scatter','bar','histogram','heatmap']},**{k:string for k in ['title','purpose','required_data']}})
     return object_schema({'title':string,'summary':string,'safety':string,'limitations':strings,'design':design,'suggested_charts':{'type':'array','items':chart,'maxItems':4},'steps':{'type':'array','items':step,'minItems':3,'maxItems':8}})
+
+
+def scientific_answer_schema(source_ids):
+    citation={'type':'string','enum':sorted(source_ids)} if source_ids else string_schema()
+    citations={'type':'array','items':citation,'maxItems':min(12,len(source_ids))}
+    claim=object_schema({'claim':string_schema(),'source_ids':dict(citations,**({'minItems':1} if source_ids else {}))})
+    claims={'type':'array','items':claim,'maxItems':6 if source_ids else 0}
+    # With no evidence, claims must be empty; the item schema need not be satisfiable.
+    return object_schema({'scientific_explanation':string_schema(),'observed_in_source':claims,
+                          'model_result':claims,'unknown_or_limitation':{'type':'array','items':string_schema(),'maxItems':6},'sources':citations})

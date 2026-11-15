@@ -29,6 +29,20 @@ class ScientificAnswers(unittest.TestCase):
         fake=SimpleNamespace(models=SimpleNamespace(generate_content=lambda **kwargs:SimpleNamespace(text=json.dumps(result))))
         return patch('google.genai.Client',return_value=fake)
 
+    def test_explicit_retrieval_scope_survives_auto_mode(self):
+        with patch('aero_psi_copilot.retrieve') as retrieve, self.mock_client(self.response()):
+            ask(self.catalog,'Explain this model',retrieve_sources=False,information_mode='auto')
+        retrieve.assert_not_called()
+
+    def test_model_context_preserves_initial_mean_and_definitions(self):
+        from aero_psi_model_interpretation import context_evidence
+        source=context_evidence({'model':'coagulation','inputs':{'initial_median_diameter_m':1e-7,'initial_geometric_std_dev':1.6,'residence_time_s':0}})
+        context=json.loads(source['text'])
+        self.assertGreater(context['initial']['equivalent_volume_mean_diameter_m'],1e-7)
+        self.assertIn('not the volume-mean',context['diameter_definitions']['initial_median_diameter_m'])
+        self.assertIn('not fitted',context['validation_status'])
+        self.assertLess(len(source['text']),12000)
+
     def test_context_general_mode_excludes_attached_evidence(self):
         with patch('aero_psi_copilot.retrieve') as retrieve, self.mock_client(self.response()) as client:
             result=ask(self.catalog,'Explain thermal motion',runtime_evidence=[{'id':'private-row','text':'ATTACHED_ROW_SENTINEL'}],information_mode='explain')
@@ -49,6 +63,40 @@ class ScientificAnswers(unittest.TestCase):
             result=ask(self.catalog,'Explain record',runtime_evidence=[{'id':'row','text':'Recorded value 12'}],information_mode='auto')
         self.assertFalse(result['information_scope']['source_claims_included'])
         self.assertFalse(result['information_scope']['general_science_included'])
+
+    def test_malformed_json_retries_once_and_recovers(self):
+        calls=[]
+        def generate(**kwargs):
+            calls.append(kwargs)
+            return SimpleNamespace(text='{"scientific_explanation":' if len(calls)==1 else json.dumps(self.response()))
+        fake=SimpleNamespace(models=SimpleNamespace(generate_content=generate))
+        with patch('google.genai.Client',return_value=fake):r=answer_question(self.catalog,'Explain Brownian motion')
+        self.assertEqual(r['service']['status'],'generated');self.assertEqual(len(calls),2)
+        self.assertIsNotNone(calls[0]['config'].response_json_schema)
+    def test_repeated_malformed_json_returns_clear_error(self):
+        calls=[]
+        def generate(**kwargs):calls.append(kwargs);return SimpleNamespace(text='not json')
+        with patch('google.genai.Client',return_value=SimpleNamespace(models=SimpleNamespace(generate_content=generate))):
+            r=answer_question(self.catalog,'Explain scattering')
+        self.assertEqual(len(calls),2);self.assertEqual(r['service']['status'],'unavailable')
+        self.assertIn('malformed',r['service']['reason']);self.assertNotIn('JSONDecodeError',r['service']['reason'])
+    def test_truncated_json_is_retried_before_publication(self):
+        calls=[]
+        def generate(**kwargs):
+            calls.append(kwargs)
+            return SimpleNamespace(text=json.dumps(self.response()),candidates=[SimpleNamespace(finish_reason='MAX_TOKENS' if len(calls)==1 else 'STOP')])
+        with patch('google.genai.Client',return_value=SimpleNamespace(models=SimpleNamespace(generate_content=generate))):
+            r=answer_question(self.catalog,'Explain temperature')
+        self.assertEqual(len(calls),2);self.assertEqual(r['service']['status'],'generated')
+
+    def test_compact_citations_resolve_to_original_sources(self):
+        source={'id':'table:NASA/original worksheet.csv:42','text':'Recorded count is 12','source_path':'NASA/original worksheet.csv'}
+        answer=self.response(observed_in_source=[{'claim':'The record contains count 12.','source_ids':['S1']}],sources=['S1'])
+        with patch('aero_psi_copilot.retrieve',return_value=[source]),self.mock_client(answer):
+            result=answer_question(self.catalog,'What was recorded?')
+        self.assertEqual(result['service']['status'],'generated')
+        self.assertEqual(result['sources'][0]['id'],source['id'])
+        self.assertEqual(result['observed_in_source'][0]['source_ids'],[source['id']])
 
     def test_general_question_without_archive_match_gets_science(self):
         with self.mock_client(self.response()):r=answer_question(self.catalog,'Could Brownian motion continue in zero gravity?')
