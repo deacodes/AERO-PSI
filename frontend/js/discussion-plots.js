@@ -29,6 +29,12 @@ const DiscussionPlots=(()=>{
    note.textContent=(chart.sampled?'Plot reduced with local extrema retained; statistics use all matching rows. ':'Plot shows every matching row. ')+'Units follow the source column. Gaps are not interpolated; patterns do not establish causation.';inspect(0);
   }
   select.onchange=draw;draw();
+  const details=document.createElement('details');const summary=document.createElement('summary');summary.textContent='Inspect calculated patterns and operating changes';details.append(summary);
+  const facts=document.createElement('div');
+  for(const s of analysis.summaries||[]){const p=document.createElement('p');p.className='micro';p.textContent=`${s.column}: first ${format(s.first.value)} (row ${s.first.row}); last ${format(s.last.value)} (row ${s.last.row}); change ${format(s.first_to_last_change)}. Adjacent usable steps: ${s.adjacent_increases} increases, ${s.adjacent_decreases} decreases, ${s.adjacent_unchanged} unchanged.`;facts.append(p);}
+  for(const s of analysis.elapsed_time_diagnostics||[]){const p=document.createElement('p');p.className='micro';p.textContent=`${s.column}: ${s.first.value} to ${s.last.value}; ${s.adjacent_decreases} backwards steps (possible resets). Time units follow the column label.`;facts.append(p);}
+  for(const s of analysis.operating_state_changes||[]){const p=document.createElement('p');p.className='micro';p.textContent=`${s.column}: ${s.transition_count} recorded transitions.`+(s.examples.length?' Examples: '+s.examples.map(e=>`row ${e.row}: ${e.from} → ${e.to}`).join('; '):'');facts.append(p);}
+  details.append(facts);host.append(details);
  }
  return {mount};
 })();

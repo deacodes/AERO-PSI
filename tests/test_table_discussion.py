@@ -46,6 +46,17 @@ class TableDiscussionTests(unittest.TestCase):
    self.assertEqual(a['summaries'][0]['possible_sentinel'],2)
    self.assertEqual(a['summaries'][0]['min']['value'],0)
    self.assertEqual(before,file.read_bytes())
+ def test_state_changes_time_resets_and_adjacent_trends(self):
+  rows=[{'Concentration':v,'ElapsedTestTime(Secs)':t,'HeatingInProgress':h} for v,t,h in [(1,0,0),(3,1,1),(None,2,1),(2,0,0),(4,1,0)]]
+  table=self.catalog['raw_tables'][0];table['rows']=rows;table['columns']=list(rows[0])
+  payload={'source_path':self.path,'question':'concentration'}
+  a=analyze(self.catalog,payload,table_page(self.catalog,payload))
+  v=next(s for s in a['summaries'] if s['column']=='Concentration')
+  self.assertEqual(v['adjacent_increases'],2);self.assertEqual(v['adjacent_decreases'],0)
+  self.assertEqual(v['first_to_last_change'],3)
+  self.assertEqual(a['elapsed_time_diagnostics'][0]['adjacent_decreases'],1)
+  self.assertEqual(a['operating_state_changes'][0]['transition_count'],2)
+  self.assertEqual(a['operating_state_changes'][0]['examples'][0]['row'],3)
  def test_general_science_mode_does_not_display_unused_data(self):
   with patch('aero_psi.copilot.ask',return_value={'sources':[]}):
    result=interpret(self.catalog,{'source_path':self.path,'mode':'explain'})
