@@ -104,25 +104,25 @@ An integrated workspace lets visitors create and revise research studies, attach
 AERO-PSI has **four primary analysis capabilities**—evidence exploration, coagulation, scattering, and gap finding—connected by a scientific-intelligence layer. The two input streams are NASA source evidence and user-defined particle scenarios.
 
 ```mermaid
+
 flowchart LR
-    subgraph E[Evidence workflow]
-      A[NASA PSI investigations] --> B[Read-only source catalog]
-      B --> C[Tables, reports, workbooks, run records]
-      C --> D[Experiment gap finder]
-      D --> E1[Measurement and validation plan]
-      C --> F[Source-row analysis and inline plots]
-    end
+    A["NASA PSI investigations"] --> B["Read-only source catalog"]
+    B --> C["Tables, reports, workbooks, run records"]
 
-    subgraph P[Physics workflow]
-      G[Particle scenario inputs] --> H[Sectional coagulation solver]
-      H --> I[Particle-size distribution evolution]
-      I --> J[Multi-angle scattering solver]
-    end
+    C --> D["Experiment gap finder"]
+    D --> E["Measurement and validation plan"]
 
-    F --> K[Scientific Intelligence]
+    C --> F["Source-row analysis and inline plots"]
+    F --> K["Scientific Intelligence"]
+
+    G["Particle scenario inputs"] --> H["Sectional coagulation solver"]
+    H --> I["Particle-size distribution evolution"]
+    I --> J["Multi-angle scattering solver"]
     H --> K
     J --> K
-    K --> L[Evidence-linked explanation]
+
+    K --> L["Evidence-linked explanation"]
+
 ```
 
 **How to explore it:** Select a NASA investigation and examine its source records, simulate a particle population with documented assumptions, inspect its modeled optical response, then ask SI to explain the selected evidence or calculation. The gap finder can help identify what further measurements would be needed to test the proposed interpretation.
