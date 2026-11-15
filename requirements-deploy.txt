@@ -1,0 +1,7 @@
+# Versions verified in the project environment. Scientific runtime only.
+-r requirements.txt
+google-genai==3.3.0
+google-auth==2.62.2
+requests==2.34.2
+numpy==2.4.6
+scipy==1.18.1

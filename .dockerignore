@@ -1,0 +1,15 @@
+**
+!Dockerfile
+!requirements.txt
+!requirements-deploy.txt
+!aero_psi/
+!aero_psi/**
+!frontend/
+!frontend/**
+!mappings/
+!mappings/**
+!deploy/
+!deploy/start.sh
+**/__pycache__/
+**/*.pyc
+**/.DS_Store
