@@ -20,6 +20,17 @@ class GapSI(unittest.TestCase):
         self.assertEqual(r['groups'],['FLEX']);self.assertIn('computed_column_summary',calls[1])
         self.assertEqual(r['findings'][0]['source_ids'][0],r['sources'][0]['id'])
         self.assertEqual(r['requirements'][0]['name'],'Oxygen at extinction')
+    def test_plan_schema_constrains_source_paths_and_keys(self):
+        schemas=[]
+        def provider(prompt,schema):
+            schemas.append(schema)
+            return self.plan() if len(schemas)==1 else self.answer()
+        review(self.catalog,{'question':'Review FLEX pressure','group':'FLEX'},provider)
+        request=schemas[0]['properties']['measurements']['items']['properties']
+        self.assertTrue(all(path.startswith('FLEX/') for path in request['path']['enum']))
+        self.assertIn('pressure',request['fields']['items']['enum'])
+        self.assertNotIn('invented_measurement',request['fields']['items']['enum'])
+
     def test_invented_column_stops_before_synthesis(self):
         p=self.plan();p['measurements'][0]['fields']=['invented_measurement']
         with patch('aero_psi_gap_si.tools') as tool:r=review(self.catalog,{'question':'Compare flames'},lambda *_:p)
