@@ -1,3 +1,28 @@
+## SI workspace and copy cleanup — 15 November 2026
+
+- [x] Remove the persistent investigation bars and floating archive SI panel; retain saved-study context internally and a local return control beside model linking.
+- [x] Route archive, model, graph-point, gap and Studio dataset interpretation into the SI page, with frozen source context, follow-ups and explicit clearing.
+- [x] Shorten introductions and helper text across all seven pages; retain units, provenance, scientific limitations and actionable errors.
+- [x] Remove four live legacy records matching browser-test prompts; recovery copies and a manifest are in `exports/test-investigations-removed-2026-11-15`. Preserve authored and ambiguous records.
+- [x] Verify 163 Python tests, shared SI browser routing and Studio regression with isolated storage and no paid AI calls.
+
+# Current pass: actionable gaps and a connected investigation
+
+- [x] Assess question-specific prerequisites using numeric values, report leads, and explicit source scope.
+- [x] Explain what existing evidence supports and what blocks the requested conclusion; never infer a literature gap from archive absence.
+- [x] Show a source-linked coverage matrix and prioritized next actions with a transparent rule and honest ties.
+- [x] Carry the question, selected finding, evidence and assumptions into a saved Studio draft without requiring AI.
+- [x] Preserve that draft while visiting models; attach backend-recomputed results and inputs to it.
+- [x] Preserve research evidence when SI revises the saved plan; expose source and model context in the interface and exports.
+- [x] Handle unsupported questions, stale selections, errors, reloads and conflicting revisions.
+- [x] Test real archive workflows, backend contracts and desktop/mobile frontend parity; do not alter NASA sources.
+
+Verification: 163 Python tests passed, including seven new readiness/handoff tests. The existing research browser regression and the new Archive → assessment → Studio → scattering → reload journey passed. Desktop/mobile layouts were inspected; source hashes matched all 180 NASA files. AI-disabled checks made no paid provider calls. Test investigations were isolated under `/tmp`, outside the user library.
+
+Backend/frontend parity: `/research/explore` returns the assessment displayed by the gap matrix; `/atlas/plan` and the SI measurement-planning tool include that assessment. `/studio/from-research` recomputes the assessment and verifies selected rows; `/studio/attach-model` recomputes model inputs, checks the saved revision, and records provenance. Studio displays linked scenarios and retains evidence during SI revision; JSON exports contain the saved context and Markdown briefs describe linked scenarios. The active study survives navigation and reload.
+
+Limits: requirements and priorities are declared workflow rules, not a learned novelty score. Report retrieval supplies leads rather than exhaustive review. Measurements are not automatically calibrated or comparable. Model links remain assumed scenarios, not fits to NASA measurements. Broader live SI answer evaluation and public deployment remain outside these two objectives. One concurrent browser run timed out; the isolated research regression and direct saved-record reload passed.
+
 # AERO-PSI: full project checklist
 
 This is the execution checklist for the **interactive web platform**. The NASA `DATA/` folder is the immutable source archive. Derived datasets, catalogs, caches, and generated outputs must live outside that folder.
@@ -547,3 +572,32 @@ Current archive status: all 49 eligible files (39 distinct contents) extracted i
 - [ ] Fully automate TEM/image processing without the underlying image corpus and validation.
 - [ ] Pool all NASA investigations as one statistically comparable dataset.
 
+
+## Homepage and SI evidence selection — 2026-11-15
+
+- [x] Restore researcher-facing explanations and stacked homepage sections with expandable cards and selectable research examples.
+- [x] Browse and preview NASA datasets inside SI; attach a table while preserving the draft question. Table context explicitly covers columns and up to three sample rows.
+- [x] Offer project evidence, general scientific knowledge, or both; apply the selected scope in contextual backend requests and distinguish generated answer origins. No web-search claim.
+- [x] Verify 166 backend tests and browser tests for homepage interactions, evidence selection, source-mode isolation, and existing contextual SI actions. Browser AI calls mocked; no paid calls.
+
+### Homepage narrative and scientific help
+- [x] Remove sidebar archive connection status and dot.
+- [x] Group dataset actions into investigation and SI actions.
+- [x] Reorder homepage: introduction, importance with NASA imagery, problem, platform approach, interactive examples and boxed CTA; expand paragraph explanations.
+- [x] Add keyboard/touch/hover help for source headers and technical model inputs; retain original headings and flag unverified definitions.
+- [x] Verify archive help interactions, action grouping, homepage ordering and existing evidence attachment in browser tests.
+
+## SI-led gap review — 15 November 2026
+- [x] Default Gap Finder to explicit SI review; retain a separately selected basic evidence check. Navigation alone does not trigger paid calls.
+- [x] Two-stage structured Vertex review: semantic question interpretation and bounded source/column tool requests, followed by source-linked synthesis.
+- [x] Validate selected investigations, exact table paths/fields and citation identities; no generated-code execution or invented measurements.
+- [x] Show clarification, out-of-scope and provider failure separately without substituting canned findings.
+- [x] Show requirements, supported evidence, unresolved questions, next actions, source excerpts and tool trace; export review and draft a Studio investigation.
+- [x] 175 backend tests passed; SI-state browser test passed. One live two-call Vertex review successfully interpreted everyday wording about thinner air, selected three investigations and used actual column summaries.
+- [ ] Independent evaluation of scientific claim support and broader question coverage remains necessary; successful generation is not scientific validation.
+
+### Gap review clarification and measurement selection
+- [x] Treat complementary measurements and run conditions as joint review scope; only an unidentified research objective blocks review.
+- [x] Verify the previous broad PSI101 smoke-growth question produces a live SI assessment rather than an optional clarification.
+- [x] Open the table and plot fields requested by SI; expose View selected measurements.
+- [x] 182 backend tests passed; browser verification includes SI-selected plot fields and review states.
