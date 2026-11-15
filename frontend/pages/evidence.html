@@ -5,10 +5,15 @@
       <div class="evidence-layout">
         <section class="copilot-panel">
           <div class="panel-title"><div><h3>Ask SI</h3></div></div>
+          <div id="scienceChatScroll" class="science-chat-scroll" role="region" aria-label="SI conversation" tabindex="0">
+            <div id="scienceConversationHistory"></div>
+            <p id="scienceCurrentQuestion" class="science-user-message"></p>
+            <div id="copilotAnswer" class="answer" aria-live="polite"><div class="answer-section"><p>Ask a question to begin.</p></div></div>
+          </div>
+          <div class="science-composer">
           <div class="prompt-suggestions" aria-label="Suggested science questions"><button type="button" data-prompt="Why can smoke particles coagulate in microgravity?">Coagulation without gravity</button><button type="button" data-prompt="How does particle size change angular scattering, and when does Rayleigh theory stop working?">Understand scattering</button><button type="button" data-prompt="Explain what PSI-101 and PSI-102 can tell us about spacecraft smoke, and distinguish that from general aerosol physics.">Connect science to NASA evidence</button></div>
           <label for="answerMode">Information sources</label><select id="answerMode"><option value="auto">Both: evidence + general science</option><option value="explain">General scientific knowledge</option><option value="evidence">Project evidence only</option></select>
-          <div class="prompt-row"><textarea id="copilotQuestion" aria-label="Scientific question" placeholder="Ask a science question or follow up on an answer…"></textarea><button id="askCopilot" class="button-primary" type="button">Ask SI</button></div><div class="science-conversation-controls"><p id="scienceConversationStatus" role="status"></p><button id="clearScienceConversation" type="button" class="button-text">New conversation</button></div><div id="scienceConversationHistory"></div>
-          <p id="scienceCurrentQuestion" class="science-user-message"></p><div id="copilotAnswer" class="answer" aria-live="polite"><div class="answer-section"><p>Ask a question to begin.</p></div></div>
+          <div class="prompt-row"><textarea id="copilotQuestion" aria-label="Scientific question" placeholder="Ask a science question or follow up on an answer…"></textarea><button id="askCopilot" class="button-primary" type="button">Ask SI</button></div><div class="science-conversation-controls"><p id="scienceConversationStatus" role="status"></p><button id="clearScienceConversation" type="button" class="button-text">New conversation</button></div>          </div>
 
         </section>
         <aside class="library-panel">
