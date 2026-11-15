@@ -3,12 +3,13 @@ renderCopilot=function(answer){
   const scope=answer.information_scope;if(scope){const labels={auto:'Evidence + general science',evidence:'Project evidence only',explain:'General scientific knowledge'};sections.push(`<p class="answer-origin"><strong>${escapeHTML(labels[scope.requested]||'Scientific answer')}</strong> · ${scope.general_science_included&&scope.source_claims_included?'Includes scientific background and cited findings':scope.source_claims_included?'Includes cited findings':scope.general_science_included?'Includes general scientific reasoning':'No generated findings'}.</p>`);}const unavailable=['science_unavailable','educational_unavailable','evidence_only_fallback'].includes(answer.mode);
   if(unavailable)sections.push(`<div class="error-box" role="status"><strong>AI answer unavailable</strong><p>${escapeHTML(answer.service?.reason || answer.unknown_or_limitation?.[0] || 'No generated answer was returned.')}</p><p>Retrieved records below are source material, not an AI scientific answer.</p></div>`);
 
-  if(answer.scientific_explanation)sections.push(`<section class="answer-section"><h3>General scientific reasoning</h3><div class="evidence-prose">${richText(answer.scientific_explanation)}</div></section>`);
-  else if(answer.answer&&!unavailable)sections.push(`<section class="answer-section"><h3>General scientific reasoning</h3><div class="evidence-prose">${richText(answer.answer)}</div></section>`);
+  if(answer.table_analysis)sections.push('<div class="discussion-plot-host"></div>');
+  if(answer.scientific_explanation)sections.push(`<section class="answer-section"><h3>${answer.table_analysis?'Interpretation of this dataset':'General scientific reasoning'}</h3><div class="evidence-prose">${richText(answer.scientific_explanation)}</div></section>`);
+  else if(answer.answer&&!unavailable)sections.push(`<section class="answer-section"><h3>${answer.table_analysis?'Interpretation of this dataset':'General scientific reasoning'}</h3><div class="evidence-prose">${richText(answer.answer)}</div></section>`);
   for(const [key,title] of [['observed_in_source','Cited evidence'],['model_result','Model calculations'],['unknown_or_limitation','What remains uncertain']]){
     if(answer[key]?.length&&!(unavailable&&key==='unknown_or_limitation'))sections.push(`<section class="answer-section"><h3>${title}</h3>${answer[key].map(v=>`<div class="evidence-prose">${richText(v)}${v.source_ids?.length?`<p class="micro">Citations: ${v.source_ids.map(escapeHTML).join(', ')}</p>`:''}</div>`).join('')}</section>`);
   }
-  $('#copilotAnswer').innerHTML=sections.join('')||'<p>No answer was returned. Try again or ask a more specific question.</p>';state.copilotSources=answer.sources||[];$('#sourceSearch').disabled=!state.copilotSources.length;renderSourceTrail(state.copilotSources);
+  $('#copilotAnswer').innerHTML=sections.join('')||'<p>No answer was returned. Try again or ask a more specific question.</p>';if(answer.table_analysis)DiscussionPlots.mount($('#copilotAnswer .discussion-plot-host'),answer.table_analysis);state.copilotSources=answer.sources||[];$('#sourceSearch').disabled=!state.copilotSources.length;renderSourceTrail(state.copilotSources);
 };
 function referenceLink(source){
   if(!source.source_url)return '';

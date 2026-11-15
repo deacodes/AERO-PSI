@@ -77,10 +77,21 @@ def interpret(catalog,payload):
             offset+=100
         if not found:raise ValueError('Selected source row was not found')
         page['rows']=[found]
-    scope=f"Source row {selected}" if selected is not None else f"First {len(page['rows'])} rows of the requested page/filter; not the full dataset"
-    evidence={'id':'runtime:archive-table','kind':'verified_source_table','title':'Verified archive table context','source_path':page['source_path'],'source_range':scope,'text':json.dumps(page,ensure_ascii=False)}
-    # Keep table context intact rather than silently cutting off wide rows.
-    evidence['text']=json.dumps({'columns':page['columns'],'rows':page['rows'][:3],'total_rows':page['total_rows'],'matching_rows':page['matching_rows'],'scope':scope+'; at most three source rows supplied as examples','source_sha256':page['source_sha256']},ensure_ascii=False)
-    answer=ask(catalog,payload.get('question','Summarize what this dataset records, its useful comparisons and its limitations.'),runtime_evidence=[evidence],allow_background=True,history=payload.get('history'),information_mode=payload.get('mode','auto'))
-    answer['table_scope']=scope+'; at most three source rows supplied as examples'
+    from .table_discussion import analyze
+    analysis=analyze(catalog,payload,page)
+    scope=analysis['scope']
+    # Entire matched worksheet is summarized deterministically; never ask SI to
+    # infer full-run trends from a handful of preview rows.
+    evidence={'id':'runtime:archive-table','kind':'computed_table_summary','title':'Selected dataset: computed descriptive statistics',
+              'source_path':page['source_path'],'source_range':scope,
+              'text':json.dumps({k:v for k,v in analysis.items() if k!='charts'},ensure_ascii=False)}
+    answer=ask(catalog,payload.get('question','Summarize what this dataset records, its useful comparisons and its limitations.'),
+               runtime_evidence=[evidence],allow_background=True,history=payload.get('history'),
+               retrieve_sources=False,information_mode=payload.get('mode','auto'))
+    if payload.get('mode','auto')!='explain':
+        answer['table_analysis']=analysis
+        answer['table_scope']=scope
+        # Keep the actual source inspectable even if the model omits its citation.
+        if not any(s['id']==evidence['id'] for s in answer.get('sources',[])):
+            answer.setdefault('sources',[]).append({k:v for k,v in evidence.items() if k!='text'})
     return answer

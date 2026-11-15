@@ -17,7 +17,8 @@ function revealScienceAnswer(){
 async function askScienceQuestion(){
   const question=$('#copilotQuestion').value.trim();if(!question)return;
   const epoch=++scienceConversation.epoch;const button=$('#askCopilot');button.disabled=true;button.textContent='Thinking…';
-  $('#scienceConversationHistory').innerHTML=scienceConversation.turns.map(t=>`<article class="science-prior-turn"><div class="science-user-message"><strong>You</strong><p>${escapeHTML(t.question)}</p></div><div class="evidence-prose"><strong>SI</strong>${richText(t.answer)}</div>${t.sources?.length?`<details><summary>Sources for this answer</summary>${t.sources.map(source=>`<p>${escapeHTML(source.title||source.source_path||source.id)}</p>`).join('')}</details>`:''}</article>`).join('');
+  $('#scienceConversationHistory').innerHTML=scienceConversation.turns.map(t=>`<article class="science-prior-turn"><div class="science-user-message"><strong>You</strong><p>${escapeHTML(t.question)}</p></div><div class="evidence-prose"><strong>SI</strong>${richText(t.answer)}</div>${t.table_analysis?'<div class="discussion-plot-host"></div>':''}${t.sources?.length?`<details><summary>Sources for this answer</summary>${t.sources.map(source=>`<p>${escapeHTML(source.title||source.source_path||source.id)}</p>`).join('')}</details>`:''}</article>`).join('');
+  $$('#scienceConversationHistory .science-prior-turn').forEach((el,i)=>{const a=scienceConversation.turns[i].table_analysis;if(a)DiscussionPlots.mount(el.querySelector('.discussion-plot-host'),a);});
   $('#scienceCurrentQuestion').textContent=question;$('#scienceConversationStatus').textContent='Thinking…';$('#copilotAnswer').innerHTML='<p class="execution-pending">Thinking…</p>';revealScienceAnswer();
   try{
     const context=scienceConversation.context;
@@ -26,7 +27,7 @@ async function askScienceQuestion(){
     const unavailable=['science_unavailable','educational_unavailable','evidence_only_fallback'].includes(answer.mode);
     $('#scienceConversationStatus').textContent=unavailable?'SI is unavailable.':'Ask a follow-up.';
     if(!unavailable){const text=[answer.scientific_explanation||answer.answer,...(answer.observed_in_source||[]),...(answer.model_result||[]),...(answer.unknown_or_limitation||[])].filter(Boolean).map(normalizeText).join('\n\n');
-      if(text){scienceConversation.messages.push({role:'user',content:question},{role:'assistant',content:text.slice(0,8000)});scienceConversation.messages=scienceConversation.messages.slice(-8);scienceConversation.turns.push({question,answer:text,sources:answer.sources||[]});$('#copilotQuestion').value='';$('#copilotQuestion').placeholder='Ask a follow-up about this answer…';scienceConversation.turns=scienceConversation.turns.slice(-4);}
+      if(text){scienceConversation.messages.push({role:'user',content:question},{role:'assistant',content:text.slice(0,8000)});scienceConversation.messages=scienceConversation.messages.slice(-8);scienceConversation.turns.push({question,answer:text,sources:answer.sources||[],table_analysis:answer.table_analysis});$('#copilotQuestion').value='';$('#copilotQuestion').placeholder='Ask a follow-up about this answer…';scienceConversation.turns=scienceConversation.turns.slice(-4);}
     }
   }catch(error){if(epoch===scienceConversation.epoch){$('#copilotAnswer').innerHTML=`<div class="error-box"><strong>Could not reach SI</strong><p>${escapeHTML(error.message)}</p></div>`;$('#scienceConversationStatus').textContent='No generated answer was returned. Check the connection and retry.';}}
   finally{if(epoch===scienceConversation.epoch){button.disabled=false;button.textContent='Ask SI';revealScienceAnswer();}}
