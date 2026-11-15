@@ -4,8 +4,8 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from aero_psi_atlas import coverage, gaps, condition_gaps, suggested_measurement, conditions
-from aero_psi_optical import summary
+from aero_psi.atlas import coverage, gaps, condition_gaps, suggested_measurement, conditions
+from aero_psi.optical import summary
 
 
 class OpticalAtlasTests(unittest.TestCase):

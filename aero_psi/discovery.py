@@ -5,7 +5,7 @@ import hashlib
 import json
 import re
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[1]
 VERSION = 'question-discovery-1.0'
 # These are declared workflow requirements, not facts extracted from NASA reports.
 REQUIREMENTS = {
@@ -116,7 +116,7 @@ def assess_requirement(key, rows, runs):
 def rank_for_question(catalog, payload, records=None, documents=None):
     question, goal, concepts=query_spec(payload)
     if documents is None:
-        from aero_psi_evidence import document_records
+        from aero_psi.evidence import document_records
         documents=document_records() if records is None else []
     records=manifest_records() if records is None else records
     result=[]
@@ -208,7 +208,7 @@ def gap_plan(catalog,payload,records=None):
     for i,gap in enumerate(candidates): gap['position']=candidates[i-1]['position'] if i and gap['priority']==candidates[i-1]['priority'] else i+1
     assessment=None
     if records is None:
-        from aero_psi_research import explore
+        from aero_psi.research import explore
         assessment=explore(catalog,payload)['assessment']
     return {'question_assessment':assessment,'version':VERSION,'question':ranking['question'],'goal':ranking['goal'],'group':group,
             'classification':'evidence-index audit and conditional experiment planning',

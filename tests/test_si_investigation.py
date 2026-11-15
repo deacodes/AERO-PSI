@@ -5,9 +5,9 @@ import tempfile
 import unittest
 from unittest.mock import patch
 import zipfile
-from aero_psi_evidence import build_index, document_records
-from aero_psi_education import answer_question
-from aero_psi_investigation import investigate, validate_plan
+from aero_psi.evidence import build_index, document_records
+from aero_psi.education import answer_question
+from aero_psi.investigation import investigate, validate_plan
 
 class EvidenceTests(unittest.TestCase):
     def test_extraction_locator_integrity_and_stale_source(self):
@@ -78,7 +78,7 @@ if __name__=='__main__': unittest.main()
 class EndpointTests(unittest.TestCase):
     def test_copilot_endpoint_reports_ai_unavailable_without_preset(self):
         import io
-        from aero_psi_backend import CatalogHandler
+        from aero_psi.backend import CatalogHandler
         handler=object.__new__(CatalogHandler)
         body=json.dumps({'question':'what is brownian motion'}).encode()
         handler.path='/api/v1/copilot'; handler.headers={'Content-Length':str(len(body))}; handler.rfile=io.BytesIO(body)
@@ -89,7 +89,7 @@ class EndpointTests(unittest.TestCase):
         self.assertNotIn('scientific_explanation',sent[0]['data'])
 
     def test_saved_investigation_endpoint_rejects_path_traversal(self):
-        from aero_psi_backend import CatalogHandler
+        from aero_psi.backend import CatalogHandler
         handler=object.__new__(CatalogHandler); handler.path='/api/v1/si/investigation?id=../../.env'
         sent=[]; handler.error_json=lambda *args:sent.append(args)
         handler.do_GET()

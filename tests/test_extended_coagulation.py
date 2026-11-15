@@ -1,7 +1,7 @@
 import unittest
-from aero_psi_sectional import simulate_sectional
-from aero_psi_kernels import physics
-from aero_psi_coagulation import _inputs
+from aero_psi.sectional import simulate_sectional
+from aero_psi.kernels import physics
+from aero_psi.coagulation import _inputs
 
 class ExtendedPhysicsTests(unittest.TestCase):
     def test_prescribed_source_number_and_volume(self):
@@ -26,13 +26,13 @@ class ExtendedPhysicsTests(unittest.TestCase):
         self.assertAlmostEqual(r['initial']['total_volume_concentration_m3_per_m3']/sum(n*math.pi*d**3/6 for n,d in zip(ns,ds)),1)
 
     def test_comparison_and_sweep(self):
-        from aero_psi_model_studies import compare_observations, sweep
+        from aero_psi.model_studies import compare_observations, sweep
         r=compare_observations({'scenario':{'brownian_regime':'disabled','residence_time_s':1},'observable':'number_concentration_m3','observations':[{'time_s':t,'value':1e10,'source':{'reference':'synthetic constant population'}} for t in (0,1)]})
         self.assertLess(r['rmse'],1e-4)
         self.assertEqual(len(sweep({'scenario':{'residence_time_s':0},'values':[0,9.81]})['results']),2)
 
     def test_fractional_bins_rejected(self):
-        from aero_psi_coagulation import ScenarioInputError
+        from aero_psi.coagulation import ScenarioInputError
         with self.assertRaises(ScenarioInputError): simulate_sectional({'section_count':16.5})
 
     def test_kernel_symmetry_and_zero_gravity(self):

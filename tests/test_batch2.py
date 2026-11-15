@@ -9,12 +9,12 @@ import tempfile
 import unittest
 from decimal import Decimal, localcontext
 from unittest.mock import patch
-from aero_psi_observed import analyze, export_analysis, compare
-from aero_psi_kernels import _fuchs_delta, physics
-from aero_psi_coagulation import _inputs, BOLTZMANN_J_PER_K
-from aero_psi_model_studies import domain_study
-from aero_psi_sectional import simulate_sectional
-from aero_psi_scattering import simulate_scattering, coupled_scattering
+from aero_psi.observed import analyze, export_analysis, compare
+from aero_psi.kernels import _fuchs_delta, physics
+from aero_psi.coagulation import _inputs, BOLTZMANN_J_PER_K
+from aero_psi.model_studies import domain_study
+from aero_psi.sectional import simulate_sectional
+from aero_psi.scattering import simulate_scattering, coupled_scattering
 
 class ObservedTests(unittest.TestCase):
     def setUp(self):
@@ -92,7 +92,7 @@ class KernelBenchmarks(unittest.TestCase):
         def constant(raw,p,ds):
             _,losses,meta=physics(raw,p,ds)
             return [[coefficient]*len(ds) for _ in ds],losses,meta
-        with patch('aero_psi_sectional.physics',side_effect=constant):
+        with patch('aero_psi.sectional.physics',side_effect=constant):
             r=simulate_sectional({'initial_number_concentration_m3':n0,'residence_time_s':duration,'section_count':32,'output_points':5,'stability_fraction':.001})
         exact=n0/(1+.5*coefficient*n0*duration)
         self.assertAlmostEqual(r['series'][-1]['number_concentration_m3']/exact,1,delta=.001)
@@ -158,12 +158,12 @@ class AdditionalPhysicsTests(unittest.TestCase):
 
 class Batch2EndpointTests(unittest.TestCase):
     def test_scattering_http_handler_without_starting_server(self):
-        from aero_psi_backend import CatalogHandler
+        from aero_psi.backend import CatalogHandler
         handler=object.__new__(CatalogHandler);body=json.dumps(ScatteringTests().payload()).encode()
         handler.path='/api/v1/models/scattering';handler.headers={'Content-Length':str(len(body))};handler.rfile=io.BytesIO(body)
         handler.catalog={'generated_at':'test','schema_version':1};sent=[];handler.send_json=lambda payload,*args:sent.append(payload)
         handler.do_POST()
         self.assertEqual(sent[0]['data']['model_id'],'sphere_optics_v1')
     def test_si_rejects_unsupplied_optical_parameters(self):
-        from aero_psi_investigation import validate_plan
+        from aero_psi.investigation import validate_plan
         with self.assertRaises(ValueError):validate_plan([{'tool':'scattering','reason':'Invent properties'}],{})

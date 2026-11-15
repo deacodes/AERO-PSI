@@ -4,7 +4,7 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import aero_psi_copilot as copilot
+import aero_psi.copilot as copilot
 
 
 class CopilotTests(unittest.TestCase):
@@ -55,7 +55,7 @@ class CopilotTests(unittest.TestCase):
         self.assertEqual(answer["mode"],"verified_context_fallback")
         self.assertEqual(answer["kind"],"coagulation_point")
         self.assertIn("Model scenario only",answer["limitations"][0])
-        self.assertEqual(answer["sources"][0]["source_path"],"aero_psi_sectional.py")
+        self.assertEqual(answer["sources"][0]["source_path"],"aero_psi/sectional.py")
 
 
 if __name__ == "__main__": unittest.main()

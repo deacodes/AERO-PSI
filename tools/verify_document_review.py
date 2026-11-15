@@ -12,8 +12,8 @@ sys.path.insert(0,str(ROOT))
 
 
 def main():
-    from aero_psi_evidence import document_records
-    from aero_psi_knowledge import review_records
+    from aero_psi.evidence import document_records
+    from aero_psi.knowledge import review_records
     docs=document_records(); reviewed=review_records(docs)
     catalog=json.loads((ROOT/'aero_psi_catalog.json').read_text())
     changed=[]

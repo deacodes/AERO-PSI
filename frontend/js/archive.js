@@ -9,7 +9,7 @@
         $('#metricFiles').textContent = formatNumber(summary.file_count); $('#metricInvestigations').textContent = formatNumber(summary.investigation_count); $('#metricRuns').textContent = formatNumber(runs101.length + runs102.length);
         $('#rankFormula').textContent=ranking.formula; renderInvestigations(); renderRunCards(); populateOpticalRuns(); renderAtlasRuns(); loadAtlasGaps(); renderCoverage();
       } catch (error) {
-        $('#investigationRanks').innerHTML = `<div class="error-box">${escapeHTML(error.message)}. Run <b>python3 aero_psi_backend.py serve</b> from the project folder.</div>`;
+        $('#investigationRanks').innerHTML = `<div class="error-box">${escapeHTML(error.message)}. Run <b>python3 -m aero_psi serve</b> from the project folder.</div>`;
       }
     }
 

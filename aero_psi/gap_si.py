@@ -4,10 +4,10 @@ No generated code execution, inferred measurements, or silent rule-based fallbac
 import json
 import os
 import threading
-from aero_psi_ai import generate_json, object_schema, AIResponseError
-from aero_psi_copilot import load_local_env, provider_failure, retrieve
-from aero_psi_discovery import manifest_records
-from aero_psi_research import number, explore
+from aero_psi.ai import generate_json, object_schema, AIResponseError
+from aero_psi.copilot import load_local_env, provider_failure, retrieve
+from aero_psi.discovery import manifest_records
+from aero_psi.research import number, explore
 
 LIMIT = threading.BoundedSemaphore(2)
 S = {'type':'string'}
@@ -65,7 +65,7 @@ def _review(catalog,payload,question,provider):
     selected=payload.get('source_path')
     preview=None
     if selected:
-        from aero_psi_archive import datasets, table_page
+        from aero_psi.archive import datasets, table_page
         item=next((i for i in datasets(catalog)['items'] if i['source_path']==selected and i['view'] in ('table','run')),None)
         if not item: raise ValueError('Choose an imported dataset from the archive')
         if pinned and pinned!=item['investigation_group']: raise ValueError('Dataset does not belong to the selected investigation')

@@ -6,9 +6,9 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from aero_psi_discovery import rank_for_question, gap_plan, query_spec
-from aero_psi_atlas import condition_gaps, conditions, gaps
-from aero_psi_investigation import investigate
+from aero_psi.discovery import rank_for_question, gap_plan, query_spec
+from aero_psi.atlas import condition_gaps, conditions, gaps
+from aero_psi.investigation import investigate
 
 
 def row(group, material, flow, aging, index=2, table='runs.csv'):

@@ -5,11 +5,11 @@ from pathlib import Path
 import tempfile
 import unittest
 from unittest.mock import patch
-from aero_psi_research import explore,interpret
-from aero_psi_discovery import query_spec
-from aero_psi_experiment_design import preview,validate_design
-from aero_psi_investigation import validate_plan,propose
-import aero_psi_studio as studio
+from aero_psi.research import explore,interpret
+from aero_psi.discovery import query_spec
+from aero_psi.experiment_design import preview,validate_design
+from aero_psi.investigation import validate_plan,propose
+import aero_psi.studio as studio
 
 class ResearchTests(unittest.TestCase):
     @classmethod
@@ -42,7 +42,7 @@ class ResearchTests(unittest.TestCase):
         with self.assertRaises(ValueError):explore(self.catalog,{'question':'flame size','group':'FLEX','table':'../../.env'})
     def test_si_receives_exact_selected_rows(self):
         r=explore(self.catalog,{'question':'flame size','group':'FLEX'});row=r['rows'][1]['source_row']
-        with patch('aero_psi_research.ask',return_value={'mode':'science_unavailable'}) as ask:
+        with patch('aero_psi.research.ask',return_value={'mode':'science_unavailable'}) as ask:
             interpret(self.catalog,{'question':'flame size','group':'FLEX','table':r['selected_table'],'source_rows':[row],'followup':'What does this measurement mean?'})
             records=ask.call_args.kwargs['runtime_evidence']
             table=[x for x in records if x['kind']=='source_table_row']
@@ -50,11 +50,11 @@ class ResearchTests(unittest.TestCase):
     def test_si_rereads_selected_run_point_and_rejects_foreign_signal(self):
         r=explore(self.catalog,{'question':'smoke detector response','group':'PSI101'})
         run=next(x for x in r['runs'] if x['signals']);signal=run['signals'][0]
-        from aero_psi_optical import time_series
+        from aero_psi.optical import time_series
         samples=time_series(Path('derived/reports/ingestion_manifest.json'),Path.cwd(),run['source_path'],[signal],10)
         row=samples['points'][0]['source_row']
         payload={'question':'smoke detector response','group':'PSI101','run':run['source_path'],'signal':signal,'source_rows':[row],'followup':'Explain this sample'}
-        with patch('aero_psi_research.ask',return_value={}) as ask:
+        with patch('aero_psi.research.ask',return_value={}) as ask:
             interpret(self.catalog,payload)
             points=[x for x in ask.call_args.kwargs['runtime_evidence'] if x['kind']=='verified_observed_sample']
             self.assertEqual(len(points),1)

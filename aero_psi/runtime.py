@@ -4,7 +4,7 @@ import importlib.util
 import os
 import sys
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[1]
 
 
 class RuntimeDependencyError(RuntimeError):
@@ -16,7 +16,8 @@ def use_project_environment():
     environment = ROOT / '.venv'
     executable = environment / ('Scripts/python.exe' if os.name == 'nt' else 'bin/python')
     if executable.is_file() and Path(sys.prefix).resolve() != environment.resolve():
-        os.execv(str(executable), [str(executable), str(ROOT/'aero_psi_backend.py'), *sys.argv[1:]])
+        os.chdir(ROOT)
+        os.execv(str(executable), [str(executable), '-m', 'aero_psi', *sys.argv[1:]])
 
 
 def capabilities():

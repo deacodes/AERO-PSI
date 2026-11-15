@@ -15,12 +15,12 @@ import threading
 import uuid
 from datetime import datetime, timezone
 
-from aero_psi_copilot import ask, retrieve, load_local_env, provider_failure
-from aero_psi_ai import generate_json, studio_schema, AIResponseError
-from aero_psi_experiment_design import validate_design
-from aero_psi_investigation import execute_tool, validate_plan, TOOLS
+from aero_psi.copilot import ask, retrieve, load_local_env, provider_failure
+from aero_psi.ai import generate_json, studio_schema, AIResponseError
+from aero_psi.experiment_design import validate_design
+from aero_psi.investigation import execute_tool, validate_plan, TOOLS
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[1]
 STORAGE = Path(os.environ.get('AERO_PSI_STUDIO_STORAGE', ROOT / 'derived/studio'))
 LEGACY = Path(os.environ.get('AERO_PSI_INVESTIGATION_STORAGE', ROOT / 'derived/investigations'))
 LOCK = threading.RLock()
@@ -213,7 +213,7 @@ def generate(payload, catalog, storage=STORAGE, provider=None):
     sources = retrieve(catalog, question+(' '+group if group else ''), limit=6)
     if payload.get('model_context') is not None:
         if not isinstance(payload['model_context'],dict):raise ValueError('Model context must contain a model and its inputs')
-        from aero_psi_model_interpretation import context_evidence
+        from aero_psi.model_interpretation import context_evidence
         sources.append(context_evidence(payload['model_context']))
     elif previous:
         sources.extend(s for s in previous.get('sources',[]) if s.get('kind')=='executed_model')
@@ -356,7 +356,7 @@ def execute(payload, catalog, storage=STORAGE):
     run_id = uuid.uuid4().hex
     run = {'id': run_id, 'step_id': step['id'], 'tool': step['tool'], 'created_at': now(), 'inputs': inputs,
            'output': output, 'stale': False, 'catalog_version': catalog.get('generated_at'),
-           'implementation_sha256': {p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in ROOT.glob('aero_psi_*.py')}}
+           'implementation_sha256': {p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in (ROOT/'aero_psi').glob('*.py')}}
     datasets = output_datasets(step['tool'], output, run_id)
     with LOCK:
         current = get_record(previous['id'], storage); _check(payload, current)
@@ -408,7 +408,7 @@ def history(record_id, storage=STORAGE):
 
 def from_research(payload, catalog, storage=STORAGE):
     """Save a source-checked planning brief; no AI output or observed outcome is invented."""
-    from aero_psi_research import explore
+    from aero_psi.research import explore
     context = explore(catalog, payload)
     assessment = context['assessment']
     key = payload.get('finding_key')
@@ -434,7 +434,7 @@ def from_research(payload, catalog, storage=STORAGE):
         raise ValueError('Select at most 30 original rows for an investigation brief')
     selected_evidence=[]
     if selected_source.startswith('run:'):
-        from aero_psi_optical import source_point
+        from aero_psi.optical import source_point
         path=selected_source[4:]
         run=next((r for r in context['runs'] if r['source_path']==path),None)
         signal=payload.get('selected_signal')
@@ -480,7 +480,7 @@ def from_research(payload, catalog, storage=STORAGE):
 def attach_model(payload, storage=STORAGE):
     """Recompute an explicit scenario and append it without replacing the study question."""
     previous=get_record(payload.get('id'),storage); _check(payload,previous)
-    from aero_psi_model_interpretation import context_evidence
+    from aero_psi.model_interpretation import context_evidence
     model=payload.get('model_context')
     if not isinstance(model,dict): raise ValueError('Choose a computed model scenario')
     reason=text(payload.get('reason',''),'How this model relates to the question',2000,True)
@@ -491,5 +491,5 @@ def attach_model(payload, storage=STORAGE):
         record['sources']=[s for s in record['sources'] if s['id']!=evidence['id']]+[evidence]
         record.setdefault('model_links',[]).append({'source_id':evidence['id'],'model':model['model'],
             'inputs':copy.deepcopy(model['inputs']),'reason':reason,'at':now(),
-            'question':record['content']['question'],'implementation_sha256':{name:hashlib.sha256((ROOT/name).read_bytes()).hexdigest() for name in ('aero_psi_sectional.py','aero_psi_scattering.py','aero_psi_model_interpretation.py')},'classification':'assumed scenario; not a fitted NASA measurement'})
+            'question':record['content']['question'],'implementation_sha256':{name:hashlib.sha256((ROOT/name).read_bytes()).hexdigest() for name in ('aero_psi/sectional.py','aero_psi/scattering.py','aero_psi/model_interpretation.py')},'classification':'assumed scenario; not a fitted NASA measurement'})
         return _commit(record,storage,current)

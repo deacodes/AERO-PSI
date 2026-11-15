@@ -1,9 +1,9 @@
 """Bounded scenario studies and explicit user-supplied observation comparisons."""
 import math
 import random
-from aero_psi_sectional import simulate_sectional
-from aero_psi_coagulation import ScenarioInputError
-from aero_psi_processes import finite
+from aero_psi.sectional import simulate_sectional
+from aero_psi.coagulation import ScenarioInputError
+from aero_psi.processes import finite
 
 FIELDS=('number_concentration_m3','equivalent_volume_mean_diameter_m','surface_area_m2_m3','mass_concentration_kg_m3')
 PARAMETERS=('gravity_m_s2','gas_temperature_k','gas_viscosity_pa_s','gas_pressure_pa','initial_number_concentration_m3','initial_median_diameter_m','initial_geometric_std_dev','sticking_efficiency','dilution_rate_s','wall_loss_rate_s','diameter_growth_rate_m_s','shear_rate_s')

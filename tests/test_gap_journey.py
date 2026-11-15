@@ -5,9 +5,9 @@ from pathlib import Path
 import tempfile
 import unittest
 from unittest.mock import patch
-from aero_psi_gap_assessment import assess
-from aero_psi_research import explore
-import aero_psi_studio as studio
+from aero_psi.gap_assessment import assess
+from aero_psi.research import explore
+import aero_psi.studio as studio
 
 class GapJourneyTests(unittest.TestCase):
     @classmethod
@@ -69,7 +69,7 @@ class GapJourneyTests(unittest.TestCase):
             def provider(prompt,context):
                 self.assertTrue(any(s['kind']=='research_assessment' for s in context['evidence']))
                 return {'title':'Revised plan','question':r['content']['question'],'kind':'experiment','steps':[{'title':'Review measured acceleration','source_ids':[r['sources'][0]['id']]}]}
-            with patch('aero_psi_studio.retrieve',return_value=[]):
+            with patch('aero_psi.studio.retrieve',return_value=[]):
                 revised=studio.generate({'id':r['id'],'revision':r['revision'],'question':r['content']['question'],'kind':'experiment'},self.catalog,tmp,provider)
             self.assertEqual(revised['research_context'],r['research_context'])
             self.assertTrue(any(s['kind']=='research_assessment' for s in revised['sources']))

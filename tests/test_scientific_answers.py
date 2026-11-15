@@ -8,18 +8,18 @@ from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
 
-from aero_psi_copilot import ask, validate_history, provider_failure
-from aero_psi_education import answer_question
-from aero_psi_investigation import propose
-from aero_psi_scattering import simulate_scattering
-from aero_psi_runtime import RuntimeDependencyError
+from aero_psi.copilot import ask, validate_history, provider_failure
+from aero_psi.education import answer_question
+from aero_psi.investigation import propose
+from aero_psi.scattering import simulate_scattering
+from aero_psi.runtime import RuntimeDependencyError
 
 
 class ScientificAnswers(unittest.TestCase):
     def setUp(self):
         self.env=patch.dict(os.environ,{'GOOGLE_CLOUD_PROJECT':'test-project','AERO_PSI_COPILOT_ENABLED':'true'});self.env.start()
         self.catalog={'investigations':[],'normalized_experiments':[]}
-        self.context=patch('aero_psi_copilot.retrieve',return_value=[]);self.context.start()
+        self.context=patch('aero_psi.copilot.retrieve',return_value=[]);self.context.start()
     def tearDown(self):self.context.stop();self.env.stop()
 
     def response(self, **updates):
@@ -30,12 +30,12 @@ class ScientificAnswers(unittest.TestCase):
         return patch('google.genai.Client',return_value=fake)
 
     def test_explicit_retrieval_scope_survives_auto_mode(self):
-        with patch('aero_psi_copilot.retrieve') as retrieve, self.mock_client(self.response()):
+        with patch('aero_psi.copilot.retrieve') as retrieve, self.mock_client(self.response()):
             ask(self.catalog,'Explain this model',retrieve_sources=False,information_mode='auto')
         retrieve.assert_not_called()
 
     def test_model_context_preserves_initial_mean_and_definitions(self):
-        from aero_psi_model_interpretation import context_evidence
+        from aero_psi.model_interpretation import context_evidence
         source=context_evidence({'model':'coagulation','inputs':{'initial_median_diameter_m':1e-7,'initial_geometric_std_dev':1.6,'residence_time_s':0}})
         context=json.loads(source['text'])
         self.assertGreater(context['initial']['equivalent_volume_mean_diameter_m'],1e-7)
@@ -44,7 +44,7 @@ class ScientificAnswers(unittest.TestCase):
         self.assertLess(len(source['text']),12000)
 
     def test_context_general_mode_excludes_attached_evidence(self):
-        with patch('aero_psi_copilot.retrieve') as retrieve, self.mock_client(self.response()) as client:
+        with patch('aero_psi.copilot.retrieve') as retrieve, self.mock_client(self.response()) as client:
             result=ask(self.catalog,'Explain thermal motion',runtime_evidence=[{'id':'private-row','text':'ATTACHED_ROW_SENTINEL'}],information_mode='explain')
         retrieve.assert_not_called()
         self.assertFalse(result['information_scope']['source_claims_included'])
@@ -92,7 +92,7 @@ class ScientificAnswers(unittest.TestCase):
     def test_compact_citations_resolve_to_original_sources(self):
         source={'id':'table:NASA/original worksheet.csv:42','text':'Recorded count is 12','source_path':'NASA/original worksheet.csv'}
         answer=self.response(observed_in_source=[{'claim':'The record contains count 12.','source_ids':['S1']}],sources=['S1'])
-        with patch('aero_psi_copilot.retrieve',return_value=[source]),self.mock_client(answer):
+        with patch('aero_psi.copilot.retrieve',return_value=[source]),self.mock_client(answer):
             result=answer_question(self.catalog,'What was recorded?')
         self.assertEqual(result['service']['status'],'generated')
         self.assertEqual(result['sources'][0]['id'],source['id'])
@@ -122,7 +122,7 @@ class ScientificAnswers(unittest.TestCase):
         client.assert_not_called();self.assertEqual(r['mode'],'evidence_only_fallback')
 
     def test_general_only_mode_does_not_retrieve_archive(self):
-        with self.mock_client(self.response()),patch('aero_psi_copilot.retrieve') as retrieve:
+        with self.mock_client(self.response()),patch('aero_psi.copilot.retrieve') as retrieve:
             r=answer_question(self.catalog,'Explain aerosol coagulation','explain')
         retrieve.assert_not_called();self.assertEqual(r['mode'],'vertex_scientific')
 
@@ -182,7 +182,7 @@ class ScatteringRuntime(unittest.TestCase):
     def test_missing_mie_is_service_error_not_bad_scientific_input(self):
         payload=self.payload();payload['method']='mie'
         with patch.dict(sys.modules,{'miepython':None}),self.assertRaises(RuntimeDependencyError):simulate_scattering(payload)
-        from aero_psi_backend import CatalogHandler
+        from aero_psi.backend import CatalogHandler
         handler=object.__new__(CatalogHandler);body=json.dumps(payload).encode();handler.path='/api/v1/models/scattering';handler.headers={'Content-Length':str(len(body))};handler.rfile=io.BytesIO(body);handler.catalog={}
         sent=[];handler.error_json=lambda *args:sent.append(args)
         with patch.dict(sys.modules,{'miepython':None}):handler.do_POST()

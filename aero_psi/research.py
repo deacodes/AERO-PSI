@@ -6,11 +6,11 @@ import math
 from pathlib import Path
 import re
 
-from aero_psi_discovery import rank_for_question, query_spec, manifest_records, assess_requirement, PROFILES, REQUIREMENTS
-from aero_psi_copilot import retrieve, ask
-from aero_psi_optical import summary, time_series, source_point
+from aero_psi.discovery import rank_for_question, query_spec, manifest_records, assess_requirement, PROFILES, REQUIREMENTS
+from aero_psi.copilot import retrieve, ask
+from aero_psi.optical import summary, time_series, source_point
 
-ROOT=Path(__file__).resolve().parent
+ROOT=Path(__file__).resolve().parents[1]
 
 
 def number(value):
@@ -83,7 +83,7 @@ def explore(catalog,payload):
     for row in selected:
         grid.append({'source_row':row['source_row'],'source_path':row['source_path'],'source_sha256':row['source_sha256'],
                      'values':{k:v['value'] if v.get('state')=='observed' else None for k,v in row['fields'].items()}})
-    from aero_psi_gap_assessment import assess
+    from aero_psi.gap_assessment import assess
     assessment=assess(question,goal,group,rows,runs,findings)
     return {'selection':{'automatic':not bool(payload.get('group')),'tied_top_groups':[i['group'] for i in ranking['items'] if i['score']==ranking['items'][0]['score']], 'formula':ranking['formula'], 'candidates':[{'group':i['group'],'score':i['score'],'matched_concepts':[m['concept'] for m in i['matches']], 'unmatched_concepts':i['unmatched_concepts']} for i in ranking['items']]},'selected_source':source_path,'assessment':assessment,'question':question,'goal':goal,'group':group,'overview':overview,
             'groups':[{'group':i['group'],'title':clean_title(i),'score':next((v['score'] for v in ranking['items'] if v['group']==i['group']),0)} for i in catalog['investigations']],

@@ -1,6 +1,6 @@
 """Prescribed population sources and size growth; no inferred vapor chemistry."""
 import math
-from aero_psi_coagulation import ScenarioInputError
+from aero_psi.coagulation import ScenarioInputError
 
 
 def finite(value, name, low=0, high=math.inf):

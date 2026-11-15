@@ -10,7 +10,7 @@ import zipfile
 import xml.etree.ElementTree as ET
 import posixpath
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[1]
 INDEX = ROOT / 'derived/evidence/documents.json'
 CONVERSIONS = ROOT / 'mappings/document_conversions.json'
 

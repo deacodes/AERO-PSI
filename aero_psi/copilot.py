@@ -9,7 +9,7 @@ import json, os, re
 from pathlib import Path
 from typing import Any
 
-ROOT=Path(__file__).resolve().parent
+ROOT=Path(__file__).resolve().parents[1]
 MANIFEST=ROOT/"derived"/"reports"/"ingestion_manifest.json"
 
 
@@ -44,9 +44,9 @@ def _chunks(catalog: dict[str,Any]) -> list[dict[str,Any]]:
             analysis=record.get("analysis",{}); text=json.dumps({"material":record.get("material_candidate"),"quality":analysis.get("quality_state"),"signals":analysis.get("available_signals",{}),"event_window":analysis.get("selected_event_window",{}),"metrics":analysis.get("metrics",{})},ensure_ascii=False)
             sheet=record.get("worksheet")
             result.append({"id":f"run:{record['source_path']}","kind":"run_qa","group":record["source_path"].split("/",1)[0],"title":"Imported run QA and source-derived metrics","source_path":record["source_path"],"source_range":f"worksheet {sheet}" if sheet else "workbook-level import record","source_row":None,"worksheet":sheet,"text":text})
-    from aero_psi_evidence import document_records
+    from aero_psi.evidence import document_records
     documents = document_records()
-    from aero_psi_knowledge import review_records
+    from aero_psi.knowledge import review_records
     reviewed = review_records(documents)
     # Keep caution notes attached to the exact underlying excerpts, including
     # source errors. An extracted equation must not outrank its known caveat.
@@ -209,7 +209,7 @@ def ask(catalog: dict[str,Any], question: str, runtime_evidence: list | None = N
                   "Return JSON with scientific_explanation (string), observed_in_source and model_result (arrays of {claim,source_ids}), unknown_or_limitation (array of concise relevant strings), sources (array of cited supplied IDs). "
                   "Keep model_result empty unless executed model results or explicitly reported model results are supplied. State only limitations relevant to the answer, without repeating boilerplate after every sentence. "
                   + "\nQUESTION: " + question + "\nCHAT CONTEXT: " + json.dumps(history,ensure_ascii=False) + "\nEVIDENCE: " + json.dumps(compact,ensure_ascii=False))
-        from aero_psi_ai import parse_response, scientific_answer_schema, AIResponseError
+        from aero_psi.ai import parse_response, scientific_answer_schema, AIResponseError
         model=os.environ.get("AERO_PSI_VERTEX_MODEL","gemini-3.5-flash")
         config={'response_mime_type':'application/json','response_json_schema':scientific_answer_schema(set(citation_aliases)),'max_output_tokens':6000}
         if model.startswith('gemini-3'): config['thinking_config']=types.ThinkingConfig(thinking_level='LOW',include_thoughts=False)
@@ -225,7 +225,7 @@ def ask(catalog: dict[str,Any], question: str, runtime_evidence: list | None = N
             close=getattr(client,'close',None)
             if callable(close): close()
     except Exception as exc:
-        from aero_psi_ai import AIResponseError
+        from aero_psi.ai import AIResponseError
         return unavailable(str(exc) if isinstance(exc,AIResponseError) else provider_failure(exc))
     for section in ('observed_in_source','model_result'):
         if isinstance(parsed.get(section),list):
@@ -257,18 +257,18 @@ def interpret_point(catalog: dict[str,Any], payload: dict[str,Any]) -> dict[str,
     question=str(payload.get("question") or "Explain this point, its scientific meaning, and its limits.").strip()
     if not question or len(question)>1000: raise ValueError("question must be 1 to 1000 characters.")
     if kind == "coagulation_point":
-        from aero_psi_sectional import simulate_sectional
+        from aero_psi.sectional import simulate_sectional
         scenario=payload.get("scenario")
         if not isinstance(scenario,dict): raise ValueError("scenario is required for a coagulation point.")
         result=simulate_sectional(scenario); index=int(payload.get("point_index",0))
         if index < 0 or index >= len(result["series"]): raise ValueError("point_index is outside the computed series.")
         point=result["series"][index]
-        evidence={"id":"runtime:coagulation-point","kind":"verified_model_output","title":"Backend-verified sectional coagulation point","source_path":"aero_psi_sectional.py","source_range":f"runtime output point {index}","classification":result["classification"],"model_id":result["model_id"],"inputs":result["inputs"],"point":point,"conservation_check":result["conservation_check"],"warnings":result["warnings"],"solver":result["solver"]}
+        evidence={"id":"runtime:coagulation-point","kind":"verified_model_output","title":"Backend-verified sectional coagulation point","source_path":"aero_psi/sectional.py","source_range":f"runtime output point {index}","classification":result["classification"],"model_id":result["model_id"],"inputs":result["inputs"],"point":point,"conservation_check":result["conservation_check"],"warnings":result["warnings"],"solver":result["solver"]}
         fallback_interpretation=f"At {point['time_s']:.4g} s, the verified scenario contains {point['number_concentration_m3']:.4e} particles/m³ with an equivalent volume-mean diameter of {point['equivalent_volume_mean_diameter_m']*1e9:.4g} nm."
         supported=[fallback_interpretation,f"The total-volume relative error is {result['conservation_check']['total_volume_relative_error']:.3e}."]
         limitations=result["warnings"][:3]
     elif kind == "optical_point":
-        from aero_psi_optical import source_point
+        from aero_psi.optical import source_point
         source_path=payload.get("source_path"); signal=payload.get("signal"); source_row=int(payload.get("source_row",-1))
         if not isinstance(source_path,str) or not source_path or not isinstance(signal,str) or not signal: raise ValueError("source_path and signal are required for an optical point.")
         point=source_point(MANIFEST,ROOT,source_path,signal,source_row)
@@ -289,7 +289,7 @@ def interpret_point(catalog: dict[str,Any], payload: dict[str,Any]) -> dict[str,
     project=os.environ.get("GOOGLE_CLOUD_PROJECT","")
     if not project or project.startswith("PASTE_"): return fallback
     try:
-        from aero_psi_ai import generate_json, object_schema, AIResponseError
+        from aero_psi.ai import generate_json, object_schema, AIResponseError
         prompt=f'''You are AERO-PSI Scientific Intelligence. Interpret one backend-verified graph point using ONLY the supplied context. Keep measured samples, deterministic model output, assumptions, and unknowns separate. Never infer particle size from detector voltage, causality from association, or archive validation for a runtime model scenario. Return valid JSON only with exactly: headline (string), interpretation (string), supported (array of strings), limitations (array of strings), sources (array containing only the supplied source id). Short Markdown and LaTeX are allowed only when supported by context.\n\nUSER QUESTION: {question}\n\nCHAT CONTEXT: {json.dumps(history,ensure_ascii=False)}\n\nVERIFIED CONTEXT: {json.dumps(evidence,ensure_ascii=False)}'''
         schema=object_schema({'headline':{'type':'string'},'interpretation':{'type':'string'},'supported':{'type':'array','items':{'type':'string'}},'limitations':{'type':'array','items':{'type':'string'}},'sources':{'type':'array','items':{'type':'string','enum':[evidence['id']]},'minItems':1,'maxItems':1}})
         parsed=generate_json(prompt,schema,max_tokens=3000)

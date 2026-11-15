@@ -8,7 +8,7 @@ from statistics import median
 from pathlib import Path
 from typing import Any
 
-from aero_psi_ranking import run_readiness
+from aero_psi.ranking import run_readiness
 
 OPTICAL_SIGNALS = {
     'obscuration_voltage',

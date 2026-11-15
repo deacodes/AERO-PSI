@@ -5,7 +5,7 @@ from pathlib import Path
 import tempfile
 import unittest
 from unittest.mock import patch
-import aero_psi_studio as studio
+import aero_psi.studio as studio
 
 class StudioTests(unittest.TestCase):
     def setUp(self):

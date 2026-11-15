@@ -5,9 +5,9 @@ import io
 import math
 from pathlib import Path
 from statistics import mean, median
-from aero_psi_optical import _record, _rows, _number
+from aero_psi.optical import _record, _rows, _number
 
-ROOT=Path(__file__).resolve().parent
+ROOT=Path(__file__).resolve().parents[1]
 MANIFEST=ROOT/'derived/reports/ingestion_manifest.json'
 UNITS={'obscuration_voltage':'V','scatter_voltage':'V','sts_voltage':'V','ion_a_voltage':'V','ion_b_voltage':'V','ptrak_particles_per_cc':'particles/cm^3','dusttrak_a_mg_m3':'mg/m^3','dusttrak_b_mg_m3':'mg/m^3','plume_temperature_c':'degC','lfe_flow_sccm':'sccm','mfc_flow_lpm':'L/min'}
 

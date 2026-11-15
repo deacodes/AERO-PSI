@@ -1,7 +1,7 @@
 import math
 import unittest
-from aero_psi_coagulation import ScenarioInputError
-from aero_psi_model_studies import uncertainty, calibrate, convergence
+from aero_psi.coagulation import ScenarioInputError
+from aero_psi.model_studies import uncertainty, calibrate, convergence
 
 
 class ModelStudiesTests(unittest.TestCase):

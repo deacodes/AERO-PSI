@@ -4,8 +4,8 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import aero_psi_coagulation as coagulation
-from aero_psi_sectional import simulate_sectional, sensitivity
+import aero_psi.coagulation as coagulation
+from aero_psi.sectional import simulate_sectional, sensitivity
 
 
 class CoagulationTests(unittest.TestCase):

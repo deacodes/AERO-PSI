@@ -1,7 +1,7 @@
 """Deterministic evidence readiness, not scientific novelty or causal inference."""
 import hashlib
 import json
-from aero_psi_discovery import REQUIREMENTS, proposal_for_requirement, ref
+from aero_psi.discovery import REQUIREMENTS, proposal_for_requirement, ref
 
 VERSION = 'evidence-readiness-1'
 # Transparent workflow ordering; these are not NASA-derived scientific scores.
@@ -9,7 +9,7 @@ CORE = {'size', 'gravity', 'angular', 'optics', 'calibration', 'flame_dimensions
 
 
 def assess(question, goal, group, rows, runs, findings):
-    from aero_psi_research import number
+    from aero_psi.research import number
     matrix, actions = [], []
     for finding in findings:
         key = finding['key']

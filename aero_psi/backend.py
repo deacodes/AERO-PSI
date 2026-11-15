@@ -4,7 +4,7 @@ from __future__ import annotations
 
 # Resolve the project interpreter before importing optional scientific dependencies.
 if __name__ == "__main__":
-    from aero_psi_runtime import use_project_environment
+    from aero_psi.runtime import use_project_environment
     use_project_environment()
 
 import argparse, csv, hashlib, json, mimetypes, os, re
@@ -15,27 +15,27 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any
 from urllib.parse import parse_qs, unquote, urlparse
-from aero_psi_coagulation import ScenarioInputError, simulate as simulate_coagulation
-from aero_psi_sectional import simulate_sectional, sensitivity as coagulation_sensitivity
-from aero_psi_model_studies import sweep as coagulation_sweep, compare_observations
-from aero_psi_model_studies import uncertainty, calibrate, convergence, domain_study
-from aero_psi_scattering import simulate_scattering, coupled_scattering
-from aero_psi_runtime import RuntimeDependencyError, capabilities
-import aero_psi_archive as archive
-from aero_psi_observed import analyze as analyze_observed, export_analysis, compare as compare_observed
-from aero_psi_optical import runs as optical_runs, summary as optical_summary, time_series as optical_time_series, lag_analysis as optical_lag_analysis, coagulation_input_candidates
-from aero_psi_atlas import coverage as atlas_coverage, gaps as atlas_gaps, conditions as atlas_conditions, condition_gaps as atlas_condition_gaps, suggested_measurement
-from aero_psi_ranking import investigation_rankings
-from aero_psi_discovery import rank_for_question, gap_plan
-from aero_psi_copilot import ask as copilot_ask, interpret_point as copilot_interpret_point
+from aero_psi.coagulation import ScenarioInputError, simulate as simulate_coagulation
+from aero_psi.sectional import simulate_sectional, sensitivity as coagulation_sensitivity
+from aero_psi.model_studies import sweep as coagulation_sweep, compare_observations
+from aero_psi.model_studies import uncertainty, calibrate, convergence, domain_study
+from aero_psi.scattering import simulate_scattering, coupled_scattering
+from aero_psi.runtime import RuntimeDependencyError, capabilities
+import aero_psi.archive as archive
+from aero_psi.observed import analyze as analyze_observed, export_analysis, compare as compare_observed
+from aero_psi.optical import runs as optical_runs, summary as optical_summary, time_series as optical_time_series, lag_analysis as optical_lag_analysis, coagulation_input_candidates
+from aero_psi.atlas import coverage as atlas_coverage, gaps as atlas_gaps, conditions as atlas_conditions, condition_gaps as atlas_condition_gaps, suggested_measurement
+from aero_psi.ranking import investigation_rankings
+from aero_psi.discovery import rank_for_question, gap_plan
+from aero_psi.copilot import ask as copilot_ask, interpret_point as copilot_interpret_point
 
-from aero_psi_education import answer_question
-from aero_psi_investigation import investigate, INVESTIGATION_STORAGE
-import aero_psi_studio as studio
-import aero_psi_research as research
-from aero_psi_evidence import document_records
+from aero_psi.education import answer_question
+from aero_psi.investigation import investigate, INVESTIGATION_STORAGE
+import aero_psi.studio as studio
+import aero_psi.research as research
+from aero_psi.evidence import document_records
 
-PROJECT_ROOT = Path(__file__).resolve().parent
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_DATA_ROOT = Path(os.environ.get("AERO_PSI_DATA_ROOT", PROJECT_ROOT / "DATA"))
 DEFAULT_CATALOG_PATH = PROJECT_ROOT / "aero_psi_catalog.json"
 DEFAULT_FRONTEND_DIR = PROJECT_ROOT / "frontend"
@@ -252,7 +252,7 @@ class CatalogHandler(BaseHTTPRequestHandler):
             except FileNotFoundError: self.error_json(HTTPStatus.NOT_FOUND, 'not_found', 'Investigation not found')
             return
         if path == '/api/v1/evidence/review':
-            from aero_psi_knowledge import review_catalog
+            from aero_psi.knowledge import review_catalog
             self.send_json(envelope(review_catalog(),self.catalog)); return
         if path == '/api/v1/si/investigation':
             identifier=query.get('id',[''])[0]
@@ -373,17 +373,17 @@ class CatalogHandler(BaseHTTPRequestHandler):
             payload=json.loads(raw.decode("utf-8"))
             if not isinstance(payload,dict): raise ValueError("Request body must be a JSON object.")
             if request.path=='/api/v1/research/gap-review':
-                from aero_psi_gap_si import review
+                from aero_psi.gap_si import review
                 self.send_json(envelope(review(self.catalog,payload),self.catalog)); return
             if request.path=='/api/v1/si/interpret-model':
-                from aero_psi_model_interpretation import interpret
+                from aero_psi.model_interpretation import interpret
                 self.send_json(envelope(interpret(self.catalog,payload),self.catalog)); return
             if request.path=='/api/v1/archive/interpret':
                 self.send_json(envelope(archive.interpret(self.catalog,payload),self.catalog)); return
             if request.path=='/api/v1/archive/table':
                 self.send_json(envelope(archive.table_page(self.catalog,payload),self.catalog)); return
             if request.path=='/api/v1/research/design':
-                from aero_psi_experiment_design import preview
+                from aero_psi.experiment_design import preview
                 self.send_json(envelope(preview(payload.get('design')),self.catalog)); return
             if request.path in ('/api/v1/research/explore','/api/v1/research/interpret'):
                 function=research.explore if request.path.endswith('/explore') else research.interpret
@@ -402,7 +402,7 @@ class CatalogHandler(BaseHTTPRequestHandler):
             if request.path=='/api/v1/si/investigate':
                 self.send_json(envelope(investigate(self.catalog,payload),self.catalog)); return
             if request.path=='/api/v1/evidence/record':
-                from aero_psi_copilot import _chunks
+                from aero_psi.copilot import _chunks
                 identifier=payload.get('id')
                 if not isinstance(identifier,str) or len(identifier)>1000: raise ValueError('Provide a source record ID')
                 record=next((r for r in _chunks(self.catalog) if r['id']==identifier),None)
@@ -420,7 +420,7 @@ class CatalogHandler(BaseHTTPRequestHandler):
                 else:
                     question=payload.get('question')
                     if not isinstance(question,str) or not 1<=len(question.strip())<=2000: raise ValueError('question must be 1–2000 characters')
-                    from aero_psi_copilot import retrieve
+                    from aero_psi.copilot import retrieve
                     selected=retrieve(self.catalog,question,limit=10)
                 self.send_json(envelope(selected,self.catalog)); return
             if request.path=='/api/v1/copilot':

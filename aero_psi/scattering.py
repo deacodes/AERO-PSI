@@ -4,8 +4,8 @@ miepython 3.3.1, https://miepython.readthedocs.io/en/latest/
 Phase normalization: integral over 4*pi solid angle = 1.
 """
 import math
-from aero_psi_processes import finite, distribution
-from aero_psi_coagulation import ScenarioInputError
+from aero_psi.processes import finite, distribution
+from aero_psi.coagulation import ScenarioInputError
 
 
 def _optics(payload):
@@ -34,7 +34,7 @@ def simulate_scattering(payload):
         try:
             import miepython
         except ImportError as exc:
-            from aero_psi_runtime import RuntimeDependencyError
+            from aero_psi.runtime import RuntimeDependencyError
             raise RuntimeDependencyError('The running server cannot load its Mie scattering library. Restart AERO-PSI with the project environment; downloading a requirements file will not fix this running process.') from exc
         engine={'name':'miepython','version':miepython.__version__}
     relative=complex(n,-k)/medium
@@ -70,7 +70,7 @@ def simulate_scattering(payload):
 
 
 def coupled_scattering(payload):
-    from aero_psi_sectional import simulate_sectional
+    from aero_psi.sectional import simulate_sectional
     scenario=payload.get('scenario'); optics=payload.get('optics')
     if not isinstance(scenario,dict) or not isinstance(optics,dict): raise ScenarioInputError('Supply scenario and optics objects')
     if 'distribution' in optics: raise ScenarioInputError('Coupled distributions come from the solver; omit optics.distribution')

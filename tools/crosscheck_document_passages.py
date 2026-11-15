@@ -13,7 +13,7 @@ sys.path.insert(0, str(ROOT))
 
 
 def main():
-    from aero_psi_copilot import load_local_env, provider_failure
+    from aero_psi.copilot import load_local_env, provider_failure
     from google import genai
     from google.genai import types
     output = ROOT / 'derived/evidence/review/vertex_crosscheck.json'

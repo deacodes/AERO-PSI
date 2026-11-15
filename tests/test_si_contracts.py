@@ -2,8 +2,8 @@
 import os
 import unittest
 from unittest.mock import patch
-from aero_psi_education import answer_question
-from aero_psi_copilot import _validate_response
+from aero_psi.education import answer_question
+from aero_psi.copilot import _validate_response
 
 QUESTIONS=[
  'What is Brownian motion?',
@@ -30,7 +30,7 @@ class SIContracts(unittest.TestCase):
 
 def case(question):
     def test(self):
-        with patch.dict(os.environ,{'AERO_PSI_COPILOT_ENABLED':'false'}),patch('aero_psi_copilot._chunks',return_value=[]):
+        with patch.dict(os.environ,{'AERO_PSI_COPILOT_ENABLED':'false'}),patch('aero_psi.copilot._chunks',return_value=[]):
             result=answer_question({},question)
         self.assertEqual(result['observed_in_source'],[])
         self.assertEqual(result['model_result'],[])

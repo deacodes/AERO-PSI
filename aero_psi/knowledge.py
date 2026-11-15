@@ -8,7 +8,7 @@ import json
 from pathlib import Path
 from urllib.parse import urlsplit
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[1]
 NOTES = ROOT / 'mappings/scientific_review.json'
 WEB = ROOT / 'mappings/scientific_web_references.json'
 
@@ -56,7 +56,7 @@ def review_records(documents, notes_path=NOTES, web_path=WEB):
 
 
 def review_catalog():
-    from aero_psi_evidence import document_records
+    from aero_psi.evidence import document_records
     documents = document_records()
     records = review_records(documents)
     active = {d['source_path'] for d in documents}

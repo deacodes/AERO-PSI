@@ -6,9 +6,9 @@ import unittest
 from unittest.mock import patch
 import zipfile
 
-from aero_psi_evidence import build_index, document_records, extract
-from aero_psi_knowledge import review_records
-from aero_psi_copilot import retrieve
+from aero_psi.evidence import build_index, document_records, extract
+from aero_psi.knowledge import review_records
+from aero_psi.copilot import retrieve
 
 
 class DocumentReviewTests(unittest.TestCase):
@@ -39,11 +39,11 @@ class DocumentReviewTests(unittest.TestCase):
             root=Path(temp)/'DATA';root.mkdir();(root/'a.txt').write_text('Brownian coagulation');(root/'b.txt').write_text('Brownian coagulation')
             index=Path(temp)/'index.json';build_index(root,index);records=document_records(index,root)
             self.assertEqual(len(records),2);self.assertEqual(records[1]['duplicate_of'],'a.txt')
-            with patch('aero_psi_copilot._chunks',return_value=records):self.assertEqual(len(retrieve({},'Brownian coagulation')),1)
+            with patch('aero_psi.copilot._chunks',return_value=records):self.assertEqual(len(retrieve({},'Brownian coagulation')),1)
 
     def test_named_investigation_keeps_other_families_out(self):
         records=[{'id':g,'group':g,'kind':'document_excerpt','text':'Radiometer calibration clock timestamp'} for g in ['FLEX','BASS-II','ACME II']]
-        with patch('aero_psi_copilot._chunks',return_value=records):
+        with patch('aero_psi.copilot._chunks',return_value=records):
             self.assertEqual([r['group'] for r in retrieve({},'FLEX radiometer calibration')],['FLEX'])
             self.assertEqual([r['group'] for r in retrieve({},'BASS-II calibration')],['BASS-II'])
 
@@ -71,7 +71,7 @@ class DocumentReviewTests(unittest.TestCase):
             record={'id':'document:converted','source_path':'old.doc','source_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),
                 'conversion':{'converted_path':'derived/old.pdf','converted_sha256':hashlib.sha256(converted.read_bytes()).hexdigest()}}
             index=derived/'index.json';index.write_text(json.dumps({'records':[record]}))
-            with patch('aero_psi_evidence.ROOT',root):
+            with patch('aero_psi.evidence.ROOT',root):
                 self.assertEqual(len(document_records(index,data)),1)
                 converted.write_bytes(b'mutated conversion')
                 self.assertEqual(document_records(index,data),[])

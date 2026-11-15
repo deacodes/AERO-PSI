@@ -3,7 +3,7 @@ import json
 import unittest
 from pathlib import Path
 from unittest.mock import patch
-from aero_psi_gap_si import review,tools
+from aero_psi.gap_si import review,tools
 
 class GapSI(unittest.TestCase):
     @classmethod
@@ -15,7 +15,7 @@ class GapSI(unittest.TestCase):
     def test_semantic_plan_executes_actual_columns_without_profile(self):
         calls=[]
         def provider(prompt,schema):calls.append(prompt);return self.plan() if len(calls)==1 else self.answer()
-        with patch('aero_psi_gap_si.retrieve',return_value=[]):r=review(self.catalog,{'question':'When the air gets thinner, why might the fire go out?'},provider)
+        with patch('aero_psi.gap_si.retrieve',return_value=[]):r=review(self.catalog,{'question':'When the air gets thinner, why might the fire go out?'},provider)
         self.assertEqual(r['status'],'generated');self.assertEqual(len(calls),2)
         self.assertEqual(r['groups'],['FLEX']);self.assertIn('computed_column_summary',calls[1])
         self.assertEqual(r['findings'][0]['source_ids'][0],r['sources'][0]['id'])
@@ -33,11 +33,11 @@ class GapSI(unittest.TestCase):
 
     def test_invented_column_stops_before_synthesis(self):
         p=self.plan();p['measurements'][0]['fields']=['invented_measurement']
-        with patch('aero_psi_gap_si.tools') as tool:r=review(self.catalog,{'question':'Compare flames'},lambda *_:p)
+        with patch('aero_psi.gap_si.tools') as tool:r=review(self.catalog,{'question':'Compare flames'},lambda *_:p)
         self.assertEqual(r['status'],'unavailable');tool.assert_not_called()
     def test_clarification_does_not_run_tools(self):
         p=self.plan();p['clarification_blocker']='missing_research_objective';p['clarification']='Do you mean flame dimensions or particle size?'
-        with patch('aero_psi_gap_si.tools') as tool:r=review(self.catalog,{'question':'Does it get bigger?'},lambda *_:p)
+        with patch('aero_psi.gap_si.tools') as tool:r=review(self.catalog,{'question':'Does it get bigger?'},lambda *_:p)
         self.assertEqual(r['status'],'clarification');tool.assert_not_called()
     def test_out_of_scope_not_forced_to_acme(self):
         p=self.plan();p['groups']=[]
@@ -45,7 +45,7 @@ class GapSI(unittest.TestCase):
         self.assertEqual(r['status'],'no_relevant_sources');self.assertNotIn('evidence_view',r)
     def test_unknown_citation_rejected(self):
         answers=iter([self.plan(),dict(self.answer(),findings=[dict(self.answer()['findings'][0],source_ids=['invented'])])])
-        with patch('aero_psi_gap_si.retrieve',return_value=[]):r=review(self.catalog,{'question':'Compare flames'},lambda *_:next(answers))
+        with patch('aero_psi.gap_si.retrieve',return_value=[]):r=review(self.catalog,{'question':'Compare flames'},lambda *_:next(answers))
         self.assertEqual(r['status'],'unavailable');self.assertNotIn('findings',r)
     def test_pinned_group_respected(self):
         r=review(self.catalog,{'question':'Compare smoke','group':'PSI101'},lambda *_:self.plan())
@@ -56,7 +56,7 @@ class GapSI(unittest.TestCase):
         self.assertEqual(r['status'],'unavailable');self.assertNotIn('assessment',r)
     def test_summaries_count_real_numeric_values(self):
         plan=self.plan()
-        with patch('aero_psi_gap_si.retrieve',return_value=[]):sources,_=tools(self.catalog,plan)
+        with patch('aero_psi.gap_si.retrieve',return_value=[]):sources,_=tools(self.catalog,plan)
         s=json.loads(sources[0]['text']);self.assertGreater(s['numeric_rows'],0);self.assertGreaterEqual(s['rows'],s['numeric_rows']);self.assertLessEqual(s['minimum'],s['maximum'])
 
     def test_exact_dataset_is_sent_to_both_ai_stages_and_measurements(self):
@@ -103,7 +103,7 @@ class GapSI(unittest.TestCase):
     def test_optional_scope_question_does_not_block_review(self):
         p=self.plan();p['clarification']='Measurements or metadata?';p['clarification_blocker']='none'
         replies=iter([p,self.answer()])
-        with patch('aero_psi_gap_si.retrieve',return_value=[]):
+        with patch('aero_psi.gap_si.retrieve',return_value=[]):
             r=review(self.catalog,{'question':'What evidence is needed to validate a model?'},lambda *_:next(replies))
         self.assertEqual(r['status'],'generated')
         self.assertTrue(r['findings'])

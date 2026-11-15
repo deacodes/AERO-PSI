@@ -3,9 +3,9 @@ from pathlib import Path
 import unittest
 from unittest.mock import patch
 from types import SimpleNamespace
-from aero_psi_archive import datasets,table_page,cell_state
-from aero_psi_ai import parse_response,AIResponseError,studio_schema
-from aero_psi_model_interpretation import interpret
+from aero_psi.archive import datasets,table_page,cell_state
+from aero_psi.ai import parse_response,AIResponseError,studio_schema
+from aero_psi.model_interpretation import interpret
 
 class ArchiveBrowserTests(unittest.TestCase):
  @classmethod
@@ -29,14 +29,14 @@ class ArchiveBrowserTests(unittest.TestCase):
    with self.assertRaises(ValueError):table_page(self.catalog,p)
  def test_model_si_recomputes_instead_of_trusting_client_results(self):
   payload=json.loads(Path('examples/scattering.json').read_text())
-  with patch('aero_psi_model_interpretation.ask',return_value={}) as ask:
+  with patch('aero_psi.model_interpretation.ask',return_value={}) as ask:
    interpret(self.catalog,{'model':'scattering','inputs':payload,'result':{'coefficients':999},'question':'Explain the angular pattern'})
    data=json.loads(ask.call_args.kwargs['runtime_evidence'][0]['text'])
    self.assertGreater(data['coefficients']['scattering_m_inv'],0);self.assertLess(data['coefficients']['scattering_m_inv'],1)
 
  def test_studio_receives_recomputed_model_context(self):
   import tempfile,copy
-  import aero_psi_studio as studio
+  import aero_psi.studio as studio
   payload=json.loads(Path('examples/scattering.json').read_text())
   def provider(prompt,context):
    model=next(e for e in context['evidence'] if e['kind']=='executed_model')

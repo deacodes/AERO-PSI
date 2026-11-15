@@ -25,5 +25,5 @@ This register prevents the application from silently replacing NASA workbook log
 
 | Model | Formula | Source | Scope / release status |
 |---|---|---|---|
-| `brownian_monodisperse_continuum_v1` | Equal-size continuum Brownian kernel: `K = sticking_efficiency × 8 k_B T / (3 μ)`; total number: `N(t) = N0 / (1 + K N0 t / 2)` | *The Simplified Aerosol Time Evolution Equations*, Appendix A, equations A.1, A.2, A.4 (public link embedded in `aero_psi_coagulation.py`) | Implemented as an assumption-explicit scenario only. It is not a NASA PSI measurement, does not infer particle size from detector voltage, and is not valid without checking its continuum-regime and closed-volume assumptions. |
+| `brownian_monodisperse_continuum_v1` | Equal-size continuum Brownian kernel: `K = sticking_efficiency × 8 k_B T / (3 μ)`; total number: `N(t) = N0 / (1 + K N0 t / 2)` | *The Simplified Aerosol Time Evolution Equations*, Appendix A, equations A.1, A.2, A.4 (public link embedded in `aero_psi/coagulation.py`) | Implemented as an assumption-explicit scenario only. It is not a NASA PSI measurement, does not infer particle size from detector voltage, and is not valid without checking its continuum-regime and closed-volume assumptions. |
 

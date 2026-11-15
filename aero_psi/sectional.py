@@ -8,9 +8,9 @@ import bisect
 import math
 from typing import Any
 
-from aero_psi_coagulation import BOLTZMANN_J_PER_K, DEFAULTS, ScenarioInputError, _inputs
-from aero_psi_kernels import physics
-from aero_psi_processes import finite, distribution, process_inputs
+from aero_psi.coagulation import BOLTZMANN_J_PER_K, DEFAULTS, ScenarioInputError, _inputs
+from aero_psi.kernels import physics
+from aero_psi.processes import finite, distribution, process_inputs
 
 MODEL_ID = "sectional_sphere_coagulation_v2"
 

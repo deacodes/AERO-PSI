@@ -11,8 +11,8 @@ The read-only NASA source archive is in `DATA/`. The platform includes imported 
 Requirements: Python 3.11 or newer. Use the project environment for scientific libraries and Vertex AI. CLI startup automatically selects `.venv` when present; it does not install packages. For a fresh checkout, create `.venv` and install `requirements.txt` into it before starting.
 
 ```bash
-python3 aero_psi_backend.py index
-python3 aero_psi_backend.py serve
+python3 -m aero_psi index
+python3 -m aero_psi serve
 ```
 
 Then open `http://127.0.0.1:8000` for the local web shell. Its versioned API lives at `http://127.0.0.1:8000/api/v1/health`, `/api/v1/investigations`, and `/api/v1/summary`.
@@ -31,7 +31,9 @@ The project does not treat raw detector voltage as a calibrated optical property
 | Path | Purpose |
 |---|---|
 | `DATA/` | Immutable local NASA source archive; excluded from Git by default. |
-| `aero_psi_backend.py` | Read-only source-catalog builder and local JSON API. |
+| `aero_psi/` | Python package: backend, scientific models, evidence and SI workflows. |
+| `tools/` | Data packaging and document-review utilities. |
+| `tests/` | Python regression tests and browser checks. |
 | `aero_psi_catalog.json` | Generated local catalog; rebuild with `index`. |
 | [DATA_DICTIONARY.md](markdowns/DATA_DICTIONARY.md) | Dataset/field definitions and provenance rules. |
 | [DATA_POLICY.md](markdowns/DATA_POLICY.md) | Attribution, redistribution, and source-handling policy. |
@@ -48,7 +50,7 @@ The optical model requires the pinned dependencies in `requirements.txt`. Use th
 python3 -m venv .venv
 .venv/bin/python -m pip install -r requirements.txt
 .venv/bin/python -m unittest discover -s tests
-.venv/bin/python aero_psi_backend.py serve
+.venv/bin/python -m aero_psi serve
 ```
 
 Example optical requests are in `examples/scattering.json` and `examples/coupled_optics.json`. The model lab now exposes gravity and gas controls, a size-distribution timeline, observed-window analysis and angular scattering. Evidence SI can plan and execute bounded investigations and export their records. Advanced calibration/uncertainty forms remain API-only.

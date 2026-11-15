@@ -30,7 +30,7 @@ def parse_response(response):
 def generate_json(prompt, schema, *, max_tokens=8000):
     from google import genai
     from google.genai import types
-    from aero_psi_copilot import load_local_env
+    from aero_psi.copilot import load_local_env
     load_local_env()
     model=os.environ.get('AERO_PSI_VERTEX_MODEL','gemini-3.5-flash')
     config={'response_mime_type':'application/json','response_json_schema':schema,'max_output_tokens':max_tokens}

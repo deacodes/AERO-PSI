@@ -4,9 +4,9 @@ import tempfile
 import unittest
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import aero_psi_backend as backend
-import aero_psi_ingest as ingest
-from aero_psi_ranking import investigation_rankings, run_readiness
+import aero_psi.backend as backend
+import aero_psi.ingest as ingest
+from aero_psi.ranking import investigation_rankings, run_readiness
 
 class CatalogTests(unittest.TestCase):
     def make_source(self, root):

@@ -1,9 +1,9 @@
 """Recompute the supplied model inputs before requesting scientific interpretation."""
 import hashlib
 import json
-from aero_psi_copilot import ask, retrieve
-from aero_psi_scattering import simulate_scattering
-from aero_psi_sectional import simulate_sectional
+from aero_psi.copilot import ask, retrieve
+from aero_psi.scattering import simulate_scattering
+from aero_psi.sectional import simulate_sectional
 
 
 def context_evidence(payload):

@@ -2,9 +2,9 @@
 import gzip
 import json
 from pathlib import Path
-from aero_psi_discovery import manifest_records
+from aero_psi.discovery import manifest_records
 
-ROOT=Path(__file__).resolve().parent
+ROOT=Path(__file__).resolve().parents[1]
 
 
 def datasets(catalog):
@@ -25,7 +25,7 @@ def cell_state(value,run=False):
     if value is None or not str(value).strip(): return 'missing'
     raw=str(value).strip()
     if run and raw in ('-10','-10.0'):return 'sentinel'
-    from aero_psi_research import number
+    from aero_psi.research import number
     return 'numeric' if number(value) is not None else 'text'
 
 
@@ -62,7 +62,7 @@ def table_page(catalog,payload):
 
 
 def interpret(catalog,payload):
-    from aero_psi_copilot import ask
+    from aero_psi.copilot import ask
     page=table_page(catalog,{k:v for k,v in payload.items() if k in ('source_path','offset','query')}|{'limit':30})
     selected=payload.get('source_row')
     if selected is not None:

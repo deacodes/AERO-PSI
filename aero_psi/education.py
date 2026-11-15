@@ -1,5 +1,5 @@
 """Science questions always use the AI provider; no canned scientific answers."""
-from aero_psi_copilot import ask, validate_history
+from aero_psi.copilot import ask, validate_history
 
 
 def explain(question):

@@ -15,7 +15,7 @@ from statistics import median
 from typing import Any
 from xml.etree import ElementTree as ET
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "DATA"
 DERIVED = ROOT / "derived"
 NS = {

@@ -5,7 +5,7 @@ https://aerosol.earthsci.dev/stable/dynamics/ . Settling uses Stokes drag
 with Cunningham correction. Shear uses the rectilinear collision approximation.
 """
 import math
-from aero_psi_coagulation import BOLTZMANN_J_PER_K as KB, ScenarioInputError
+from aero_psi.coagulation import BOLTZMANN_J_PER_K as KB, ScenarioInputError
 
 
 def _fuchs_delta(diameter, flight):

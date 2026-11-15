@@ -195,7 +195,7 @@ Verification: 102 Python tests pass. Browser checks cover question-dependent reo
 - [ ] Broad live scientific-answer evaluation, independent claim-support review, complete screen-reader/contrast audit and NASA experimental validation remain open. Numerical/software checks do not certify scientific predictions.
 
 ### Follow-up fixes — scattering runtime and scientific answers
-- [x] Ordinary CLI launch selects the existing project environment before loading scientific dependencies; verify real Mie angular scattering from `python3 aero_psi_backend.py serve`.
+- [x] Ordinary CLI launch selects the existing project environment before loading scientific dependencies; verify real Mie angular scattering from `python3 -m aero_psi serve`.
 - [x] Rayleigh uses its analytical implementation without requiring Mie; missing Mie is a server capability error, never an instruction to download a requirements file.
 - [x] Direct scientific conversation appears before optional tool plans. General science and conditional reasoning do not require an archive match; source-specific claims still require citations.
 - [x] Remove every canned scientific-answer path, including the exact Brownian-motion special case. Empty question inputs; no prefilled question silently supplied.
@@ -254,7 +254,7 @@ Current archive status: all 49 eligible files (39 distinct contents) extracted i
 
 ## 2. Backend foundation
 
-- [x] Create a project-local, read-only NASA file catalog: `aero_psi_backend.py`.
+- [x] Create a project-local, read-only NASA file catalog: `aero_psi/backend.py`.
 - [x] Produce `aero_psi_catalog.json` from `DATA/`.
 - [x] Verify the catalog finds 180 source files and eight investigation metadata records.
 - [x] Run the local API health endpoint successfully.

@@ -17,7 +17,7 @@ loadAtlasGaps=async function(interactive=false){
     if(useSI&&response.status!=='generated'){renderSIGapState(response);return;}
     const result=useSI?response.evidence_view:response;
     researchView.siResult=useSI?response:null;
-    if(!result?.assessment)throw Error('The running Python backend is older than this page. Stop it with Ctrl+C, run python3 aero_psi_backend.py serve again, then reload this page.');
+    if(!result?.assessment)throw Error('The running Python backend is older than this page. Stop it with Ctrl+C, run python3 -m aero_psi serve again, then reload this page.');
     researchView.result=result;researchView.request={...request,group:result.group,table:result.selected_table};discovery.plan=result;
     $('#atlasGroup').innerHTML='<option value="">Find relevant investigations</option>'+result.groups.map(g=>`<option value="${plain(g.group)}">${plain(g.group)}</option>`).join('');$('#atlasGroup').value=request.group||'';
     if(useSI)$('#researchCandidates').replaceChildren();else renderResearchCandidates(result);
