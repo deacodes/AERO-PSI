@@ -158,3 +158,13 @@
     .micro { color: var(--quiet); font-size: 12px; line-height: 1.5; }
     .kicker { color: var(--quiet); font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
 
+
+.sidebar-resource-links { display:grid; grid-template-columns:minmax(0,1fr) 44px; gap:8px; }
+.sidebar-resource-links .settings-button { min-height:44px; }
+.sidebar-resource-links .github-link { padding:10px; justify-content:center; text-decoration:none; }
+.sidebar-resource-links .github-link svg { width:20px; height:20px; fill:currentColor; stroke:none; }
+.sidebar-resource-links .resources-compact-icon { display:none; }
+.sidebar-collapsed .sidebar-resource-links { grid-template-columns:1fr; }
+.sidebar-collapsed .resources-link { justify-content:center; }
+.sidebar-collapsed .resources-compact-icon { display:block; }
+@media(max-width:900px) { .sidebar-resource-links { grid-template-columns:1fr; } .sidebar-resource-links .resources-compact-icon { display:block; } }
