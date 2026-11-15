@@ -3,6 +3,7 @@ import gzip
 import json
 from pathlib import Path
 from aero_psi.discovery import manifest_records
+from .source_labels import presentation
 
 from .runtime_data import root as runtime_root
 ROOT = runtime_root()
@@ -19,6 +20,7 @@ def datasets(catalog):
             'row_count':len(table['rows']) if table is not None else run.get('analysis',{}).get('row_count') if run else None,
             'column_count':len(table['columns']) if table is not None else run.get('header_count') if run else None,
             'worksheet':run.get('worksheet') if run else None})
+    for item in items:item.update(presentation(item,item['view']))
     return {'items':items,'groups':sorted({i['investigation_group'] for i in items})}
 
 

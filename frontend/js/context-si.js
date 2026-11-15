@@ -6,7 +6,7 @@ const ContextSI=(()=>{
  function open(row=false){const v=ArchiveBrowser.view;if(!v.page)return;
   if(row&&!v.selected){$('#datasetStatus').textContent='Select a row first.';return;}
   const context={source_path:v.page.source_path,offset:v.offset,query:$('#datasetQuery').value,...(row?{source_row:v.selected.source_row}:{})};
-  ScienceContext.open(context.source_path.split('/').at(-1)+(row?' · row '+context.source_row:''),row?'Explain this row and which comparisons it supports.':'Summarize this table and its columns. Distinguish the sampled rows from the full dataset.',
+  ScienceContext.open(SourceLabels.title(context.source_path)+(row?' · row '+context.source_row:''),row?'Explain this row and which comparisons it supports.':'Summarize this table and its columns. Distinguish the sampled rows from the full dataset.',
    (question,history,mode)=>post('/api/v1/archive/interpret',{...context,question,history,mode}));
  }
  $('#archiveSISummary').onclick=()=>open();$('#archiveSIRow').onclick=()=>open(true);

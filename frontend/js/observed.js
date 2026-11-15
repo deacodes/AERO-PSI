@@ -1,6 +1,6 @@
     function friendlyRun(run) {
       const file=run.source_path.split('/').pop(); const runMatch=run.source_path.match(/run[_\s-]?(\d+)/i); const gmtMatch=run.source_path.match(/gmt[_\s-]?(\d+)/i); const material=run.material_candidate || 'Material not catalogued'; const ids=[runMatch?`Run ${runMatch[1]}`:'Imported run',gmtMatch?`GMT ${gmtMatch[1]}`:null].filter(Boolean).join(' · '); const signals=Object.keys(run.optical_signal_columns||{}).length;
-      return { title:`${material} · ${ids}`, meta:`${run.group} · ${signals} optical channels · ${run.quality_state || 'quality unclassified'}`, file };
+      return { title:SourceLabels.title(run.source_path,`${material} · ${ids}`), meta:`${run.group} · ${signals} optical channels · ${run.quality_state || 'quality unclassified'}`, file };
     }
     function findRun(source) { return Object.values(state.runs).flat().find(run=>run.source_path===source); }
     function populateOpticalRuns() {

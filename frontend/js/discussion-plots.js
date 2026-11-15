@@ -4,7 +4,7 @@ const DiscussionPlots=(()=>{
   if(!host||!analysis)return;
   host.className='discussion-plot';
   const heading=document.createElement('h3');heading.textContent='Patterns in this dataset';host.append(heading);
-  const source=document.createElement('p');source.className='micro';source.textContent=analysis.source_path.split('/').at(-1)+' · '+analysis.scope;host.append(source);
+  const source=document.createElement('p');source.className='micro';source.textContent=SourceLabels.title(analysis.source_path)+' · '+analysis.scope;host.append(source);const filename=document.createElement('p');filename.className='source-filename';filename.textContent=analysis.source_path.split('/').at(-1);host.append(filename);
   if(!analysis.charts?.length){const p=document.createElement('p');p.textContent='No plot available: this selection needs at least two usable numeric values in a displayed measurement.';host.append(p);return;}
   const label=document.createElement('label');label.textContent='Measurement ';const select=document.createElement('select');select.setAttribute('aria-label','Measurement to plot in this answer');
   analysis.charts.forEach((c,i)=>{const o=document.createElement('option');o.value=i;o.textContent=c.column;select.append(o);});label.append(select);host.append(label);

@@ -1,7 +1,7 @@
 /* Page templates are separate documents; scientific state survives page navigation. */
 (async function bootWorkspace() {
   const pages = ['home', 'mission', 'lab', 'atlas', 'evidence', 'resources', 'studio'];
-  const scripts = ['browser-storage', 'core', 'navigation', 'charts', 'archive', 'coagulation', 'observed', 'atlas',
+  const scripts = ['browser-storage', 'core', 'source-labels', 'navigation', 'charts', 'archive', 'coagulation', 'observed', 'atlas',
     'evidence-base', 'settings', 'workflow-shared', 'distribution', 'observed-analysis', 'scattering',
     'analysis-runner', 'discussion-plots', 'sources', 'accessibility', 'resources', 'science-chat', 'discovery', 'studio-charts', 'studio', 'experiment-design', 'research', 'gap-si', 'archive-browser', 'model-si', 'context-si', 'journey', 'si-workspace', 'si-evidence-picker', 'home-explore', 'home-previews', 'term-help', 'compact-actions'];
   async function template(path) {
@@ -18,6 +18,7 @@
     document.querySelector('#settingsMount').outerHTML = content[1];
     document.querySelector('#pageMount').outerHTML = content.slice(2).join('\n');
     for (const name of scripts) {
+      if(name==='navigation')await SourceLabels.ready;
       await new Promise((resolve, reject) => {
         const script = document.createElement('script');
         script.src = `/js/${name}.js`; script.onload = resolve;

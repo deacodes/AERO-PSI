@@ -11,7 +11,7 @@ renderCopilot=function(answer){
     if(key==='observed_in_source'&&answer.table_analysis)continue;
     if(answer[key]?.length&&!(unavailable&&key==='unknown_or_limitation'))sections.push(`<section class="answer-section"><h3>${title}</h3>${answer[key].map(v=>`<div class="evidence-prose">${richText(v)}${v.source_ids?.length?`<p class="micro">Citations: ${v.source_ids.map(escapeHTML).join(', ')}</p>`:''}</div>`).join('')}</section>`);
   }
-  $('#copilotAnswer').innerHTML=sections.join('')||'<p>No answer was returned. Try again or ask a more specific question.</p>';if(answer.table_analysis)DiscussionPlots.mount($('#copilotAnswer .discussion-plot-host'),answer.table_analysis);state.copilotSources=answer.sources||[];$('#sourceSearch').disabled=!state.copilotSources.length;renderSourceTrail(state.copilotSources);
+  $('#copilotAnswer').innerHTML=sections.join('')||'<p>No answer was returned. Try again or ask a more specific question.</p>';if(answer.table_analysis)DiscussionPlots.mount($('#copilotAnswer .discussion-plot-host'),answer.table_analysis);$$('#copilotAnswer > .answer-section, #copilotAnswer > .discussion-plot').forEach((el,i)=>{el.classList.add('si-answer-enter');el.style.setProperty('--answer-delay',Math.min(i*45,180)+'ms');});state.copilotSources=answer.sources||[];$('#sourceSearch').disabled=!state.copilotSources.length;renderSourceTrail(state.copilotSources);
 };
 function referenceLink(source){
   if(!source.source_url)return '';
@@ -37,7 +37,7 @@ renderSourceTrail=function(sources,query=''){
   $('#sourceSearch').disabled=!sources.length;
   const list=sources.filter(s=>JSON.stringify(s).toLowerCase().includes(query.toLowerCase()));
   $('#sourceCount').textContent=`${list.length} source records`;
-  $('#copilotSources').innerHTML=list.map((s,i)=>`<div class="citation"><button class="citation-button" data-source-index="${i}" type="button" aria-expanded="false"><strong>${escapeHTML(s.title||s.source_path||s.id)}</strong><span>${escapeHTML(s.source_range||'Source record')}</span><small>${escapeHTML(s.review_state||s.kind||'Source reference')} · Inspect source</small></button></div>`).join('')||'<p class="micro">No sources cited yet.</p>';
+  $('#copilotSources').innerHTML=list.map((s,i)=>`<div class="citation"><button class="citation-button" data-source-index="${i}" type="button" aria-expanded="false"><strong>${escapeHTML(SourceLabels.get(s.source_path)?SourceLabels.title(s.source_path):s.title||s.source_path||s.id)}</strong>${s.source_path?SourceLabels.caption(s.source_path)+SourceLabels.tags(s.source_path):''}<span>${escapeHTML(s.source_range||'Source record')}</span><small>${escapeHTML(s.review_state||s.kind||'Source reference')} · Inspect source</small></button></div>`).join('')||'<p class="micro">No sources cited yet.</p>';
   $$('[data-source-index]').forEach(b=>b.onclick=async()=>{
     const s=list[Number(b.dataset.sourceIndex)];
     const existing=b.parentElement.querySelector('.source-excerpt');

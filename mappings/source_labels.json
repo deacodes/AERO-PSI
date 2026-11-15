@@ -1,0 +1,902 @@
+{
+  "ACME FLAME DESIGN/PSI-10_Engineering Documents_ACME Engineering Implementation Rpt..pdf": {
+    "title": "ACME — engineering implementation report",
+    "kind": "Document",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "ACME FLAME DESIGN/PSI-10_Experimental table_Flame Design_Inverse Flame.csv": {
+    "title": "ACME Flame Design — inverse-flame measurements",
+    "kind": "Experiment table",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "ACME FLAME DESIGN/PSI-10_Experimental table_Flame Design_Normal Flame.csv": {
+    "title": "ACME Flame Design — normal-flame measurements",
+    "kind": "Experiment table",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "ACME FLAME DESIGN/PSI-10_Reports_FinalRpt_ACMEFlameDesign.pdf": {
+    "title": "ACME Flame Design — final report",
+    "kind": "Report",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "ACME FLAME DESIGN/PSI-10_Reports_TaskbookPubsList_Feb2023.pdf": {
+    "title": "TaskbookPubsList Feb2023",
+    "kind": "Report",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "ACME FLAME DESIGN/PSI-10_Reports_TaskbookRpts.pdf": {
+    "title": "TaskbookRpts",
+    "kind": "Report",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "ACME FLAME DESIGN/PSI-10_Science Documents_ACME_ISRD.pdf": {
+    "title": "ACME ISRD",
+    "kind": "Document",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "ACME FLAME DESIGN/PSI-10_Science Documents_ACME_SORD.pdf": {
+    "title": "ACME SORD",
+    "kind": "Document",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "ACME FLAME DESIGN/PSI-10_Science Documents_SRD_ACMEFlameDesign.pdf": {
+    "title": "SRD ACMEFlameDesign",
+    "kind": "Document",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "ACME FLAME DESIGN/PSI-10_metadata_PSI-10-ISA/i_Investigation.txt": {
+    "title": "ACME Flame Design — investigation description",
+    "kind": "Metadata",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "ACME FLAME DESIGN/PSI-10_metadata_PSI-10-ISA/s_PSI-10.txt": {
+    "title": "ACME Flame Design — study metadata",
+    "kind": "Metadata",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "ACME II/PSI-159_Engineering Documents_ACME Engineering Implementation Rpt..pdf": {
+    "title": "ACME — engineering implementation report",
+    "kind": "Document",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "ACME II/PSI-159_Experimental table_CFI-G_Inverse Flames.csv": {
+    "title": "ACME CFI-G — inverse-flame measurements",
+    "kind": "Experiment table",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "ACME II/PSI-159_Experimental table_CFI-G_Normal Flames.csv": {
+    "title": "ACME CFI-G — normal-flame measurements",
+    "kind": "Experiment table",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "ACME II/PSI-159_Reports_FinalRpt_ACME.CFI-G.pdf": {
+    "title": "ACME CFI-G — final report",
+    "kind": "Report",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "ACME II/PSI-159_metadata_PSI-159-ISA/i_Investigation.txt": {
+    "title": "ACME CFI-G — investigation description",
+    "kind": "Metadata",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "ACME II/PSI-159_metadata_PSI-159-ISA/s_PSI-159.txt": {
+    "title": "ACME CFI-G — study metadata",
+    "kind": "Metadata",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "BASS (ORIGINAL)/BASS Test Matrix 050213.xlsx": {
+    "title": "BASS — test matrix (050213)",
+    "kind": "Workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "BASS (ORIGINAL)/BASS test matrix.xlsx": {
+    "title": "BASS — test matrix",
+    "kind": "Workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "BASS (ORIGINAL)/DLD_BASS.pdf": {
+    "title": "DLD BASS",
+    "kind": "Document",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "BASS (ORIGINAL)/PSI-26_Experimental table_BASS.csv": {
+    "title": "BASS — experiment measurements",
+    "kind": "Experiment table",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "BASS (ORIGINAL)/PSI-26_metadata_PSI-102_BASS/i_Investigation.txt": {
+    "title": "BASS — investigation description",
+    "kind": "Metadata",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "BASS (ORIGINAL)/PSI-26_metadata_PSI-102_BASS/s_PSI-26.txt": {
+    "title": "BASS — study metadata",
+    "kind": "Metadata",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "BASS (ORIGINAL)/SRD_BASS.pdf": {
+    "title": "SRD BASS",
+    "kind": "Document",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "BASS (ORIGINAL)/US National Meeting-070HE-0218-Final.docx": {
+    "title": "BASS — US National Meeting paper (070HE-0218)",
+    "kind": "Report",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "BASS-II/BASS-2 Engineering Requirements.pptx": {
+    "title": "BASS-2 Engineering Requirements",
+    "kind": "Presentation",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "BASS-II/BASS-II Summary Report.pdf": {
+    "title": "BASS-II Summary Report",
+    "kind": "Report",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "BASS-II/BASS-II Test Matrix by PI Final.xlsx": {
+    "title": "BASS-II — test matrix",
+    "kind": "Workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "BASS-II/BASS-II data FAQ.docx": {
+    "title": "BASS-II — data questions and answers",
+    "kind": "Document",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "BASS-II/PSI-25_Experimental table_BASS-II.csv": {
+    "title": "BASS-II — experiment measurements",
+    "kind": "Experiment table",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "BASS-II/PSI-25_metadata_PSI_metadata_PSI-101_BASS-II/i_Investigation.txt": {
+    "title": "BASS-II — investigation description",
+    "kind": "Metadata",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "BASS-II/PSI-25_metadata_PSI_metadata_PSI-101_BASS-II/s_PSI-25.txt": {
+    "title": "BASS-II — study metadata",
+    "kind": "Metadata",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "BASS-II/SRD_BASS-II.pdf": {
+    "title": "SRD BASS-II",
+    "kind": "Document",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "FLEX/20CAL08.txt": {
+    "title": "FLEX — 20CAL08 data record",
+    "kind": "Reference file",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "FLEX/FLEX DoD.docx": {
+    "title": "FLEX DoD",
+    "kind": "Document",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "FLEX/FLEX_Test_Plan.pdf": {
+    "title": "FLEX — test plan",
+    "kind": "Document",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "FLEX/PSI-69_Experimental table_FLEX.csv": {
+    "title": "FLEX — experiment measurements",
+    "kind": "Experiment table",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "FLEX/PSI-69_metadata_PSI-133_FLEX/i_Investigation.txt": {
+    "title": "FLEX — investigation description",
+    "kind": "Metadata",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "FLEX/PSI-69_metadata_PSI-133_FLEX/s_PSI-69.txt": {
+    "title": "FLEX — study metadata",
+    "kind": "Metadata",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Combined SAMER Results 06 02 14.xlsx": {
+    "title": "SAME-R — combined results (2014)",
+    "kind": "Workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Kapton Runs/2010_214_10_kapton_run61.xls": {
+    "title": "Kapton — Run 61 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Kapton Runs/2010_214_10_kapton_run62.xls": {
+    "title": "Kapton — Run 62 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Kapton Runs/2010_237_12_kapton_run70.xls": {
+    "title": "Kapton — Run 70 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Kapton Runs/2010_238_17_kapton_run73.xls": {
+    "title": "Kapton — Run 73 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Kapton Runs/2010_238_18_kapton_run75.xls": {
+    "title": "Kapton — Run 75 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Kapton Runs/2010_238_19_kapton_run77.xls": {
+    "title": "Kapton — Run 77 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Kapton Runs/2010_242_12_kapton_run85.xls": {
+    "title": "Kapton — Run 85 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Kapton Runs/2010_242_15_kapton_run90.xls": {
+    "title": "Kapton — Run 90 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Kapton Runs/2010_250_13_kapton_run93.xls": {
+    "title": "Kapton — Run 93 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Kapton Runs/2010_250_13_kapton_run94.xls": {
+    "title": "Kapton — Run 94 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Kapton Runs/2010_250_16_kapton_run92.xls": {
+    "title": "Kapton — Run 92 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Kapton Runs/2010_251_13_kapton_run101.xls": {
+    "title": "Kapton — Run 101 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Kapton Runs/2010_251_14_kapton_run102.xls": {
+    "title": "Kapton — Run 102 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Kapton Runs/2010_252_16_kapton_run108.xls": {
+    "title": "Kapton — Run 108 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Kapton Runs/2010_253_14_kapton_run112.xls": {
+    "title": "Kapton — Run 112 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Kapton Runs/2010_253_15_kapton_run114.xls": {
+    "title": "Kapton — Run 114 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Kapton Runs/62 Kapton aged issue with bins.xlsx": {
+    "title": "62 Kapton aged issue with bins",
+    "kind": "Workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Kapton Runs/62 Kapton unaged.xlsx": {
+    "title": "62 Kapton unaged",
+    "kind": "Workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Kapton Runs/94 Kapton aged- 4 images.xlsx": {
+    "title": "94 Kapton aged- 4 images",
+    "kind": "Workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/PSI-101_Experimental table_SAME-R.csv": {
+    "title": "SAME-R — experiment measurements",
+    "kind": "Experiment table",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/PSI-101_metadata_PSI-169_SAME-R/i_Investigation.txt": {
+    "title": "SAME-R — investigation description",
+    "kind": "Metadata",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/PSI-101_metadata_PSI-169_SAME-R/s_PSI-101.txt": {
+    "title": "SAME-R — study metadata",
+    "kind": "Metadata",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Pyrell Runs/2010_202_13_pyrell_run52.xls": {
+    "title": "Pyrell — Run 52 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Pyrell Runs/2010_2342_11_pyrell_run84.xls": {
+    "title": "Pyrell — Run 84 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Pyrell Runs/2010_235_11_pyrell_run64.xls": {
+    "title": "Pyrell — Run 64 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Pyrell Runs/2010_235_11_pyrell_run64a.xls": {
+    "title": "Pyrell — Run 64a — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Pyrell Runs/2010_235_9_pyrell_run63.xls": {
+    "title": "Pyrell — Run 63 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Pyrell Runs/2010_235_9_pyrell_run63a.xls": {
+    "title": "Pyrell — Run 63a — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Pyrell Runs/2010_237_13_pyrell_run71.xls": {
+    "title": "Pyrell — Run 71 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Pyrell Runs/2010_238_17_pyrell_run74.xls": {
+    "title": "Pyrell — Run 74 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Pyrell Runs/2010_238_18_pyrell_run76.xls": {
+    "title": "Pyrell — Run 76 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Pyrell Runs/2010_242_13_pyrell_run87.xls": {
+    "title": "Pyrell — Run 87 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Pyrell Runs/2010_250_14_pyrell_run95.xls": {
+    "title": "Pyrell — Run 95 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Pyrell Runs/2010_251_10_pyrell_run97.xls": {
+    "title": "Pyrell — Run 97 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Pyrell Runs/2010_252_13_pyrell_run107.xls": {
+    "title": "Pyrell — Run 107 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Pyrell Runs/2010_253_14_pyrell_run113.xls": {
+    "title": "Pyrell — Run 113 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Pyrell Runs/63 Pyrell aged.xlsx": {
+    "title": "63 Pyrell aged",
+    "kind": "Workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Pyrell Runs/63 Pyrell unaged.xlsx": {
+    "title": "63 Pyrell unaged",
+    "kind": "Workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Pyrell Runs/64 Pyrell aged.xlsx": {
+    "title": "64 Pyrell aged",
+    "kind": "Workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Pyrell Runs/64 Pyrell unaged.xlsx": {
+    "title": "64 Pyrell unaged",
+    "kind": "Workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/SAME EIRD Rev 2.00 02-25-05 HIgh Q.pdf": {
+    "title": "SAME — experiment interface requirements (revision 2)",
+    "kind": "Document",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/SAME ICES  2013 07 15 final as presented.pptx": {
+    "title": "SAME — ICES presentation (2013)",
+    "kind": "Presentation",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/SAMER_Final 0602 2014.pdf": {
+    "title": "SAME-R — final science report (2014)",
+    "kind": "Report",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Silicone Runs/2010_236_9_silicone_run67.xls": {
+    "title": "Silicone — Run 67 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Silicone Runs/2010_237_14_silcone_run72.xls": {
+    "title": "Silicone — Run 72 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Silicone Runs/2010_242_14_silicone_run86.xls": {
+    "title": "Silicone — Run 86 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Silicone Runs/2010_250_12_silicone_run91.xls": {
+    "title": "Silicone — Run 91 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Silicone Runs/2010_251_12_silicone_run99.xls": {
+    "title": "Silicone — Run 99 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Silicone Runs/2010_252_12_silicone_run104.xls": {
+    "title": "Silicone — Run 104 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Silicone Runs/2010_252_15_silicone_run103.xls": {
+    "title": "Silicone — Run 103 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Silicone Runs/2010_253_13_silicone_run109.xls": {
+    "title": "Silicone — Run 109 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Silicone Runs/Copy of 2010_235_10_silicone_run66 test.xls": {
+    "title": "Silicone — Run 66 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Teflon Runs/2010_201_12_teflon_run50.xls": {
+    "title": "Teflon — Run 50 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Teflon Runs/2010_210_10_teflon_run56.xls": {
+    "title": "Teflon — Run 56 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Teflon Runs/2010_211_12_teflon_run58.xls": {
+    "title": "Teflon — Run 58 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Teflon Runs/2010_236_10_teflon_run69.xls": {
+    "title": "Teflon — Run 69 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Teflon Runs/2010_239_14_teflon_run79.xls": {
+    "title": "Teflon — Run 79 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Teflon Runs/2010_239_16_teflon_run81.xls": {
+    "title": "Teflon — Run 81 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Teflon Runs/2010_239_17_teflon_run83.xls": {
+    "title": "Teflon — Run 83 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Teflon Runs/2010_242_15_teflon_run89.xls": {
+    "title": "Teflon — Run 89 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Teflon Runs/2010_251_11_teflon_run100.xls": {
+    "title": "Teflon — Run 100 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Teflon Runs/2010_252_14_teflon_run105.xls": {
+    "title": "Teflon — Run 105 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI101/Teflon Runs/2010_253_13_teflon_run111.xls": {
+    "title": "Teflon — Run 111 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Dibutyl Phthalate/DBP  GMT257hkp.xls": {
+    "title": "Dibutyl phthalate — GMT 257 housekeeping",
+    "kind": "Housekeeping",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Dibutyl Phthalate/DBP run 4 GMT255hkp with zgy average.xls": {
+    "title": "Dibutyl Phthalate — Run 4 — housekeeping (averaged)",
+    "kind": "Housekeeping",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Dibutyl Phthalate/GMT254HKPandLOGmultiple runs.xls": {
+    "title": "GMT 254 multi-run housekeeping and log",
+    "kind": "Housekeeping",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Dibutyl Phthalate/GMT255 log.xlsx": {
+    "title": "GMT 255 test log",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Dibutyl Phthalate/GMT262 Run 11 DBP hkp.xls": {
+    "title": "Dibutyl Phthalate — Run 11 — housekeeping",
+    "kind": "Housekeeping",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Dibutyl Phthalate/GMT262 Run 12 dbp.xls": {
+    "title": "Dibutyl Phthalate — Run 12 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Dibutyl Phthalate/GMT263 Run 15 DBP.xls": {
+    "title": "Dibutyl Phthalate — Run 15 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Dibutyl Phthalate/GMT263 Run 16 DBP.xls": {
+    "title": "Dibutyl Phthalate — Run 16 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Dibutyl Phthalate/GMT264 Run 18 DBP.xls": {
+    "title": "Dibutyl Phthalate — Run 18 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Dibutyl Phthalate/GMT264 Run 21 DBP.xls": {
+    "title": "Dibutyl Phthalate — Run 21 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Dibutyl Phthalate/GMT264 Run 22 DBP.xls": {
+    "title": "Dibutyl Phthalate — Run 22 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Dibutyl Phthalate/GMT264dbptest19and20hkp.xls": {
+    "title": "Dibutyl phthalate — GMT 264 housekeeping · source record 19a, 20h",
+    "kind": "Housekeeping",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Dibutyl Phthalate/GMT276dbp36hkp.xls": {
+    "title": "Dibutyl phthalate — GMT 276 housekeeping · source record 36h",
+    "kind": "Housekeeping",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Dibutyl Phthalate/GMT276dbp37.xls": {
+    "title": "Dibutyl phthalate — GMT 276 workbook · source record 37",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Dibutyl Phthalate/GMT276dbp38.xls": {
+    "title": "Dibutyl phthalate — GMT 276 workbook · source record 38",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Dibutyl Phthalate/GMT276dbp39hkp.xls": {
+    "title": "Dibutyl phthalate — GMT 276 housekeeping · source record 39h",
+    "kind": "Housekeeping",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Dibutyl Phthalate/GMT276dbp40hkp.xls": {
+    "title": "Dibutyl phthalate — GMT 276 housekeeping · source record 40h",
+    "kind": "Housekeeping",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Dibutyl Phthalate/GMT277DBP43hkp.xls": {
+    "title": "Dibutyl phthalate — GMT 277 housekeeping · source record 43h",
+    "kind": "Housekeeping",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Dibutyl Phthalate/GMT277DBPTest44.xls": {
+    "title": "Dibutyl phthalate — GMT 277 workbook · source record 44",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Dibutyl Phthalate/GMT277dbp42hkp peak 1.xls": {
+    "title": "Dibutyl phthalate — GMT 277 housekeeping · source record 42h, 1",
+    "kind": "Housekeeping",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Dibutyl Phthalate/GMT277dbp42hkp peak 2.xls": {
+    "title": "Dibutyl phthalate — GMT 277 housekeeping · source record 42h, 2",
+    "kind": "Housekeeping",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Dibutyl Phthalate/GMT277dbp43hkpa.xls": {
+    "title": "Dibutyl phthalate — GMT 277 housekeeping · source record 43h",
+    "kind": "Housekeeping",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Dibutyl Phthalate/GMT278DBP45.xls": {
+    "title": "Dibutyl phthalate — GMT 278 workbook · source record 45",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Dibutyl Phthalate/Run 2 DBP GMT 254 with averages.xls": {
+    "title": "Dibutyl Phthalate — Run 2 — measurements (averaged)",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Dibutyl Phthalate/Run 2 GMT254 testlog b.xlsx": {
+    "title": "Dibutyl Phthalate — Run 2 — test log",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Dibutyl Phthalate/Run 2 GMT254 testlog.xlsx": {
+    "title": "Dibutyl Phthalate — Run 2 — test log",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Dibutyl Phthalate/dbpGMT257hkp zgy average.xls": {
+    "title": "Dibutyl phthalate — GMT 257 averaged housekeeping (ZGY)",
+    "kind": "Housekeeping",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/ICES Paper 2005-01-2930 rev.doc": {
+    "title": "SAME — ICES paper (2005-01-2930)",
+    "kind": "Document",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Kapton/GMT263 run 14 kapton avg.xls": {
+    "title": "Kapton — Run 14 — measurements (averaged)",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Kapton/GMT271kapton29.xls": {
+    "title": "Kapton — GMT 271 workbook · source record 29",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Kapton/GMT272kapton30.xls": {
+    "title": "Kapton — GMT 272 workbook · source record 30",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Kapton/GMT273kapton33.xls": {
+    "title": "Kapton — GMT 273 workbook · source record 33",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Kapton/kaptonGMT257 zgy average.xls": {
+    "title": "Kapton — Run 8 — measurements (averaged)",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Kapton/kaptonGMT257.xls": {
+    "title": "Kapton — Run 8 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Lampwick/GMT264 Run 17 lampwick.xls": {
+    "title": "Lampwick — Run 17 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Lampwick/GMT272lampwick31.xls": {
+    "title": "Lampwick — GMT 272 workbook · source record 31",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Lampwick/GMT272lampwick32.xls": {
+    "title": "Lampwick — GMT 272 workbook · source record 32",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Lampwick/GMT273lampwick34.xls": {
+    "title": "Lampwick — GMT 273 workbook · source record 34",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Lampwick/GMT278Lampwick46.xls": {
+    "title": "Lampwick — GMT 278 workbook · source record 46",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Metadata/i_Investigation.txt": {
+    "title": "SAME — investigation description",
+    "kind": "Metadata",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Metadata/s_PSI-102.txt": {
+    "title": "SAME — study metadata",
+    "kind": "Metadata",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/PSI-102_Experimental table_SAME (1).csv": {
+    "title": "SAME — experiment measurements",
+    "kind": "Experiment table",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/SAME EIRD Rev 2.00 02-25-05 HIgh Q (1).pdf": {
+    "title": "SAME — experiment interface requirements (revision 2)",
+    "kind": "Document",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/SAME Final Science report  03 18 10 with papers attached (1).pdf": {
+    "title": "SAME — final science report and papers (2010)",
+    "kind": "Report",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/SAME ICES  2013 07 15 final as presented.pptx": {
+    "title": "SAME — ICES presentation (2013)",
+    "kind": "Presentation",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Silicone/GMT267silicon test 23 and 24 log.xlsx": {
+    "title": "Silicone — GMT 267 test log · source record 23, 24",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Silicone/GMT267silicon23hkp.xls": {
+    "title": "Silicone — GMT 267 housekeeping · source record 23h",
+    "kind": "Housekeeping",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Silicone/GMT267silicon24hkp.xls": {
+    "title": "Silicone — GMT 267 housekeeping · source record 24h",
+    "kind": "Housekeeping",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Silicone/GMT269silicon27.xls": {
+    "title": "Silicone — GMT 269 workbook · source record 27",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Silicone/GMT276silicone35.xls": {
+    "title": "Silicone — GMT 276 workbook · source record 35",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Silicone/Run 1 GMT252 testlog.xls": {
+    "title": "Silicone — Run 1 — test log",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Silicone/Silicone GMT255hkp run 5s zgy average.xls": {
+    "title": "Silicone — Run 5s — housekeeping (averaged)",
+    "kind": "Housekeeping",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Silicone/Silicone GMT255hkp run 5s.xls": {
+    "title": "Silicone — Run 5s — housekeeping",
+    "kind": "Housekeeping",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Teflon/GMT256HKP zgy average.xls": {
+    "title": "GMT 256 averaged housekeeping (ZGY)",
+    "kind": "Housekeeping",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Teflon/GMT256HKP.xls": {
+    "title": "GMT 256 housekeeping",
+    "kind": "Housekeeping",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Teflon/GMT256LOG.xlsx": {
+    "title": "GMT 256 test log",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Teflon/GMT262 RUN 13 teflon.xls": {
+    "title": "Teflon — Run 13 — measurements",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Teflon/GMT268teflon25.xls": {
+    "title": "Teflon — GMT 268 workbook · source record 25",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Teflon/GMT268teflon26.xls": {
+    "title": "Teflon — GMT 268 workbook · source record 26",
+    "kind": "Run workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Teflon/GMT269teflon28hkp.xls": {
+    "title": "Teflon — GMT 269 housekeeping · source record 28h",
+    "kind": "Housekeeping",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Teflon/TeflonGMT257hkp zgy average.xls": {
+    "title": "Teflon — Run 10 — housekeeping (averaged)",
+    "kind": "Housekeeping",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/Teflon/TeflonGMT257hkp.xls": {
+    "title": "Teflon — Run 10 — housekeeping",
+    "kind": "Housekeeping",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/housekeeping/GMT252run1testhkp with plots.xls": {
+    "title": "Run 1t — housekeeping",
+    "kind": "Housekeeping",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/housekeeping/GMT252run1testhkp with plotszgy average.xls": {
+    "title": "Run 1t — housekeeping (averaged)",
+    "kind": "Housekeeping",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/housekeeping/GMT254run2btesthkp with zgy average.xls": {
+    "title": "Run 2b — housekeeping (averaged)",
+    "kind": "Housekeeping",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "PSI102/housekeeping/GMT255hkp.xlsx": {
+    "title": "GMT 255 housekeeping",
+    "kind": "Housekeeping",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "SAFFIRE/PSI-98_Experimental table_SAFFIRE-1.csv": {
+    "title": "Saffire-I — experiment measurements",
+    "kind": "Experiment table",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "SAFFIRE/PSI-98_metadata_PSI-166_SAFFIRE-I/i_Investigation.txt": {
+    "title": "Saffire-I — investigation description",
+    "kind": "Metadata",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "SAFFIRE/PSI-98_metadata_PSI-166_SAFFIRE-I/s_PSI-98.txt": {
+    "title": "Saffire-I — study metadata",
+    "kind": "Metadata",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "SAFFIRE/SAFFIRE-1_MergeResult-jpeg_Update_Final_v2.xlsx": {
+    "title": "Saffire-I — merged results workbook (version 2)",
+    "kind": "Workbook",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "SAFFIRE/SAFFIRE-I Image Directory Nomenclature.pdf": {
+    "title": "SAFFIRE-I Image Directory Nomenclature",
+    "kind": "Document",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "SAFFIRE/SAFFIRE-I Operations.pdf": {
+    "title": "SAFFIRE-I Operations",
+    "kind": "Document",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "SAFFIRE/SAFFIRE-I and SAFFIRE-III DoD.docx": {
+    "title": "SAFFIRE-I and SAFFIRE-III DoD",
+    "kind": "Document",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "SOFIE/Aly 2026 CSSCI Abstract.pdf": {
+    "title": "Aly 2026 CSSCI Abstract",
+    "kind": "Document",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "SOFIE/NASA Materials Flammability Update update 9.09.2021 Final.pdf": {
+    "title": "NASA Materials Flammability Update update 9.09.2021 Final",
+    "kind": "Report",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "SOFIE/SOFIE ISS.pdf": {
+    "title": "SOFIE ISS",
+    "kind": "Document",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  },
+  "SOFIE/TaskBookD1259B57C2702453C950346E397E5134-11132026.pdf": {
+    "title": "SoFIE — NASA taskbook record (2026)",
+    "kind": "Document",
+    "basis": "Descriptive display label from filename/directory; verified run links where supplied. Not a new scientific classification."
+  }
+}
