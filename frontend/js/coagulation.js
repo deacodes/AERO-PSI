@@ -14,10 +14,10 @@
         const result = await jsonFetch('/api/v1/models/coagulation/sectional', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(payload) });
         state.currentCoag = { result, payload, series: result.series }; document.dispatchEvent(new CustomEvent('scenario-computed'));  state.pinnedPoints.coagulation.clear(); $('#coagPointActions').classList.remove('open'); $('#coagPointAnswer').innerHTML='';
         drawSeries($('#coagChart'), result.series, 'time_s', 'number_concentration_m3', state.coagMarks, 'series', 'coagulation');
-        $('#coagEmpty').classList.add('hidden'); $('#markScenario').disabled = false;
+        $('#coagEmpty').classList.add('hidden'); $('#interpretScenario').disabled=false; $('#coagRunStatus').textContent='Showing the last completed run. Mark it before changing inputs to compare scenarios.'; $('#markScenario').disabled = false;
         const final = result.series.at(-1); const start = result.series[0]; const reduction = start.number_concentration_m3 ? 100 * (1 - final.number_concentration_m3 / start.number_concentration_m3) : 0;
         $('#resultNumber').textContent = scientific(final.number_concentration_m3, ' m⁻³'); $('#resultDiameter').textContent = `${(final.equivalent_volume_mean_diameter_m * 1e9).toFixed(2)} nm`; $('#resultError').textContent = scientific(result.conservation_check.total_volume_relative_error);
-        $('#coagInterpretation').className = 'finding observed'; $('#coagInterpretation').innerHTML = `<div class="state">Model result</div><p>Number concentration changed by ${(-reduction).toFixed(2)}%. Final equivalent volume-mean diameter is ${(final.equivalent_volume_mean_diameter_m*1e9).toFixed(2)} nm. This is a solver result under the selected assumptions, not a PSI observation.</p>`;
+        $('#coagInterpretation').className = 'finding observed'; $('#coagInterpretation').innerHTML = `<div class="state">Model result</div><p>Number concentration changed by ${(-reduction).toFixed(2)}%. Final equivalent volume-mean diameter is ${(final.equivalent_volume_mean_diameter_m*1e9).toFixed(2)} nm. ${Math.abs(reduction)<1?'Less than 1% changed over this duration; a nearly flat curve is expected. ':''}Gravity: ${payload.gravity_m_s2} m/s²; floor deposition ${payload.settling_deposition?'enabled':'disabled'}. This is a model scenario, not a PSI observation.</p>`;
       } catch (error) { $('#coagInterpretation').className = 'error-box'; $('#coagInterpretation').textContent = error.message; }
       finally { button.disabled = false; button.textContent = old; }
     });
@@ -40,3 +40,6 @@
       $$('[data-remove-coag]').forEach(button => button.addEventListener('click', () => { state.coagMarks.splice(Number(button.dataset.removeCoag), 1); renderCoagMarks(); }));
     }
 
+
+$('#coagScale').onchange=()=>{ $('#coagAxisLabel').textContent=$('#coagScale').value==='fraction'?'Particles remaining (% of initial) vs time (s)':'Number concentration (m⁻³) vs time (s) · auto zoom';renderCoagMarks();};
+$('#coagForm').addEventListener('input',event=>{if(event.target.id==='coagScale')return;$('#coagRunStatus').textContent='Inputs changed. Run scenario to update the plots and SI context.';});

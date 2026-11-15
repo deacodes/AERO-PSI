@@ -160,3 +160,30 @@ body .discovery-query h2 { font-size:1.65rem; line-height:1.2; }
 #page-evidence .investigation-studio { margin-top:48px; }
 #page-evidence .answer .error-box p { margin:12px 0 0; }
 @media(max-width:600px){.science-conversation-controls { align-items:flex-start; flex-direction:column; gap:8px; }}
+
+/* Visible conversational turns with a composer following the latest response. */
+.science-user-message { margin:18px 0 24px auto; padding:16px 20px; background:var(--surface); border:1px solid var(--line); border-radius:14px; max-width:65ch; overflow-wrap:anywhere; }
+.science-user-message:empty { display:none; }
+.science-prior-turn { border:0; padding:0 0 24px; border-bottom:1px solid var(--line); border-radius:0; }
+.science-prior-turn .evidence-prose { max-width:72ch; }
+.copilot-panel > .prompt-row { margin-top:28px; }
+#coagScale { max-width:100%; }
+#coagGridSettings { margin-block:20px; }
+
+.compact-actions { position:relative; width:fit-content; margin-block:12px; }
+.compact-actions > summary { cursor:pointer; list-style:none; padding:8px 16px; border:1px solid var(--line); border-radius:10px; width:fit-content; }
+.compact-actions > div { position:absolute; top:calc(100% + 8px); left:0; z-index:50; width:260px; max-width:calc(100vw - 100px); padding:8px; background:var(--surface); border-radius:12px; box-shadow:0 10px 30px rgb(0 0 0 / .25); }
+.si-glyph,.si-icon-action { display:inline-flex; align-items:center; justify-content:center; flex-shrink:0; }
+.si-icon-action { width:44px; height:44px; padding:10px; }
+
+/* Menu actions form one vertical list, including dynamically inserted SI actions. */
+.compact-actions[open] > div,
+.compact-actions .dataset-action-group,
+.compact-actions .discovery-actions { display:flex; flex-direction:column; align-items:stretch; gap:4px; margin:0; padding:0; border:0; }
+.compact-actions[open] > div { padding:8px; }
+.compact-actions .action-group-label { display:none; }
+.compact-actions button:not(.term-help) { width:100%; flex:none; margin:0; padding:12px; border:0; box-shadow:none; background:transparent; color:inherit; text-align:left; justify-content:flex-start; white-space:normal; }
+.compact-actions button:not(.term-help):hover { background:var(--line); }
+.si-secondary-action { display:inline-flex; align-items:center; gap:10px; }
+.si-action-star { display:inline-flex; align-items:center; justify-content:center; flex-shrink:0; }
+.si-secondary-action:focus-visible { outline:2px solid var(--blue); outline-offset:3px; }

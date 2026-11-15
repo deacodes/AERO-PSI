@@ -7,7 +7,7 @@
       return { x: 60 + ((Number(point[xKey]) - domain.xmin) / (domain.xmax - domain.xmin || 1)) * 680, y: 315 - ((Number(point[yKey]) - domain.ymin) / (domain.ymax - domain.ymin || 1)) * 285 };
     }
     function chartBase(svg, domain) {
-      const labels = domain ? `<text class="axis-text" x="60" y="340">${escapeHTML(formatNumber(domain.xmin))}</text><text class="axis-text" x="740" y="340" text-anchor="end">${escapeHTML(formatNumber(domain.xmax))}</text><text class="axis-text" x="52" y="38" text-anchor="end">${escapeHTML(domain.ymax.toExponential(5))}</text><text class="axis-text" x="52" y="318" text-anchor="end">${escapeHTML(domain.ymin.toExponential(5))}</text>` : '';
+      const labels = domain ? `<text class="axis-text" x="60" y="340">${escapeHTML(formatNumber(domain.xmin))}</text><text class="axis-text" x="740" y="340" text-anchor="end">${escapeHTML(formatNumber(domain.xmax))}</text><text class="axis-text" x="52" y="38" text-anchor="end">${escapeHTML(domain.percent ? `${formatNumber(domain.ymax)}%` : domain.ymax.toExponential(5))}</text><text class="axis-text" x="52" y="318" text-anchor="end">${escapeHTML(domain.percent ? `${formatNumber(domain.ymin)}%` : domain.ymin.toExponential(5))}</text>` : '';
       svg.innerHTML = `<g aria-hidden="true"><line class="grid-line" x1="60" y1="30" x2="60" y2="315"/><line class="grid-line" x1="60" y1="315" x2="740" y2="315"/>${[0,1,2,3,4].map(i => `<line class="grid-line" x1="60" y1="${30+i*71.25}" x2="740" y2="${30+i*71.25}"/>`).join('')}${labels}</g>`;
     }
     function pathFor(points, xKey, yKey, domain) {
@@ -15,7 +15,11 @@
       return valid.map((point, index) => { const {x,y} = chartCoordinates(point,xKey,yKey,domain); return `${index ? 'L' : 'M'}${x.toFixed(2)},${y.toFixed(2)}`; }).join(' ');
     }
     function drawSeries(svg, series, xKey, yKey, marks = [], markSeries = 'series', kind = 'coagulation', extraSeries = []) {
-      const markSeriesList = marks.map(mark => mark[markSeries]); const domain = chartDomain([series, ...extraSeries, ...markSeriesList], xKey, yKey); chartBase(svg, domain);
+      if(kind==='coagulation' && $('#coagScale')?.value==='fraction'){
+        const normalized=items=>items.map(p=>({...p,number_percent:items[0].number_concentration_m3?100*p.number_concentration_m3/items[0].number_concentration_m3:0}));
+        series=normalized(series);marks=marks.map(m=>({...m,[markSeries]:normalized(m[markSeries])}));yKey='number_percent';
+      }
+      const markSeriesList = marks.map(mark => mark[markSeries]); const domain = chartDomain([series, ...extraSeries, ...markSeriesList], xKey, yKey); if(yKey==='number_percent'){domain.ymin=0;domain.ymax=Math.max(100,domain.ymax);domain.percent=true;} chartBase(svg, domain);
       marks.forEach((mark, index) => { const path = pathFor(mark[markSeries], xKey, yKey, domain); if (path) svg.insertAdjacentHTML('beforeend', `<path class="data-path marked-${index ? 'b' : 'a'}" d="${path}"/>`); });
       extraSeries.forEach((items,index)=>{const extraPath=pathFor(items,xKey,yKey,domain);if(extraPath)svg.insertAdjacentHTML('beforeend',`<path class="data-path angle-${(index+1)%5}" d="${extraPath}"/>`);});
       const path = pathFor(series, xKey, yKey, domain); if (path) svg.insertAdjacentHTML('beforeend', `<path class="data-path angle-0" d="${path}"/>`);

@@ -3,7 +3,7 @@
   const pages = ['home', 'mission', 'lab', 'atlas', 'evidence', 'resources', 'studio'];
   const scripts = ['core', 'navigation', 'charts', 'archive', 'coagulation', 'observed', 'atlas',
     'evidence-base', 'settings', 'workflow-shared', 'distribution', 'observed-analysis', 'scattering',
-    'analysis-runner', 'sources', 'accessibility', 'resources', 'science-chat', 'discovery', 'studio-charts', 'studio', 'experiment-design', 'research', 'gap-si', 'archive-browser', 'model-si', 'context-si', 'journey', 'si-workspace', 'si-evidence-picker', 'home-explore', 'home-previews', 'term-help'];
+    'analysis-runner', 'sources', 'accessibility', 'resources', 'science-chat', 'discovery', 'studio-charts', 'studio', 'experiment-design', 'research', 'gap-si', 'archive-browser', 'model-si', 'context-si', 'journey', 'si-workspace', 'si-evidence-picker', 'home-explore', 'home-previews', 'term-help', 'compact-actions'];
   async function template(path) {
     let response;
     try { response = await fetch(path); }
