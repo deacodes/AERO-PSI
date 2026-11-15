@@ -123,12 +123,24 @@ def _write(path, value):
 
 
 def get_record(record_id, storage=STORAGE):
+    from .browser_work import CURRENT
+    context=CURRENT.get()
+    if context is not None:
+        record=context['record']
+        if not record or record['id']!=identifier(record_id):raise FileNotFoundError('Investigation not supplied by this browser')
+        return copy.deepcopy(record)
     path = Path(storage) / f'{identifier(record_id)}.json'
     if not path.is_file(): raise FileNotFoundError('Investigation not found')
     return json.loads(path.read_text(encoding='utf-8'))
 
 
 def _commit(record, storage, previous=None):
+    from .browser_work import CURRENT
+    context=CURRENT.get()
+    if context is not None:
+        record["updated_at"]=now();record["revision"]=previous["revision"]+1 if previous else 1
+        context["record"]=copy.deepcopy(record)
+        return record
     folder = Path(storage)
     if previous is not None:
         _write(folder / 'history' / record['id'] / f"{previous['revision']}.json", previous)

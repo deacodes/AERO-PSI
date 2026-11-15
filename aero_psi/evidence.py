@@ -11,7 +11,9 @@ import xml.etree.ElementTree as ET
 import posixpath
 
 ROOT = Path(__file__).resolve().parents[1]
-INDEX = ROOT / 'derived/evidence/documents.json'
+from .runtime_data import root as runtime_root
+RUNTIME_ROOT=runtime_root()
+INDEX = RUNTIME_ROOT / 'derived/evidence/documents.json'
 CONVERSIONS = ROOT / 'mappings/document_conversions.json'
 
 
@@ -71,7 +73,7 @@ def build_index(data_root, output=INDEX, pdf_tool=None, conversions=None):
     if output == data_root or data_root in output.parents:
         raise ValueError('Derived evidence must be outside the original archive')
     if conversions is None:
-        conversions = json.loads(CONVERSIONS.read_text()) if data_root == (ROOT/'DATA').resolve() and CONVERSIONS.is_file() else []
+        conversions = json.loads(CONVERSIONS.read_text()) if data_root == (RUNTIME_ROOT/'DATA').resolve() and CONVERSIONS.is_file() else []
     records, reports, seen = [], [], {}
     for path in sorted(data_root.rglob('*')):
         if path.suffix.lower() not in {'.pdf', '.pptx', '.ppt', '.docx', '.doc', '.txt'}: continue
@@ -81,8 +83,8 @@ def build_index(data_root, output=INDEX, pdf_tool=None, conversions=None):
             conversion = next((c for c in conversions if c['source_path'] == relative and c['source_sha256'] == sha), None)
             conversion_metadata = {}
             if path.suffix.lower() in ('.doc', '.ppt') and conversion:
-                converted = (ROOT/conversion['converted_path']).resolve()
-                if (ROOT/'derived').resolve() not in converted.parents or not converted.is_file() or digest(converted) != conversion['converted_sha256']:
+                converted = (RUNTIME_ROOT/conversion['converted_path']).resolve()
+                if (RUNTIME_ROOT/'derived').resolve() not in converted.parents or not converted.is_file() or digest(converted) != conversion['converted_sha256']:
                     raise ValueError('Derived conversion is missing, changed or outside derived/')
                 units = [('converted_page', n, t) for _, n, t in extract(converted, pdf_tool)]
                 conversion_metadata = {'conversion': conversion, 'conversion_note':'Page numbers refer to the derived PDF, not the original Word pagination. Embedded equations require visual checking.'}
@@ -112,7 +114,7 @@ def build_index(data_root, output=INDEX, pdf_tool=None, conversions=None):
     return {'documents':len(reports),'extracted':sum(r['status']=='extracted' for r in reports),'chunks':len(records),'unavailable':[r for r in reports if r['status']=='unavailable']}
 
 
-def document_records(index=INDEX, data_root=ROOT/'DATA'):
+def document_records(index=INDEX, data_root=RUNTIME_ROOT/'DATA'):
     if not Path(index).is_file(): return []
     data = json.loads(Path(index).read_text())
     # Never expose stale excerpts as current evidence after a source changes.
@@ -124,10 +126,10 @@ def document_records(index=INDEX, data_root=ROOT/'DATA'):
         if key not in checks: checks[key] = digest(path) if path.is_file() else None
         conversion = record.get('conversion')
         if conversion:
-            converted = (ROOT/conversion['converted_path']).resolve()
+            converted = (RUNTIME_ROOT/conversion['converted_path']).resolve()
             cache_key = str(converted)
             if cache_key not in checks:
-                checks[cache_key] = digest(converted) if (ROOT/'derived').resolve() in converted.parents and converted.is_file() else None
+                checks[cache_key] = digest(converted) if (RUNTIME_ROOT/'derived').resolve() in converted.parents and converted.is_file() else None
             if checks[cache_key] != conversion['converted_sha256']: continue
         if checks[key] == record['source_sha256']: result.append(record)
     return result
@@ -135,5 +137,5 @@ def document_records(index=INDEX, data_root=ROOT/'DATA'):
 
 if __name__ == '__main__':
     import argparse
-    parser=argparse.ArgumentParser(); parser.add_argument('--data-root',type=Path,default=ROOT/'DATA'); parser.add_argument('--output',type=Path,default=INDEX); parser.add_argument('--pdftotext')
+    parser=argparse.ArgumentParser(); parser.add_argument('--data-root',type=Path,default=RUNTIME_ROOT/'DATA'); parser.add_argument('--output',type=Path,default=INDEX); parser.add_argument('--pdftotext')
     args=parser.parse_args(); print(json.dumps(build_index(args.data_root,args.output,args.pdftotext),indent=2))

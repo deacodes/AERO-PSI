@@ -54,3 +54,11 @@ python3 -m venv .venv
 ```
 
 Example optical requests are in `examples/scattering.json` and `examples/coupled_optics.json`. The model lab now exposes gravity and gas controls, a size-distribution timeline, observed-window analysis and angular scattering. Evidence SI can plan and execute bounded investigations and export their records. Advanced calibration/uncertainty forms remain API-only.
+
+## Browser-private investigations and cloud data
+
+Studio work is saved in IndexedDB for the current browser and website origin. The public backend does not list or reopen server-side investigations. Existing local `derived/studio/` and `derived/investigations/` files are left untouched and are not migrated into visitor libraries. Calculations and SI send the relevant browser record to the backend for request-scoped processing; no shared copy is saved. Browser data can be lost when site storage is cleared or a private-browsing session ends. Export important work; exports currently have no in-app import flow. Changing hostname or port creates a separate browser library.
+
+For scientific runtime data, set `AERO_PSI_STORAGE_BUCKET=aeropsi-data` in `.env` or the hosting environment and run `python3 -m aero_psi serve`. Authentication uses ADC locally and the service identity when deployed. Grant the runtime identity read-only object access to the bucket. The app downloads the allowed scientific objects into `cache/cloud-runtime/<bucket>/` by default, verifies SHA-256 and file sizes, and reuses unchanged files. Override `AERO_PSI_CLOUD_CACHE` to locate this disposable cache elsewhere. The first startup downloads about 761 MB; allow time, disk capacity and applicable download charges. This is a cached snapshot at startup, not a network filesystem mount or a live write-through connection. Restart after updating bucket data. Failed authentication or checksum validation stops startup rather than silently falling back to different data.
+
+Unset the bucket setting (or explicitly set it to an empty string) to use project-local scientific files. Code, mappings, secrets and visitor investigations are never downloaded from this data bucket. Do not delete your originals until you have a separate backup and have verified the deployed workflow.

@@ -15,7 +15,9 @@ from aero_psi.optical import summary
 from aero_psi.runtime import RuntimeDependencyError
 
 ROOT=Path(__file__).resolve().parents[1]
-INVESTIGATION_STORAGE=Path(os.environ.get('AERO_PSI_INVESTIGATION_STORAGE', ROOT/'derived/investigations'))
+from .runtime_data import root as runtime_root
+RUNTIME_ROOT=runtime_root()
+INVESTIGATION_STORAGE=Path(os.environ.get('AERO_PSI_INVESTIGATION_STORAGE', RUNTIME_ROOT/'derived/investigations'))
 TOOLS=('rank_investigations','inspect_run','coverage_gaps','simulate_coagulation','gravity_comparison','uncertainty','analyze_observed','scattering','coupled_optics','plan_measurements','review_science')
 
 
@@ -79,7 +81,7 @@ def execute_tool(tool,payload,catalog):
     if tool=='rank_investigations': return rank_for_question(catalog,payload)
     if tool=='plan_measurements': return gap_plan(catalog,payload)
     if tool=='coverage_gaps': return condition_gaps(catalog,payload.get('group'))
-    if tool=='inspect_run': return summary(ROOT/'derived/reports/ingestion_manifest.json',payload['source_path'])
+    if tool=='inspect_run': return summary(RUNTIME_ROOT/'derived/reports/ingestion_manifest.json',payload['source_path'])
     if tool=='analyze_observed':
         from aero_psi.observed import analyze
         return analyze(payload['observed_request'])
@@ -146,6 +148,7 @@ def investigate(catalog,payload,storage=INVESTIGATION_STORAGE,cancelled=None):
             record['status']='completed' if all(s['status']=='completed' for s in record['steps']) else 'partial'
             record['interpretation']=ask(catalog,payload['question'],runtime_evidence=runtime,allow_background=True)
             record['evidence'].extend(runtime)
+    if storage is None:return record
     storage=Path(storage); storage.mkdir(parents=True,exist_ok=True)
     encoded=json.dumps(record,ensure_ascii=False,allow_nan=False)
     with (storage/(record['id']+'.json')).open('x',encoding='utf-8') as stream: stream.write(encoded)

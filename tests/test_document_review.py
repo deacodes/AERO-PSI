@@ -71,7 +71,7 @@ class DocumentReviewTests(unittest.TestCase):
             record={'id':'document:converted','source_path':'old.doc','source_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),
                 'conversion':{'converted_path':'derived/old.pdf','converted_sha256':hashlib.sha256(converted.read_bytes()).hexdigest()}}
             index=derived/'index.json';index.write_text(json.dumps({'records':[record]}))
-            with patch('aero_psi.evidence.ROOT',root):
+            with patch('aero_psi.evidence.RUNTIME_ROOT',root):
                 self.assertEqual(len(document_records(index,data)),1)
                 converted.write_bytes(b'mutated conversion')
                 self.assertEqual(document_records(index,data),[])

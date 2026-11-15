@@ -5,7 +5,8 @@ import hashlib
 import json
 import re
 
-ROOT = Path(__file__).resolve().parents[1]
+from .runtime_data import root as runtime_root
+ROOT = runtime_root()
 VERSION = 'question-discovery-1.0'
 # These are declared workflow requirements, not facts extracted from NASA reports.
 REQUIREMENTS = {

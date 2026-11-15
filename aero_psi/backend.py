@@ -36,10 +36,12 @@ import aero_psi.research as research
 from aero_psi.evidence import document_records
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_DATA_ROOT = Path(os.environ.get("AERO_PSI_DATA_ROOT", PROJECT_ROOT / "DATA"))
-DEFAULT_CATALOG_PATH = PROJECT_ROOT / "aero_psi_catalog.json"
+from .runtime_data import root as runtime_root
+RUNTIME_ROOT=runtime_root()
+DEFAULT_DATA_ROOT = Path(os.environ.get("AERO_PSI_DATA_ROOT", RUNTIME_ROOT / "DATA"))
+DEFAULT_CATALOG_PATH = RUNTIME_ROOT / "aero_psi_catalog.json"
 DEFAULT_FRONTEND_DIR = PROJECT_ROOT / "frontend"
-DEFAULT_INGESTION_MANIFEST = PROJECT_ROOT / "derived" / "reports" / "ingestion_manifest.json"
+DEFAULT_INGESTION_MANIFEST = RUNTIME_ROOT / "derived" / "reports" / "ingestion_manifest.json"
 SYSTEM_FILES = {
     '.DS_Store'
 }; WORKBOOK_SUFFIXES = {
@@ -243,27 +245,18 @@ class CatalogHandler(BaseHTTPRequestHandler):
             '/api/files': '/api/v1/files'
         }.get(request.path,request.path)
         if path in ('/api/v1/studio/library', '/api/v1/studio/record', '/api/v1/studio/history'):
-            try:
-                if path.endswith('/library'): result = studio.library()
-                elif path.endswith('/history'): result = studio.history(query.get('id', [''])[0])
-                else: result = studio.get_record(query.get('id', [''])[0])
-                self.send_json(envelope(result, self.catalog))
-            except ValueError as exc: self.error_json(HTTPStatus.BAD_REQUEST, 'invalid_request', str(exc))
-            except FileNotFoundError: self.error_json(HTTPStatus.NOT_FOUND, 'not_found', 'Investigation not found')
+            if path.endswith('/library'):self.send_json(envelope({'items':[],'warnings':[]},self.catalog))
+            else:self.error_json(HTTPStatus.NOT_FOUND,'browser_storage','Investigations are stored in your browser, not on this server.')
             return
         if path == '/api/v1/evidence/review':
             from aero_psi.knowledge import review_catalog
             self.send_json(envelope(review_catalog(),self.catalog)); return
         if path == '/api/v1/si/investigation':
-            identifier=query.get('id',[''])[0]
-            if not re.fullmatch(r'[a-f0-9]{32}',identifier):
+            if not re.fullmatch(r'[a-f0-9]{32}',query.get('id',[''])[0]):
                 self.error_json(HTTPStatus.BAD_REQUEST,'invalid_id','Use the returned investigation ID.'); return
-            saved=INVESTIGATION_STORAGE/f'{identifier}.json'
-            if not saved.is_file():
-                self.error_json(HTTPStatus.NOT_FOUND,'not_found','Investigation not found.'); return
-            self.send_json(envelope(json.loads(saved.read_text()),self.catalog)); return
+            self.error_json(HTTPStatus.NOT_FOUND,'browser_storage','Saved analyses are private to your browser.'); return
         routes={"/api/v1/archive/datasets":lambda:archive.datasets(self.catalog),"/api/v1/health":lambda:{
-            'ok': True, 'capabilities': capabilities()
+            'ok': True, 'capabilities': capabilities(), 'investigation_storage':'browser', 'scientific_data':{'mode':'cloud_cache' if RUNTIME_ROOT!=PROJECT_ROOT else 'local','bucket':os.environ.get('AERO_PSI_STORAGE_BUCKET') if RUNTIME_ROOT!=PROJECT_ROOT else None}
         },"/api/v1/summary":lambda:self.catalog["summary"],"/api/v1/investigations":lambda:self.catalog["investigations"],"/api/v1/rankings/investigations":lambda:investigation_rankings(self.catalog),"/api/v1/tables":lambda:self.catalog["csv_tables"],"/api/v1/raw-tables":lambda:self.catalog["raw_tables"],"/api/v1/experiments":lambda:self.catalog["normalized_experiments"],"/api/v1/atlas/coverage":lambda:atlas_coverage(self.catalog),"/api/v1/atlas/gaps":lambda:atlas_gaps(self.catalog,query.get("group",[
             None
         ])[0]),"/api/v1/atlas/conditions":lambda:atlas_conditions(self.catalog,query.get("group",[
@@ -291,7 +284,7 @@ class CatalogHandler(BaseHTTPRequestHandler):
             ])[0].split(",") if item]
             try: maximum=int(query.get("max_points",[
                 '1000'
-            ])[0]); data=optical_time_series(DEFAULT_INGESTION_MANIFEST,PROJECT_ROOT,source_path,signals or None,maximum); self.send_json(envelope(data,self.catalog)); return
+            ])[0]); data=optical_time_series(DEFAULT_INGESTION_MANIFEST,RUNTIME_ROOT,source_path,signals or None,maximum); self.send_json(envelope(data,self.catalog)); return
             except KeyError as exc: self.error_json(HTTPStatus.NOT_FOUND,"run_not_found",str(exc)); return
             except (ValueError,TypeError) as exc: self.error_json(HTTPStatus.BAD_REQUEST,"invalid_time_series_request",str(exc)); return
         if path=="/api/v1/optical/lag":
@@ -302,7 +295,7 @@ class CatalogHandler(BaseHTTPRequestHandler):
             ])[0]; right=query.get("right",[
                 None
             ])[0]
-            try: data=optical_lag_analysis(DEFAULT_INGESTION_MANIFEST,PROJECT_ROOT,source_path,left,right,int(query.get("max_lag_samples",[
+            try: data=optical_lag_analysis(DEFAULT_INGESTION_MANIFEST,RUNTIME_ROOT,source_path,left,right,int(query.get("max_lag_samples",[
                 '30'
             ])[0])); self.send_json(envelope(data,self.catalog)); return
             except KeyError as exc: self.error_json(HTTPStatus.NOT_FOUND,"run_not_found",str(exc)); return
@@ -368,7 +361,7 @@ class CatalogHandler(BaseHTTPRequestHandler):
             self.error_json(HTTPStatus.NOT_FOUND,"route_not_found","Use a documented /api/v1 route."); return
         try:
             length=int(self.headers.get("Content-Length","0"))
-            if length < 0 or length > 100_000: raise ScenarioInputError("Request body must be between 0 and 100000 bytes.")
+            if length < 0 or length > (10_000_000 if request.path.startswith('/api/v1/studio/') else 100_000): raise ScenarioInputError("Request body exceeds the endpoint size limit.")
             raw=self.rfile.read(length) if length else b"{}"
             payload=json.loads(raw.decode("utf-8"))
             if not isinstance(payload,dict): raise ValueError("Request body must be a JSON object.")
@@ -389,10 +382,8 @@ class CatalogHandler(BaseHTTPRequestHandler):
                 function=research.explore if request.path.endswith('/explore') else research.interpret
                 self.send_json(envelope(function(self.catalog,payload),self.catalog)); return
             if request.path.startswith('/api/v1/studio/'):
-                actions = {'from-research': lambda p: studio.from_research(p, self.catalog), 'attach-model': studio.attach_model, 'create': studio.create, 'save': studio.save, 'generate': lambda p: studio.generate(p, self.catalog),
-                           'dataset': studio.add_dataset, 'execute': lambda p: studio.execute(p, self.catalog),
-                           'interpret': lambda p: studio.interpret(p, self.catalog)}
-                self.send_json(envelope(actions[request.path.rsplit('/', 1)[1]](payload), self.catalog)); return
+                from .browser_work import execute as browser_execute
+                self.send_json(envelope(browser_execute(request.path.rsplit('/',1)[1],payload,self.catalog),self.catalog));return
             if request.path in ('/api/v1/rankings/question','/api/v1/atlas/plan'):
                 function=rank_for_question if request.path.endswith('/question') else gap_plan
                 self.send_json(envelope(function(self.catalog,payload),self.catalog)); return
@@ -400,7 +391,7 @@ class CatalogHandler(BaseHTTPRequestHandler):
             if request.path in batch2:
                 self.send_json(envelope(batch2[request.path](payload),self.catalog)); return
             if request.path=='/api/v1/si/investigate':
-                self.send_json(envelope(investigate(self.catalog,payload),self.catalog)); return
+                self.send_json(envelope(investigate(self.catalog,payload,storage=None),self.catalog)); return
             if request.path=='/api/v1/evidence/record':
                 from aero_psi.copilot import _chunks
                 identifier=payload.get('id')

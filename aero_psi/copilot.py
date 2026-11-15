@@ -10,7 +10,9 @@ from pathlib import Path
 from typing import Any
 
 ROOT=Path(__file__).resolve().parents[1]
-MANIFEST=ROOT/"derived"/"reports"/"ingestion_manifest.json"
+from .runtime_data import root as runtime_root
+RUNTIME_ROOT=runtime_root()
+MANIFEST=RUNTIME_ROOT/"derived"/"reports"/"ingestion_manifest.json"
 
 
 def load_local_env(path: Path=ROOT/".env") -> None:
@@ -271,7 +273,7 @@ def interpret_point(catalog: dict[str,Any], payload: dict[str,Any]) -> dict[str,
         from aero_psi.optical import source_point
         source_path=payload.get("source_path"); signal=payload.get("signal"); source_row=int(payload.get("source_row",-1))
         if not isinstance(source_path,str) or not source_path or not isinstance(signal,str) or not signal: raise ValueError("source_path and signal are required for an optical point.")
-        point=source_point(MANIFEST,ROOT,source_path,signal,source_row)
+        point=source_point(MANIFEST,RUNTIME_ROOT,source_path,signal,source_row)
         evidence={"id":"runtime:optical-point","kind":"verified_observed_sample","title":"Backend-verified optical source sample","source_path":source_path,"source_range":f"worksheet {point.get('worksheet')}, source row {source_row}","source_sha256":point["source_sha256"],"classification":point["classification"],"signal":signal,"source_column":point["source_column"],"point":point,"warnings":point["warnings"]}
         value=point["value"]
         if value is None: raise ValueError("Selected source sample is missing or a sentinel; choose a valid measurement.")

@@ -10,7 +10,8 @@ from aero_psi.discovery import rank_for_question, query_spec, manifest_records, 
 from aero_psi.copilot import retrieve, ask
 from aero_psi.optical import summary, time_series, source_point
 
-ROOT=Path(__file__).resolve().parents[1]
+from .runtime_data import root as runtime_root
+ROOT = runtime_root()
 
 
 def number(value):

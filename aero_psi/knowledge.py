@@ -9,6 +9,8 @@ from pathlib import Path
 from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
+from .runtime_data import root as runtime_root
+RUNTIME_ROOT=runtime_root()
 NOTES = ROOT / 'mappings/scientific_review.json'
 WEB = ROOT / 'mappings/scientific_web_references.json'
 
@@ -60,7 +62,7 @@ def review_catalog():
     documents = document_records()
     records = review_records(documents)
     active = {d['source_path'] for d in documents}
-    report = ROOT/'derived/evidence/review/coverage.json'
+    report = RUNTIME_ROOT/'derived/evidence/review/coverage.json'
     coverage = json.loads(report.read_text()) if report.is_file() else {}
     return {'scope':coverage.get('review_claim', 'Document review has not been built.'),
         'source_files':len(active), 'distinct_sources':len({d['source_sha256'] for d in documents}),

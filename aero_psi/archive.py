@@ -4,7 +4,8 @@ import json
 from pathlib import Path
 from aero_psi.discovery import manifest_records
 
-ROOT=Path(__file__).resolve().parents[1]
+from .runtime_data import root as runtime_root
+ROOT = runtime_root()
 
 
 def datasets(catalog):
